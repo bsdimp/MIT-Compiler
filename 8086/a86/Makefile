@@ -6,8 +6,9 @@ OBJECTS = error.o init.o ins.o ps.o rel.o sdi.o sym.o scan.o
 KNR=-std=c89 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-return-type
 KNR_BAD=-Wno-bitwise-op-parentheses -Wno-dangling-else -I. -Wno-parentheses
 CFLAGS = -O ${KNR} ${KNR_BAD}
+ALL=a86 ncvt86
 
-all:	a86 ncvt86
+all:	${ALL}
 
 try:	ncvt86 xee.ld
 	ncvt86  xee.ld xee.com
@@ -27,3 +28,6 @@ cvt86: cvt86.o
 
 ld86:	ld86.o
 	cc -o ld86 ld86.o
+
+clean:
+	rm -f ${OBJECTS} ${ALL}
