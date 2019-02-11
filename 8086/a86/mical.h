@@ -1,4 +1,13 @@
+/* Compat macros to build under more modern code with minimal chanages. */
+#define VOID int
+#define V_RETURN return 0
+
 #include <stdio.h>
+
+/* Defines for things that have been standardized since this code was written */
+#define abort MyAbort
+#define exp MyExp
+#define strncpy MyStrncpy
 
 /* Assembler parameters */
 #define	STR_MAX		32	/* number of chars in any single token */
@@ -127,6 +136,11 @@ struct oper {
   struct sym_bkt *sym_o;	/* symbol used for relocation */
   long value_o;			/* Value subfield */
 };
+
+/* error.c */
+int Sys_Error();
+int Prog_Error();
+int Prog_Warning();
 
 extern int abort();
 extern char *soperand(),*exp();

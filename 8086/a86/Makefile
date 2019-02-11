@@ -3,7 +3,11 @@ FILES = mical.h inst.h scan.c error.c init.c ins.c \
 
 OBJECTS = error.o init.o ins.o ps.o rel.o sdi.o sym.o scan.o
 
-CFLAGS = -O -Dabort=MyAbort -Dexp=MyExp
+KNR=-std=c89 -Wno-implicit-int -Wno-implicit-function-declaration -Wno-return-type
+KNR_BAD=-Wno-bitwise-op-parentheses -Wno-dangling-else -I. -Wno-parentheses
+CFLAGS = -O ${KNR} ${KNR_BAD}
+
+all:	a86 ncvt86
 
 try:	ncvt86 xee.ld
 	ncvt86  xee.ld xee.com

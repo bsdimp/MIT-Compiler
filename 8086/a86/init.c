@@ -318,7 +318,9 @@ Concat(s1,s2,s3)
  * appears; NULL if not found
 */
 
+#ifndef NULL
 #define NULL 0
+#endif /* NULL */
 
 char *
 rindex(sp, c)
