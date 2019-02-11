@@ -1,0 +1,18 @@
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdident (var fdb:txtfdb; var ident:identifier); extern;
+
+procedure $rdb ( var sourcevalue: boolean;var fdb:txtfdb);
+
+   var ident: identifier;
+   begin
+   $rdident (fdb,ident);
+   if ident = 'true            ' then sourcevalue := true
+   else if ident = 'false           ' then sourcevalue := false
+   else $perror(fdb,'true or false expected      ');
+   end;
+
+   (* dummy main program *)
+
+.

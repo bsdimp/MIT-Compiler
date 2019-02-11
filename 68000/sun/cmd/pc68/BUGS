@@ -1,0 +1,30 @@
+Try out under Vkernel
+
+Handle double floating correctly
+
+Optimize to use auto-increment modes
+
+Fix pc68 - .lst
+
+Block and string compares (direction, =, <>, ...)
+
+Documentation, incl. man pc68
+
+Replace DIV, MOD of 2**i by shift or mask? Mul by 10?
+
+Cleanup as68: jmp <ext lab>
+
+char->[1..1]char coercion
+
+EXPV IMPV
+
+UPAS Fixes:
+Real should be 32 bits
+Changed write to writeln if errors found.
+'Only one error' now has the word 'detected' appendeed.
+ugtp.: minvarreg or whatever...
+ug.h: changed?
+pio: rdr should accept both 'e' and 'E'. What about scalars?
+ugtp: UMUS: careful about trashing "divat"
+
+what about a6@(n, dx) -should work, or not?

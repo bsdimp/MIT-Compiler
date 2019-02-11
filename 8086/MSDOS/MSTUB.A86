@@ -1,0 +1,34 @@
+| Stubs to MSDOS (2.0 and greater) calls...			SAW 5/83
+| Emulates UNIX system interface.
+
+	.globl	_mstub
+
+| ax = mstub(ax, dx, cx, si, di, bx)
+| Returns -errcode on error (ie if C set), else return value.
+| DOESN'T save AX, BC.
+
+_mstub:	push	bp
+	mov	bp,sp
+	push	dx
+	push	cx
+	push	si
+	push	di
+
+	mov	ax,4[bp]
+	mov	dx,6[bp]
+	mov	dx,8[bp]
+	mov	si10[bp]
+	mov	di,12[bp]
+	mov	bx,14[bp]
+	int	0x21
+	jnc	mstub1
+
+	neg	ax
+mstub1:
+	pop	di
+	pop	si
+	pop	cx
+	pop	dx
+	pop	bp
+	ret
+

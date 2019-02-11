@@ -1,0 +1,304 @@
+Sun Jun 27 01:46:08 1982
+  created file Makefile[diablo], author: bothner on Thu Jun 24 21:44:38 1982
+Sun Jun 27 01:46:09 1982
+  created file break.b[diablo], author: bothner on Thu Jun 24 21:44:47 1982
+Sun Jun 27 01:46:10 1982
+  created file break.c[diablo], author: bothner on Thu Jun 24 21:44:56 1982
+Sun Jun 27 01:46:12 1982
+  created file bufval.b[diablo], author: bothner on Thu Jun 24 22:10:55 1982
+Sun Jun 27 01:46:13 1982
+  created file bufval.body[diablo], author: bothner on Thu Jun 24 22:10:59 1982
+Sun Jun 27 01:46:14 1982
+  created file callwrr.b[diablo], author: bothner on Sat May 29 21:22:05 1982
+Sun Jun 27 01:46:15 1982
+  created file callwrr.c[diablo], author: bothner on Thu Jun 24 22:11:15 1982
+Sun Jun 27 01:46:16 1982
+  created file caseerr.b[diablo], author: bothner on Thu Jun 24 21:45:33 1982
+Sun Jun 27 01:46:18 1982
+  created file caseerr.body[diablo], author: bothner on Thu Jun 24 21:45:34 1982
+Sun Jun 27 01:46:19 1982
+  created file cflds.c[diablo], author: bothner on Thu Jun 24 21:45:38 1982
+Sun Jun 27 01:46:21 1982
+  created file cflds.s[diablo], author: bothner on Thu Jun 24 21:45:41 1982
+Sun Jun 27 01:46:22 1982
+  created file close.b[diablo], author: bothner on Thu Jun 24 21:45:46 1982
+Sun Jun 27 01:46:24 1982
+  created file close.c[diablo], author: bothner on Thu Jun 24 21:45:49 1982
+Sun Jun 27 01:46:25 1982
+  created file date.b[diablo], author: bothner on Thu Jun 24 21:45:52 1982
+Sun Jun 27 01:46:27 1982
+  created file date.p[diablo], author: bothner on Thu Jun 24 22:10:36 1982
+Sun Jun 27 01:46:28 1982
+  created file display.b[diablo], author: bothner on Thu Jun 24 21:45:59 1982
+Sun Jun 27 01:46:29 1982
+  created file display.c[diablo], author: bothner on Thu Jun 24 21:46:04 1982
+Sun Jun 27 01:46:30 1982
+  created file eln.b[diablo], author: bothner on Thu Jun 24 21:46:11 1982
+Sun Jun 27 01:46:31 1982
+  created file eln.body[diablo], author: bothner on Thu Jun 24 21:46:12 1982
+Sun Jun 27 01:46:32 1982
+  created file eof.b[diablo], author: bothner on Thu Jun 24 21:46:25 1982
+Sun Jun 27 01:46:34 1982
+  created file eof.body[diablo], author: bothner on Thu Jun 24 21:46:27 1982
+Sun Jun 27 01:46:35 1982
+  created file eopage.b[diablo], author: bothner on Thu Jun 24 21:46:32 1982
+Sun Jun 27 01:46:36 1982
+  created file eopage.body[diablo], author: bothner on Thu Jun 24 21:46:33 1982
+Sun Jun 27 01:46:37 1982
+  created file filepos.b[diablo], author: bothner on Thu Jun 24 21:46:40 1982
+Sun Jun 27 01:46:39 1982
+  created file filepos.body[diablo], author: bothner on Thu Jun 24 21:46:43 1982
+Sun Jun 27 01:46:40 1982
+  created file filestat.b[diablo], author: bothner on Thu Jun 24 21:46:46 1982
+Sun Jun 27 01:46:42 1982
+  created file filestat.body[diablo], author: bothner on Thu Jun 24 21:46:49 1982
+Sun Jun 27 01:46:43 1982
+  created file filestatus.b[diablo], author: bothner on Sat May 29 21:22:23 1982
+Sun Jun 27 01:46:44 1982
+  created file get.b[diablo], author: bothner on Thu Jun 24 21:46:54 1982
+Sun Jun 27 01:46:46 1982
+  created file get.body[diablo], author: bothner on Thu Jun 24 21:46:56 1982
+Sun Jun 27 01:46:48 1982
+  created file getb.b[diablo], author: bothner on Thu Jun 24 21:47:01 1982
+Sun Jun 27 01:46:50 1982
+  created file getb.c[diablo], author: bothner on Thu Jun 24 21:47:40 1982
+Sun Jun 27 01:46:51 1982
+  created file getfname.b[diablo], author: bothner on Thu Jun 24 21:47:43 1982
+Sun Jun 27 01:46:52 1982
+  created file getfname.body[diablo], author: bothner on Thu Jun 24 21:47:45 1982
+Sun Jun 27 01:46:53 1982
+  created file halt.b[diablo], author: bothner on Thu Jun 24 21:47:54 1982
+Sun Jun 27 01:46:55 1982
+  created file halt.p[diablo], author: bothner on Thu Jun 24 22:10:38 1982
+Sun Jun 27 01:46:56 1982
+  created file hptr.b[diablo], author: bothner on Thu Jun 24 21:47:58 1982
+Sun Jun 27 01:46:57 1982
+  created file hptr.c[diablo], author: bothner on Thu Jun 24 21:48:04 1982
+Sun Jun 27 01:46:58 1982
+  created file initfile.b[diablo], author: bothner on Thu Jun 24 21:48:09 1982
+Sun Jun 27 01:46:59 1982
+  created file initfile.body[diablo], author: bothner on Thu Jun 24 21:48:14 1982
+Sun Jun 27 01:47:00 1982
+  created file initstd.b[diablo], author: bothner on Thu Jun 24 21:48:17 1982
+Sun Jun 27 01:47:01 1982
+  created file initstd.body[diablo], author: bothner on Thu Jun 24 21:48:19 1982
+Sun Jun 27 01:47:06 1982
+  created file libpcvax.a[diablo], author: bothner on Thu Jun 24 21:49:13 1982
+Sun Jun 27 01:47:08 1982
+  created file macros.m[diablo], author: bothner on Thu Jun 24 21:49:34 1982
+Sun Jun 27 01:47:09 1982
+  created file mathstubs.b[diablo], author: bothner on Thu Jun 24 21:49:36 1982
+Sun Jun 27 01:47:11 1982
+  created file mathstubs.c[diablo], author: bothner on Thu Jun 24 21:49:40 1982
+Sun Jun 27 01:47:13 1982
+  created file misc.b[diablo], author: bothner on Thu Jun 24 21:49:44 1982
+Sun Jun 27 01:47:14 1982
+  created file misc.c[diablo], author: bothner on Thu Jun 24 21:49:47 1982
+Sun Jun 27 01:47:16 1982
+  created file mwrr.r[diablo], author: bothner on Thu Jun 24 21:49:52 1982
+Sun Jun 27 01:47:18 1982
+  created file open.b[diablo], author: bothner on Thu Jun 24 21:49:56 1982
+Sun Jun 27 01:47:20 1982
+  created file open.c[diablo], author: bothner on Thu Jun 24 21:50:04 1982
+Sun Jun 27 01:47:22 1982
+  created file openttin.b[diablo], author: bothner on Thu Jun 24 21:50:07 1982
+Sun Jun 27 01:47:24 1982
+  created file openttin.body[diablo], author: bothner on Thu Jun 24 21:50:10 1982
+Sun Jun 27 01:47:25 1982
+  created file openttout.b[diablo], author: bothner on Sat May 29 21:23:11 1982
+Sun Jun 27 01:47:27 1982
+  created file opnttout.b[diablo], author: bothner on Thu Jun 24 21:50:17 1982
+Sun Jun 27 01:47:28 1982
+  created file opnttout.body[diablo], author: bothner on Thu Jun 24 21:50:21 1982
+Sun Jun 27 01:47:29 1982
+  created file parseint.b[diablo], author: bothner on Thu Jun 24 21:50:26 1982
+Sun Jun 27 01:47:31 1982
+  created file parseint.body[diablo], author: bothner on Thu Jun 24 21:50:29 1982
+Sun Jun 27 01:47:32 1982
+  created file parseint.l[diablo], author: bothner on Thu Jun 24 21:50:31 1982
+Sun Jun 27 01:47:34 1982
+  created file perror.b[diablo], author: bothner on Thu Jun 24 21:50:35 1982
+Sun Jun 27 01:47:35 1982
+  created file perror.body[diablo], author: bothner on Thu Jun 24 21:50:38 1982
+Sun Jun 27 01:47:36 1982
+  created file pflds.body[diablo], author: bothner on Thu Jun 24 21:50:40 1982
+Sun Jun 27 01:47:37 1982
+  created file pflds.s[diablo], author: bothner on Thu Jun 24 21:50:46 1982
+Sun Jun 27 01:47:39 1982
+  created file pio68.header[diablo], author: bothner on Thu Jun 24 21:50:48 1982
+Sun Jun 27 01:47:40 1982
+  created file put.b[diablo], author: bothner on Thu Jun 24 21:51:19 1982
+Sun Jun 27 01:47:41 1982
+  created file put.c[diablo], author: bothner on Thu Jun 24 21:51:24 1982
+Sun Jun 27 01:47:42 1982
+  created file rdb.b[diablo], author: bothner on Thu Jun 24 21:51:41 1982
+Sun Jun 27 01:47:43 1982
+  created file rdb.body[diablo], author: bothner on Thu Jun 24 21:51:43 1982
+Sun Jun 27 01:47:44 1982
+  created file rdc.b[diablo], author: bothner on Thu Jun 24 21:51:48 1982
+Sun Jun 27 01:47:45 1982
+  created file rdc.body[diablo], author: bothner on Thu Jun 24 21:51:51 1982
+Sun Jun 27 01:47:47 1982
+  created file rdc.l[diablo], author: bothner on Thu Jun 24 21:52:00 1982
+Sun Jun 27 01:47:48 1982
+  created file rdcrange.b[diablo], author: bothner on Thu Jun 24 21:52:10 1982
+Sun Jun 27 01:47:50 1982
+  created file rdcrange.body[diablo], author: bothner on Thu Jun 24 21:52:12 1982
+Sun Jun 27 01:47:51 1982
+  created file rdi.b[diablo], author: bothner on Thu Jun 24 21:52:23 1982
+Sun Jun 27 01:47:52 1982
+  created file rdi.body[diablo], author: bothner on Thu Jun 24 21:52:25 1982
+Sun Jun 27 01:47:54 1982
+  created file rdident.b[diablo], author: bothner on Sat May 29 21:23:42 1982
+Sun Jun 27 01:47:55 1982
+  created file rdident.body[diablo], author: bothner on Thu Jun 24 21:52:38 1982
+Sun Jun 27 01:47:57 1982
+  created file rdirange.b[diablo], author: bothner on Thu Jun 24 21:52:50 1982
+Sun Jun 27 01:47:59 1982
+  created file rdirange.body[diablo], author: bothner on Thu Jun 24 21:52:52 1982
+Sun Jun 27 01:48:00 1982
+  created file rdli.b[diablo], author: bothner on Thu Jun 24 21:52:58 1982
+Sun Jun 27 01:48:02 1982
+  created file rdli.body[diablo], author: bothner on Thu Jun 24 21:53:02 1982
+Sun Jun 27 01:48:03 1982
+  created file rdlirange.b[diablo], author: bothner on Thu Jun 24 21:53:06 1982
+Sun Jun 27 01:48:04 1982
+  created file rdlirange.befo[diablo], author: bothner on Thu Jun 24 21:53:08 1982
+Sun Jun 27 01:48:05 1982
+  created file rdlirange.body[diablo], author: bothner on Thu Jun 24 21:53:11 1982
+Sun Jun 27 01:48:07 1982
+  created file rdpage.b[diablo], author: bothner on Thu Jun 24 21:53:19 1982
+Sun Jun 27 01:48:08 1982
+  created file rdpage.body[diablo], author: bothner on Thu Jun 24 21:53:20 1982
+Sun Jun 27 01:48:09 1982
+  created file rdpage.l[diablo], author: bothner on Thu Jun 24 21:53:23 1982
+Sun Jun 27 01:48:10 1982
+  created file rdr.b[diablo], author: bothner on Thu Jun 24 21:53:29 1982
+Sun Jun 27 01:48:12 1982
+  created file rdr.body[diablo], author: bothner on Thu Jun 24 21:53:31 1982
+Sun Jun 27 01:48:13 1982
+  created file rdr.l[diablo], author: bothner on Thu Jun 24 21:53:35 1982
+Sun Jun 27 01:48:16 1982
+  created file rdr.p[diablo], author: bothner on Thu Jun 24 22:34:26 1982
+Sun Jun 27 01:48:18 1982
+  created file rds.b[diablo], author: bothner on Sat May 29 21:23:57 1982
+Sun Jun 27 01:48:19 1982
+  created file rds.body[diablo], author: bothner on Thu Jun 24 21:53:47 1982
+Sun Jun 27 01:48:20 1982
+  created file rdscalar.b[diablo], author: bothner on Thu Jun 24 21:54:03 1982
+Sun Jun 27 01:48:22 1982
+  created file rdscalar.body[diablo], author: bothner on Thu Jun 24 21:54:06 1982
+Sun Jun 27 01:48:23 1982
+  created file rdset.b[diablo], author: bothner on Thu Jun 24 21:54:09 1982
+Sun Jun 27 01:48:25 1982
+  created file rdset.body[diablo], author: bothner on Thu Jun 24 21:54:11 1982
+Sun Jun 27 01:48:26 1982
+  created file rdups.b[diablo], author: bothner on Thu Jun 24 21:54:21 1982
+Sun Jun 27 01:48:28 1982
+  created file rdups.body[diablo], author: bothner on Thu Jun 24 21:54:24 1982
+Sun Jun 27 01:48:29 1982
+  created file res.b[diablo], author: bothner on Thu Jun 24 21:54:37 1982
+Sun Jun 27 01:48:32 1982
+  created file res.body[diablo], author: bothner on Thu Jun 24 21:54:39 1982
+Sun Jun 27 01:48:33 1982
+  created file res.l[diablo], author: bothner on Thu Jun 24 21:54:43 1982
+Sun Jun 27 01:48:34 1982
+  created file rew.b[diablo], author: bothner on Thu Jun 24 21:54:50 1982
+Sun Jun 27 01:48:35 1982
+  created file rew.body[diablo], author: bothner on Thu Jun 24 21:54:53 1982
+Sun Jun 27 01:48:37 1982
+  created file rln.b[diablo], author: bothner on Thu Jun 24 21:54:56 1982
+Sun Jun 27 01:48:38 1982
+  created file rln.body[diablo], author: bothner on Thu Jun 24 21:54:59 1982
+Sun Jun 27 01:48:39 1982
+  created file rngchk.b[diablo], author: bothner on Sat May 29 21:24:15 1982
+Sun Jun 27 01:48:40 1982
+  created file round.b[diablo], author: bothner on Thu Jun 24 21:55:04 1982
+Sun Jun 27 01:48:41 1982
+  created file round.c[diablo], author: bothner on Thu Jun 24 21:55:07 1982
+Sun Jun 27 01:48:42 1982
+  created file sed.csh[diablo], author: bothner on Thu Jun 24 21:55:13 1982
+Sun Jun 27 01:48:44 1982
+  created file setmasks.b[diablo], author: bothner on Thu Jun 24 21:55:16 1982
+Sun Jun 27 01:48:45 1982
+  created file setmasks.c[diablo], author: bothner on Thu Jun 24 21:55:20 1982
+Sun Jun 27 01:48:46 1982
+  created file stty.b[diablo], author: bothner on Thu Jun 24 21:55:27 1982
+Sun Jun 27 01:48:47 1982
+  created file stty.body[diablo], author: bothner on Thu Jun 24 21:55:31 1982
+Sun Jun 27 01:48:49 1982
+  created file tc.c[diablo], author: bothner on Sat May 29 21:24:24 1982
+Sun Jun 27 01:48:51 1982
+  created file time.b[diablo], author: bothner on Thu Jun 24 21:55:41 1982
+Sun Jun 27 01:48:53 1982
+  created file time.body[diablo], author: bothner on Thu Jun 24 21:55:44 1982
+Sun Jun 27 01:48:55 1982
+  created file tw.c[diablo], author: bothner on Sat May 29 21:24:30 1982
+Sun Jun 27 01:48:56 1982
+  created file tw.r[diablo], author: bothner on Sat May 29 21:24:31 1982
+Sun Jun 27 01:48:58 1982
+  created file txtfdb.h[diablo], author: bothner on Thu Jun 24 21:55:48 1982
+Sun Jun 27 01:49:01 1982
+  created file ugen68.log[diablo], author: bothner on Sat May 29 21:24:35 1982
+Sun Jun 27 01:49:02 1982
+  created file utilities.b[diablo], author: bothner on Thu Jun 24 21:56:24 1982
+Sun Jun 27 01:49:04 1982
+  created file utilities.c[diablo], author: bothner on Thu Jun 24 21:56:28 1982
+Sun Jun 27 01:49:05 1982
+  created file wln.b[diablo], author: bothner on Thu Jun 24 21:56:32 1982
+Sun Jun 27 01:49:07 1982
+  created file wln.body[diablo], author: bothner on Thu Jun 24 21:56:33 1982
+Sun Jun 27 01:49:08 1982
+  created file wr1c.b[diablo], author: bothner on Thu Jun 24 21:56:37 1982
+Sun Jun 27 01:49:10 1982
+  created file wr1c.body[diablo], author: bothner on Thu Jun 24 21:56:40 1982
+Sun Jun 27 01:49:12 1982
+  created file wrb.b[diablo], author: bothner on Thu Jun 24 21:56:53 1982
+Sun Jun 27 01:49:13 1982
+  created file wrb.body[diablo], author: bothner on Thu Jun 24 21:56:55 1982
+Sun Jun 27 01:49:14 1982
+  created file wrc.b[diablo], author: bothner on Thu Jun 24 21:56:58 1982
+Sun Jun 27 01:49:15 1982
+  created file wrc.body[diablo], author: bothner on Thu Jun 24 21:57:01 1982
+Sun Jun 27 01:49:16 1982
+  created file wri.b[diablo], author: bothner on Thu Jun 24 21:57:11 1982
+Sun Jun 27 01:49:17 1982
+  created file wri.body[diablo], author: bothner on Thu Jun 24 21:57:12 1982
+Sun Jun 27 01:49:18 1982
+  created file wrli.b[diablo], author: bothner on Thu Jun 24 21:57:21 1982
+Sun Jun 27 01:49:20 1982
+  created file wrli.body[diablo], author: bothner on Thu Jun 24 21:57:23 1982
+Sun Jun 27 01:49:22 1982
+  created file wrpage.b[diablo], author: bothner on Thu Jun 24 21:58:01 1982
+Sun Jun 27 01:49:23 1982
+  created file wrpage.body[diablo], author: bothner on Thu Jun 24 21:58:12 1982
+Sun Jun 27 01:49:24 1982
+  created file wrr.b[diablo], author: bothner on Thu Jun 24 21:58:18 1982
+Sun Jun 27 01:49:26 1982
+  created file wrr.body.old[diablo], author: bothner on Thu Jun 24 21:58:23 1982
+Sun Jun 27 01:49:27 1982
+  created file wrr.c[diablo], author: bothner on Thu Jun 24 21:58:25 1982
+Sun Jun 27 01:49:28 1982
+  created file wrs.b[diablo], author: bothner on Thu Jun 24 21:58:29 1982
+Sun Jun 27 01:49:30 1982
+  created file wrs.body[diablo], author: bothner on Thu Jun 24 21:58:30 1982
+Sun Jun 27 01:49:31 1982
+  created file wrscalar.b[diablo], author: bothner on Thu Jun 24 21:58:41 1982
+Sun Jun 27 01:49:33 1982
+  created file wrscalar.body[diablo], author: bothner on Thu Jun 24 21:58:43 1982
+Sun Jun 27 01:49:34 1982
+  created file wrset.b[diablo], author: bothner on Sat May 29 21:25:08 1982
+Sun Jun 27 01:49:35 1982
+  created file wrset.body[diablo], author: bothner on Thu Jun 24 21:58:56 1982
+Sun Jun 27 01:49:39 1982
+  created file wrset.ls[diablo], author: bothner on Thu Jun 24 21:59:04 1982
+Sun Jun 27 01:49:40 1982
+  created file wrups.b[diablo], author: bothner on Thu Jun 24 21:59:16 1982
+Sun Jun 27 01:49:41 1982
+  created file wrups.body[diablo], author: bothner on Thu Jun 24 21:59:18 1982
+Sun Jun 27 01:49:42 1982
+  created file xit.b[diablo], author: bothner on Thu Jun 24 21:59:36 1982
+Sun Jun 27 01:49:43 1982
+  created file xit.c[diablo], author: bothner on Thu Jun 24 21:59:40 1982
+Sun Jun 27 01:49:45 1982
+  created file y[diablo], author: bothner on Thu Jun 24 21:45:02 1982

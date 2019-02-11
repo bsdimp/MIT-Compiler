@@ -1,0 +1,232 @@
+.TH PC68 1 MC68000
+.SU
+.SH NAME
+pc68 \- Pascal compiler for the MC68000
+.SH SYNOPSIS
+.B pc68
+[ option ] name ...
+.SH DESCRIPTION
+.I Pc68
+is the version of the portable Pascal* compiler that generates code for 
+the MC68000.
+Object files 
+created by other language processors may be loaded together with
+object files created by 
+.IR pc68 .
+Calling conventions are as in C,
+with
+.B var
+parameters passed by address.
+.I Pc68
+is a flexible program for translating between various types of files.  The
+types catered for in order of appearance during translation are `.p' 
+(Pascal source files), `.a68' or '.s' (assembly language files), 
+`.b' (relocatable binary files),
+`b.out' (absolute binary files), `.r' (byte-reversed files, cf.
+.I rev68(1)
+).
+and `.dl' (Macsbug download format, cf.
+.I dl68(1)
+).
+.PP
+Arguments to pc68 are either flags or input files.
+The type of an input file is normally determined by its suffix.  When an
+argument to pc68 is not a flag and has none of the above suffixes, it is
+assumed to be of one of the types `.p', `.b', or `b.out', namely the latest of
+these three consistent with the type of the output (e.g. if the output type
+were `.s' or `.b' then the input would have to be `.p').
+.PP
+Translation proceeds as follows.  
+Each `.p' and `.s' program is translated to a `.b' relocatable using upas68, 
+ugen68, and as68 as necessary.  Then all .b files including those produced by
+translation are link edited into the one file, called `b.out'.  If the only
+input file was a single `.p' program then the `.b' file is deleted, otherwise
+all `.b' files are preserved.
+.PP
+The amount of processing performed by cc68 may be decreased or increased with
+some of the options.  The -S option takes translation no further than `.s'
+files, i.e. only upas68 and ugen68 are applied.  
+The -c option takes translation up to `.b' files, omitting the link-editing 
+and not deleting any `.b' files.
+The -d option goes beyond `b.out' to produce a `.dl' file (using dl68) that
+may be downloaded by the Motorola MACSBUG monitor and the Sun1 monitor.  The
+-r option similarly goes beyond `b.out' to produce a `.r' file (using rev68)
+that may be loaded directly by 68000 code based on ld68.  Both -d and -r may
+be used together.
+.PP
+The output may be named explicitly with the -o option; the output file's name
+should follow -o.  Otherwise the name is `b.out' in the normal case, or
+`filename.dl' for the -d option, or `filename.r' for the -r option, where
+`filename' is the first `.p', `.a68', `.s', or `.b' file named as an input.  
+If the input is not in any of those three categories, the names `d.out' 
+and `r.out' are used respectively for -d and -r.
+.PP
+The version of the target machine may be given as the flag
+.BI \-v n
+where 
+.I n
+is the version.  The only recognized version at present is -vm, "Version
+Macsbug."
+.PP
+A complete list of options interpreted by pc68 follows:
+.TP 6
+.B \-c
+Suppress loading and produce `.b' file(s) from source file(s).
+.TP 6
+.B \-g
+Have the compiler produce additional symbol table information for
+.IR pcdb68
+(not implemented).
+.TP 6
+.B \-e " entrypoint"
+Entrypoint specifies where to begin execution.
+.TP 6
+.BR \-o " output"
+Name the final output file
+.I output
+instead of
+.I b.out.
+Effective only if \-d or \-r flags are not used.
+.IR pc68 .
+.TP 6
+.B  \-s
+Accept standard Pascal only;
+non-standard constructs cause warning diagnostics (not implemented \- see 
+internally controlled options).
+.TP 6
+.B  \-v n
+Use the 'n' version of the runtime support.
+.TP 6
+.BR \-w
+Suppress warning messages (not implemented).
+.TP 6
+.B \-\-x
+Suppress passing the '\-x' flag to the loader, retaining local symbols.
+.TP 6
+.B \-E
+Run only the preprocessor (not implemented).
+.TP 6
+.B  \-L
+Make an assembly listing in filename.ls for each file assembled.
+.TP 6
+.SM
+.B \-O
+Invoke an
+object-code improver (not implemented).
+.TP 6
+.B  \-R
+Preserve relocation information in b.out.
+.TP 6
+.SM
+.B \-S
+Compile the named program, and leave the
+assembler-language output on the corresponding file suffixed `.s'.
+(No `.b' is created.).
+.TP 6
+.B \-T " org"
+Org specifies in hexadecimal where to begin loading the program.
+.TP 6
+.B \-V
+Show the various stages of the compilation by printing images of the processes
+forked off to perform the actual work of the compilation.
+.TP 6
+.B \-U
+Save the ucode associated with filname.p in filename.u (and filename.U,
+depending on the -W option).
+.TP 6
+.B \-W
+Invoke the local ucode-to-ucode optimizer.  If -U option active, generates
+filename.U.
+.TP 6
+.B \-P
+Save all intermediate files.  Most useful in conjuntion with \-V (so that it
+is possible to find the intermediates).
+.PP
+Other arguments
+are taken
+to be loader option arguments,
+perhaps libraries of
+.IR pc68
+compatible routines.
+.SH "SOURCE FLAGS"
+.PP
+Certain flags can also be controlled in comments within the program.
+A sample option line is a comment with # as its first character, e.g.:
+.ta 1.5i 3.0i
+.nf
+.na
+	(*#g+,tdpy 1,tchk 1,u-8 *)
+
+switch	default		meaning
+
+b+	-	bounds and nil pointer checking
+c+	+	print ucode (otherwise only syntax check)
+dn	0	upas debugging
+	1	  print u-code table listing file
+	10	  not used
+	100	  print source in u-code file
+	1000	  print comments in u-code file ("verbose")
+	10000	  trace set parser
+	100000	  print sym instructions in u-code file
+f+	-	print binary file (b-code)
+g+	-	write abbreviated list (log) file
+		g+ causes all error messages to be 
+		written to the listing file.
+l+	-	write full list file
+p+	-	keep execution profile
+s+	-	accept standard pascal only
+un	-8	if positive, only first n chars of ids will
+		be considered significant    
+		if negative, makes the external names of all
+		procedures unique to n chars
+wn	0	print warnings for:
+	1	  ununsed variables, types, procs, etc.
+	10	  nested comments
+	100	  out-of-procedure gotos      
+yn	0	debugging level
+	0	  no debugging
+	1	  fast debugging
+	2	  full debugging
+.fi
+.ad
+.SH FILES
+file.p	pascal source files
+.br
+file.b	binary files
+.br
+file.a68	assembler files
+.br
+file.s	assembler files  
+.br
+file.ls	assembler listing
+.br
+file.err	pascal listing
+.SH FILE INPUT-OUTPUT
+You can read and write files on machines which run a Leaf server.
+(This is only partially tested.)
+To open  a file for reading do:
+.sp 2
+reset(file,'[hostname:username:password]filename');
+.sp 2
+The same syntax applies to rewrite.
+You can of course also use a Pascal string variable.
+Terminating spaces in hostname, username and password are ignored.
+(This should make it easier for a program to construct the appropriate
+filename string.)
+You can leave out the ':password', and the system will ask you for one.
+.sp 2
+To get an input file of raw bytes, declare it as 'ascii' instead of 'text'.
+Otherwise, you'll get 'intelligent' proceessing of the data.
+.sp 2
+There is some obscure bug which sometimes requires that the filename
+include the complete pathname, even if you want the home directory.
+.SH BUGS
+Lots. (Also untested stuff.)  Among others:
+.sp 2
+Heap management is not implemented yet.
+.sp 2
+There is no macro processor, and none of the optimizers are installed.
+.sp 2
+Large amount of stuff for debugging the compiler is left on 'ugen68.log'.
+.sp 2
+The standard files input and output are undefined in subprograms.

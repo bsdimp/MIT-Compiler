@@ -1,0 +1,36 @@
+
+       SUMMARY OF COMPILER FILES CHANGED BY BILL O'FARRELL
+
+                         macdefs
+                         code.c
+                         scan.c
+                         table.c
+
+5-Jul-82: Changed macdefs to increase initial parameter offset by 
+          16 bits (because of the longer return pointer).
+
+7-Jul-82: Changed efcode in code.c to emit ".para" after function
+          definitions, and to use "reti" instead of "ret".
+
+          Added bpcode to code.c. This function is called to begin
+          a program; it is resposible for emmiting ".comm  calltmp,4",
+          the definition of the common area which is used to hold the
+          arguments to an indirect intersegment call.
+
+          Added a call to bpcode in mainp1 in scan.c.
+
+          Changed table.c to encorporate new call sequences.  A direct
+          call to a procedure is of the form "calli 0,#_fctn". An indirect
+          call to a procedure is of the form:
+
+               "mov ax,<address thing>"
+               "mov calltmp+2,ax"
+               "calli @calltmp"
+
+          Note: the runtime startoff is responsible for ensuring that calltmp+0
+                contains a 0;
+
+15-Jul-82: Changed code.c to eliminate direct switches.  These caused problems
+          with the linker, which expectes all text relocations to be paragr
+          aligned.  One could probably fix the system to correctly handle
+          direct switches, but I havn't got time for this right now.

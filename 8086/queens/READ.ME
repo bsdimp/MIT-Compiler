@@ -1,0 +1,38 @@
+You should install the following files into some directory on your
+search path (on our system we use /usr/local):
+
+	bb86		; shell script implements "cc" but for 8086
+	a86/a86		; the assembler
+	c86/c86		; the C compiler
+
+Regular 4.1BSD programs used:
+
+	ar		; used for preparing loader libraries
+	/lib/cpp	; C preprocessor
+
+The bb86 script expects to find the libc.a and crt files in
+/projects/compilers/8086/lib86 -- if you don't put them there, you'll
+have to update bb86...
+
+The compiler produces assembly language output suitable for a86.
+It is a 16-bit compiler; output code does not touch the data/stack/extra
+segment regs, so it is possible to have separate instruction and data
+segments (see lib86/csu/crt1.b86 for the start up routine we use
+on our IBM Personal computer to set up the segment regs, etc. from
+info in the .com file).  Currently floating point and long arithmetic
+is implemented using 8087 instructions.
+
+Although the assembler produces ".d" files, they have exactly the
+same format as ".o" files under 4.1BSD -- things like nm and size will
+work, and, most importantly, a modified ld.  Using ld with the -8
+option (see Bill.changes in ld) will produce an IBM DOS format 
+.com file.
+
+lib86/libc.a contains most of the standard i/o library -- I haven't
+yet finished the system calls write around for IBM DOS, but what there
+is can be found in lib86/sys/syscalls.c.
+
+Good luck...
+
+NOTE: the above comments were edited to agree with the changes programed
+by Bill O'Farrell.

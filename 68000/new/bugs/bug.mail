@@ -1,0 +1,32 @@
+From SCHIFFMAN@SRI-KL  Thu May  6 01:51:03 1982
+Date:  5 May 1982 2250-PDT
+From: SCHIFFMAN at SRI-KL
+Subject: As68 bugs...
+To: sunhax at SUMEX-AIM, cjt at MIT-AI
+cc: deutsch at PARC-MAXC, schiffman at SRI-KL
+
+
+Using the .rept statement causes a segmentation fault.
+
+Generated labels with `?' don't stay consistant within a macro.
+
+Using the `\' feature doesn't include an evaluated expression (like
+the Macro-11 manual says) -- it does something random.
+
+I know I'm not using "advertised" features of the assembler -- I'm
+using the Macro-11 assembler manual as a guide (the as68 documentation
+says that it is "patterned" after Macro-11); there is indeed code in
+as68 to do these things (or something like them!).
+
+Is there better documentation for what commands as68 works correctly
+on (that is, other than the nroff guide supplied with the sources)?
+
+Is there anyone with bug fixes for the things mentioned above?
+
+Does anyone know how to get in touch with Mike Patrick and J Gula
+(their names, along with Chris Terman's are on the sources)?
+
+-Allan
+-------
+
+

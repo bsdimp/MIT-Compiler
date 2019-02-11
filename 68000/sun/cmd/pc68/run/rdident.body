@@ -1,0 +1,29 @@
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+function $bufval (var fdb:txtfdb): char; extern;
+
+procedure $rdc ( var ch:char;var fdb:txtfdb); extern;
+
+procedure $rdident (var fdb:txtfdb; var ident:identifier);
+   var i:integer;
+   ch: char;
+   begin
+   while $bufval(fdb) in [' ',','] do $rdc(ch,fdb);
+   ident := '                ';
+   i := 0;
+   if not ($bufval(fdb) in ['a'..'z']) then
+   $perror(fdb,'illegal char in ennum. type ')
+   else
+   repeat
+	 if i < identlength then
+	    begin
+	    i := i + 1;
+	    ident[i] := $bufval(fdb);
+	    end;
+	 $rdc (ch,fdb);
+   until not ($bufval(fdb) in ['0'..'9','a'..'z',underbar]);
+   end;
+
+   (* dummy main program *)
+
+.

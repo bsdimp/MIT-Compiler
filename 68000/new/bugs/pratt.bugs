@@ -1,0 +1,58 @@
+From pratt@Shasta@Sumex-Aim  Sat Dec 12 16:35:33 1981
+Mail-from: SU-NET host SU-SHASTA rcvd at 12-Dec-81 0944-PST
+Date: 12 Dec 1981 09:46:02-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+Subject: C68
+Cc: pratt
+
+When you compiled Emacs with c68 which did you change to deal with the
+language problems?  The ones I encountered were:
+
+Identifier length (one identifier was longer than 20, which caused grief
+somewhere).
+(x == y) == z generates a warning when x,y are enums and z is int.
+Enums can't be used in fields.
+A mov instead of a movl was generated when exporting a struct.
+
+I fixed the latter two.
+
+John Seamons changed Emacs for the above.  There were also some problems to do
+with array indexing invoking lmul instead of generating inline multiplies,
+thus slowing redisplay down considerably, and floating point constants coming
+out with 16-bit words inverted.
+
+In the assembler there is a problem with stop not taking an argument.
+
+It would be nice if we could bring our respective versions back into
+agreement.  I'd like to be able to view MIT as the authority as to what c68
+is, and to be able to get the latest MIT version of c68, o68, and a68.  Our
+present version dates back to last December, and we have made quite a few bug
+fixes to it since then, hopefully most of which have gone back to you.
+
+	Vaughan
+
+
+From pratt@Shasta@Sumex-Aim  Sat Dec 12 20:01:34 1981
+Mail-from: SU-NET host SU-SHASTA rcvd at 12-Dec-81 1700-PST
+Date: 12 Dec 1981 15:37:01-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+Subject: o68 bug
+
+Did you get my mail of November 6 with the following .a68 program?
+
+	.text
+.L:
+	.data
+	.word 0
+	.text
+	bra	.L
+	.data
+
+The version of o68 we have gets confused by this and manages to lose part of
+the data segment.
+
+Vaughan
+
+

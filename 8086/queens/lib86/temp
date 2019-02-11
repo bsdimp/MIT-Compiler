@@ -1,0 +1,462 @@
+
+abort.b:
+00000000 T _abort
+
+abs.b:
+00000000 T _abs
+
+atoi.b:
+00000000 T _atoi
+
+atol.b:
+00000000 T _atol
+         U lmul
+
+blt.b:
+00000000 T _blt
+
+calloc.b:
+00000000 T _calloc
+00000053 T _cfree
+         U _free
+         U _malloc
+
+clear.b:
+00000000 T _clear
+
+clrerr.b:
+00000000 T _clearer
+
+crypt.b:
+000002ed T _crypt
+000000f8 T _encrypt
+00000000 T _setkey
+
+ctime.b:
+00000313 T _asctime
+00000000 T _ctime
+00000437 T _dysize
+         U _ftime
+00000155 T _gmtime
+00000022 T _localti
+         U ldiv
+         U lmul
+         U lrem
+
+cuexit.b:
+         U __cleanu
+         U __exit
+00000000 T _exit
+
+execvp.b:
+         U _errno
+00000000 T _execlp
+         U _execv
+0000001f T _execvp
+         U _getenv
+         U _index
+         U _sleep
+
+fdopen.b:
+         U __iob
+         U __lastbu
+00000000 T _fdopen
+         U _lseek
+
+fgetc.b:
+         U __filbuf
+00000000 T _fgetc
+
+fgets.b:
+         U __filbuf
+00000000 T _fgets
+
+fopen.b:
+         U __iob
+         U __lastbu
+         U _creat
+         U _errno
+00000000 T _fopen
+         U _lseek
+         U _open
+
+fprintf.b:
+         U __doprnt
+00000000 T _fprintf
+
+fputc.b:
+         U __flsbuf
+00000000 T _fputc
+
+fputs.b:
+         U __flsbuf
+00000000 T _fputs
+
+freopen.b:
+         U _creat
+         U _fclose
+00000000 T _freopen
+         U _lseek
+         U _open
+
+frexp.b:
+00000000 T _frexp
+
+fseek.b:
+         U __filbuf
+         U _fflush
+00000000 T _fseek
+         U _lseek
+
+ftell.b:
+00000000 T _ftell
+         U _lseek
+
+getenv.b:
+         U _environ
+00000000 T _getenv
+
+getlogin.b:
+         U _close
+00000000 T _getlogi
+         U _lseek
+         U _open
+         U _read
+         U _ttyslot
+
+gets.b:
+         U __filbuf
+         U __iob
+00000000 T _gets
+
+getw.b:
+         U __filbuf
+00000000 T _getw
+
+handler.b:
+00000000 T _handler
+0000005e T _nohandl
+0000005e T _nohandler
+
+index.b:
+00000000 T _index
+
+io.b:
+00000000 T _inp
+00000009 T _outp
+
+l3.b:
+00000057 T _l3tol
+00000000 T _ltol3
+
+mcount.b:
+00000002 C cntbase
+00000000 T mcount
+
+mfill.b:
+00000000 T _mfill
+
+mktemp.b:
+         U _access
+         U _getpid
+00000000 T _mktemp
+
+mon.b:
+         U _close
+         U _creat
+00000000 T _monitor
+         U _profil
+         U _write
+
+perror.b:
+00000002 C _errno
+00000000 T _perror
+         U _strlen
+         U _sys_err
+00000002 C _sys_ner
+         U _write
+
+errlst.b:
+00000000 D _sys_err
+00000046 D _sys_ner
+
+printf.b:
+         U __doprnt
+         U __iob
+00000000 T _printf
+
+putchar.b:
+         U __flsbuf
+         U __iob
+00000000 T _putchar
+
+puts.b:
+         U __flsbuf
+         U __iob
+00000000 T _puts
+
+putw.b:
+         U __flsbuf
+00000000 T _putw
+
+qsort.b:
+00000000 T _qsort
+
+rand.b:
+0000001d T _rand
+00000000 T _srand
+         U lmul
+
+rdwr.b:
+         U __filbuf
+         U __flsbuf
+00000000 T _fread
+00000072 T _fwrite
+
+rew.b:
+         U _fflush
+         U _lseek
+00000000 T _rewind
+
+scanf.b:
+         U __doscan
+         U __iob
+00000023 T _fscanf
+00000000 T _scanf
+00000045 T _sscanf
+
+doscan.b:
+         U __ctype_
+00000000 T __doscan
+         U __filbuf
+000006b2 T __getccl
+0000020a T __innum
+00000593 T __instr
+00000724 D __sctab
+         U _atof
+         U _ungetc
+
+atof.b:
+         U __ctype_
+00000000 T _atof
+0000021e D _exp5
+         U _ldexp
+00000216 D _twoe56
+
+ctype_.b:
+00000000 D __ctype_
+
+filbuf.b:
+00000000 T __filbuf
+         U _malloc
+         U _read
+
+setbuf.b:
+         U _free
+00000000 T _setbuf
+
+sleep.b:
+         U _alarm
+         U _longjmp
+         U _pause
+         U _setjmp
+         U _signal
+00000000 T _sleep
+
+setjmp.b:
+         U _longjmp
+00000000 T _setjmp
+
+strcatn.b:
+00000000 T _strcatn
+
+strcmpn.b:
+00000000 T _strcmpn
+
+strcpyn.b:
+00000000 T _strcpyn
+
+strlen.b:
+00000000 T _strlen
+
+strncat.b:
+00000000 T _strncat
+
+strncmp.b:
+00000000 T _strncmp
+
+strncpy.b:
+00000000 T _strncpy
+
+swab.b:
+00000000 T _swab
+
+system.b:
+         U __exit
+         U _execl
+         U _fork
+         U _signal
+00000000 T _system
+         U _wait
+
+tell.b:
+         U _lseek
+00000000 T _tell
+
+timezone.b:
+         U _sprintf
+00000000 T _timezon
+
+sprintf.b:
+         U __doprnt
+         U __flsbuf
+00000000 T _sprintf
+
+doprnt.b:
+00000000 T __doprnt
+         U __strout
+         U _ecvt
+         U _fcvt
+         U _gcvt
+
+gcvt.b:
+         U _ecvt
+00000000 T _gcvt
+
+ecvt.b:
+00000000 T _ecvt
+00000031 T _fcvt
+         U _modf
+
+arith.b:
+         U _errno
+0000002a T _ldexp
+00000011 T _modf
+000000ad T aldiv
+00000097 T almul
+00000000 T fpinit
+00000081 T ldiv
+0000006c T lmul
+
+strout.b:
+         U __flsbuf
+00000000 T __strout
+
+flsbuf.b:
+00000150 T __cleanu
+00000000 T __flsbuf
+         U __iob
+         U __lastbu
+         U __sobuf
+         U _close
+00000175 T _fclose
+000000f5 T _fflush
+         U _free
+         U _isatty
+         U _malloc
+         U _write
+
+data.b:
+00000000 D __iob
+000000a0 D __lastbu
+00000200 C __sibuf
+00000200 C __sobuf
+
+malloc.b:
+00000002 C _allocp
+00000248 D _allocs
+00000002 C _alloct
+00000002 C _allocx
+0000016e T _free
+00000000 T _malloc
+00000192 T _realloc
+         U _sbrk
+
+ttyslot.b:
+         U _close
+         U _open
+         U _read
+         U _rindex
+         U _strcmp
+         U _ttyname
+00000000 T _ttyslot
+
+rindex.b:
+00000000 T _rindex
+
+ttyname.b:
+         U _close
+         U _fstat
+         U _isatty
+         U _open
+         U _read
+         U _stat
+         U _strcat
+         U _strcpy
+00000000 T _ttyname
+
+isatty.b:
+         U _gtty
+00000000 T _isatty
+
+strcat.b:
+00000000 T _strcat
+
+strcpy.b:
+00000000 T _strcpy
+
+stty.b:
+00000022 T _gtty
+         U _ioctl
+00000000 T _stty
+
+syscalls.b:
+         U __memtop
+00000154 T __open
+0000058c T __read
+00000080 C __rwbuf
+00000656 T __rwchec
+00000002 C __rwcoun
+00000002 C __rwextb
+00000002 C __rwnb
+00000002 C __rwptr
+000002cd T __rwsetu
+         U __tty_in
+         U __tty_ou
+         U __user_i
+         U __user_o
+0000045d T __write
+00000031 T _close
+000000a4 T _creat
+         U _dos
+00000000 T _dos_ini
+00000138 T _flength
+00000776 T _ioctl
+00000688 T _lseek
+000000cd T _open
+000007ee T _parsena
+000007c2 T _prints
+00000512 T _read
+0000073b T _sbrk
+         U _strcmp
+000000f5 T _unlink
+00000258 T _write
+
+strcmp.b:
+00000000 T _strcmp
+
+ttyio.b:
+00000037 T __tty_in
+00000000 T __tty_ou
+         U _dos
+
+ungetc.b:
+00000000 T _ungetc
+
+userio.b:
+00000037 T __user_i
+00000000 T __user_o
+         U _dos
+
+dos.b:
+00000000 T _dos

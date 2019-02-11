@@ -1,0 +1,67 @@
+	.data
+	.comm	dope,800
+	.comm	table,0
+	.comm	rwtable,4
+	.comm	opptr,400
+	.text
+	.globl	setrew
+setrew:
+	link	a6,#-_F1
+	moveml	#_S1,a6@(-_F1)
+	movl	#table,a5
+	jra	.L19
+.L20001:
+	cmpl	#100,a5@(4)
+	jne	.L17
+	movl	a5,rwtable
+	jra	.L21
+.L17:
+	addl	#88,a5
+.L19:
+	cmpl	#10,a5@
+	jne	.L20001
+	.text
+	movl	#.L23,sp@-
+	jsr	cerror
+	addql	#4,sp
+.L21:
+	clrl	d7
+.L20005:
+	movl	d7,d0
+	asll	#2,d0
+	addl	#dope,d0
+	movl	d0,a0
+	tstl	a0@
+	jeq	.L24
+	movl	#table,a5
+	jra	.L30
+.L20003:
+	cmpl	#101,a5@
+	jge	.L28
+	movl	a5@,d0
+	cmpl	d7,d0
+	jeq	.L29
+.L28:
+	addl	#88,a5
+.L30:
+	cmpl	#10,a5@
+	jne	.L20003
+.L29:
+	movl	d7,d0
+	asll	#2,d0
+	addl	#opptr,d0
+	movl	d0,a0
+	movl	a5,a0@
+.L24:
+	addql	#1,d7
+	cmpl	#111,d7
+	jlt	.L20005
+	moveml	a6@(-_F1),#8320
+	unlk	a6
+	rts
+_F1 = 8
+_S1 = 8320
+	.data
+.L23:
+	.byte	98,97,100,32,115,101,116,114
+	.byte	101,119,0

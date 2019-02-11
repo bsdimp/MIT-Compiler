@@ -1,0 +1,11 @@
+ugtp:
+UENT: If 68000 or Vax, don't allocate RsavAt
+UABS: if Is68000 and real number, then let emitunaryop handle it
+UADD/USUB/UINC/UDEC: You can get rid of Is68000, since I handle it in
+	Emitbinaryop
+UINN USGS Handled inefficiently for 68000, but left so. Should change later
+UMUS: header comment: last word must be ANDed -instead of- ORed
+UCVT2: restack At1 because moveit might call a subroutine,
+	which needs the stack so it can save registers
+	Should be a temporary hack
+ULDP and other places: Inefficient code for machines with autoincrement!

@@ -1,0 +1,48 @@
+
+procedure $get (var fdb:txtfdb); extern;
+function $getfname (prompt: identifier; VAR name: stdstring):integer; extern;
+procedure $open (var fdb:txtfdb; VAR name: stdstring; namelength: integer;
+		    inputfile:boolean;protection:integer); extern;
+procedure $close (var fdb:txtfdb); extern;
+
+PROCEDURE $Res (VAR Fdb:Txtfdb; VAR Fname:stdstring; Fnamelen:Integer;
+		Protection:Integer; Filevarname:Identifier; Ftype:Typeoffile;
+		Flength: Integer);
+   var name: stdstring; i:integer;
+   begin
+   with fdb do
+   begin
+   if Fnamelen > stdstringlength then Fnamelen := stdstringlength;
+   for i := 1 to Fnamelen do name[i] := Fname[i];
+   if status <> notopen then
+      $close (fdb);
+   status := notopen;
+   prompt := filevarname;
+   filetype := ftype;
+   pbuffersize := Flength;
+   bufferinvalid := false;
+   eofflag := false;
+   eolnflag := false;
+   eopageflag := false;
+   charcount := 0;
+   linecount := 1;
+   pagecount := 1;
+   tabcount := 0;
+   ttymode := true;
+   while fnamelen = 0 do fnamelen := $getfname (prompt, name);
+   repeat
+	 $open (fdb,name,fnamelen,true,protection);
+	 if status = notopen then
+	    repeat fnamelen := $getfname (prompt, name)
+	    until fnamelen > 0;
+   until status <> notopen;
+   end;
+   $get (fdb);
+   end;
+
+
+
+   (* dummy main program *)
+
+.
+

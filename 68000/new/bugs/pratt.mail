@@ -1,0 +1,685 @@
+From pratt@Shasta@Sumex-Aim  Sun Jan  3 22:30:51 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 3-Jan-82 1927-PST
+Date: 3 Jan 1982 19:28:10-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+Subject: iterate
+
+I'm enclosing a header file I've been using for some time now to do blts and
+such on the 68000.  The macros are all machine independent, yet generate good
+(close to fast-as-possible though not compact-as-possible) code for the
+intended applications.  My reason for sending them is so you can decide if
+you want to implement structure copies in C as a call to bltlong for
+structures requiring more than some number of move instructions
+
+The present code generated for structure assignments is both grossly oversize
+for big structures, and buggy to boot - it copies from tail to head, so that
+if you are moving a structure downwards in memory by less than its length you
+clobber it.  (This can happen in, e.g., *a = *b, where *a and *b are structs
+that overlap for whatever reason.)  The Vax code is much better: just a
+movc (but still with the overlap bug, that ought to be fixed, sigh).  However
+with a macro like bltlong the Sun can compete pretty well, maybe even better
+if movc is dumb and moves byte-at-a-time (does it?).  Can a Vax movc be
+interrupted in midmove?
+
+If you like the idea but don't have the time to implement let me know and I'll
+do it when I get a chance.
+
+/* iterate - efficient-iteration macro
+ * V.R. Pratt			July 1981
+ *
+ * This header file supplies a macro for efficient iteration.  It also supplies
+ * macros for defining functions that perform common iterative tasks such as
+ * moving or clearing blocks of data.
+ *
+ * iterate(n,op) iterates the operation "op" n times, but with approximately
+ * one eighth of the loop overhead of a more direct implementation such as 
+ * '{register int cnt; for (cnt=0; cnt<n; cnt++) op}'.
+ *
+ * Examples:
+ *	iterate(3*4,x+=5) 
+ *		adds 60 to x.  
+ *	iterate(sourcehi-sourcelo, *destlo++ = *sourcelo++)
+ *		blts (moves) data from source to destination
+ */ 
+
+#define iterate(n,op) {							\
+	int cnt = n;							\
+	register quot;		 					\
+	if (cnt > 0) {							\
+		quot = cnt >> 3;					\
+		while (quot--) {					\
+			op; op; op; op;					\
+			op; op; op; op;					\
+		}							\
+		switch (7-(cnt&7)) {					\
+			case 0: op;					\
+			case 1: op;					\
+			case 2: op;					\
+			case 3: op;					\
+			case 4: op;					\
+			case 5: op;					\
+			case 6: op;					\
+			case 7: break;					\
+		}							\
+	}								\
+}
+
+/* Applications of iterate
+ *
+ * The following defines a function to set a given range of ints to c.
+ *
+ * setint(lo,hi,c) 
+ * register *lo, *hi, c; 
+ * { iterate(hi-lo, *lo++ = c); }
+ * 
+ * The following blts data in the address range [lo,hi) (i.e. inclusive of
+ * lo but exclusive of hi) to destination dest.
+ * 
+ * bltchar(lo,hi,dest) 
+ * register char *lo, *hi, *dest; 
+ * { iterate(hi-lo, *dest++ = *lo++); }
+ * 
+ * The following macros permit the above and a number of other useful
+ * iterate-using functions to be defined conveniently in a program.
+ */
+
+/* Putting Set(short) in a program has the effect of defining the function
+ * setshort(lo,hi,c) which sets all shorts in the address range [lo,hi) to the
+ * constant c.
+ */
+
+#define Set(TYPE)							\
+set/**/TYPE(lo,hi,c) 							\
+register TYPE *lo, c; TYPE *hi;						\
+{ iterate(hi-lo, *lo++ = c); }
+
+/* Putting Clear(int) in a program has the effect of defining the function
+ * clearint(lo,hi) which clears all ints in the address range [lo,hi).
+ * Of course setint(lo,hi,0) would achieve this effect also, but not
+ * necessarily with as efficient code, since the code appears in the
+ * function setint, which cannot assume c will always be 0.
+ */
+
+#define Clear(TYPE)							\
+clear/**/TYPE(lo,hi) 							\
+register TYPE *lo; TYPE *hi;						\
+{ iterate(hi-lo, *lo++ = 0); }
+
+/* Putting Getb(int) in a program has the effect of defining
+ * the function getbint(lo,hi,port).  This makes copies of the contents of
+ * a fixed location, port, in the block [lo,hi).  The main application is
+ * when that location is an i/o port that yields a different value each time
+ * it is accessed.  Putb(int) defines putbint(lo,hi,port) which moves data
+ * from the block [lo,hi) to the port.  For both putb and getb the data is
+ * moved starting from the low end of the block.
+ */
+
+#define Getb(TYPE)							\
+getb/**/TYPE(lo,hi,port)						\
+register TYPE *lo, *port; TYPE *hi; 					\
+{ iterate(hi-lo, *lo++ = *port; }
+
+/* Put a block to a port */
+#define Putb(TYPE)							\
+putb/**/TYPE(lo,hi,port) 						\
+register TYPE *lo, *port; TYPE *hi; 					\
+{ iterate(hi-lo, *port = *lo++; }
+
+/* Transfer a block to a destination block.  Overlapping blocks permitted */
+#define Blt(TYPE)							\
+blt/**/TYPE(lo,hi,destlo) 						\
+register TYPE *lo, *hi, *destlo; 					\
+{									\
+	if (destlo >= hi || destlo < lo)				\
+		iterate(hi-lo, *destlo++ = *lo++)			\
+	else if (destlo != lo) {					\
+		destlo += hi-lo;					\
+		iterate(hi-lo, *--destlo = *--hi)			\
+	}								\
+}
+
+
+
+
+From pratt@Shasta  Sun Jan 17 15:23:23 1982
+Date: 16 Jan 1982 22:16:09-PST
+From: pratt at Shasta
+Reply-to: csd.pratt at SCORE
+To: jks
+Subject: ccom
+Cc: cjt@ml, pratt, sunhax
+
+/mnt/lunix/src/cmd/ccom contains your compiler with alignment back to 16, and
+with several "improvements" accumulated here over the past year.  They include:
+
+structs now may be returned (fixes a "mov" bug, becomes "movl" - also
+generalized to handle other than structures of size a multiple of 4)
+
+switches now use a table kept in the data segment.  This makes it possible
+to have purely executable code that cannot be read, for which there exists
+a protection code (rwx--x).
+
+structs with at most 16 bits worth of fields are treated as shorts instead
+of ints.  (This is handy for device-oriented programming where device accesses
+must be 16 instead of 32 bits, e.g. the Sun memory maps.)
+
+Null moveml's at the end of a function are not generated, saving both space and
+time.  Getting rid of null moveml's at the start of a function is sufficiently
+much harder that I haven't done it (I used to have code for that, but it got
+lost in the shuffle last time we imported the MIT code, in Dec. 1980).
+
+jbsr's are generated in place of jsr's.
+
+
+From pratt@Shasta  Fri Jan 22 13:09:15 1982
+Date: 16 Jan 1982 23:14:35-PST
+From: pratt at Shasta
+Reply-to: csd.pratt at SCORE
+To: jks
+Subject: as68 update
+Cc: cjt@ml, sunhax
+
+I have merged Stanford and Lucasfilm bug fixes for as68 into both sets of
+sources.  From Lucasfilm there were:
+
+	0x permitted in place of / to denote hex constants
+
+	roxrl and subx{b,w,l} had wrong opcodes
+
+	fix to rel.c (I forget the details)
+
+	/bin/sort changed to /usr/bin/sort
+
+>From Stanford there were
+
+	stop fixed to take argument
+
+	displacement changed from [0,0400) to [-0200,0200) (in a test).
+
+	clrw sr now assembles as movw #0,sr instead of generating an illegal
+	instruction
+
+Residual differences have to do with the fact that Lucasfilm as68 is called
+as, and uses a.out.h rather than b.out.h, which it looks for in a different
+place.  None of this will cause problems.
+
+
+From pratt@Shasta@Sumex-Aim  Sat Jan 23 12:00:44 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 21-Jan-82 1352-PST
+Date: 21 Jan 1982 13:52:41-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+Subject: bbn assembler
+
+The following is a 68000 assembler offer from BBN.  As far as I can see its
+main impact would be on speed of assembly - I'm dubious that their "more
+sophisticated SDI" will improve things visibly.  My first goal however is not
+to wander off the present beaten track of sharing the same assembler between
+MIT, Stanford, and Lucasfilm.  Thus I would only be interested in Hoffman's
+offer (assuming it is even worth the effort) if MIT and Lucasfilm were also
+willing to make the change.  Are you?
+
+Vaughan
+
+
+	From mdh@BBN-CLXX Tue Jan 19 08:09:49 1982
+	Mail-from: ARPANET host SU-SCORE rcvd at 19-Jan-82 0806-PST
+	Mail-from: ARPANET site BBN-CLXX rcvd at 19-Jan-82 0807-PST
+	Date: 19 Jan 1982 12:01:27 EST (Tuesday)
+	From: Morton D. Hoffman <mdh at BBN-CLXX>
+	Subject: M68000 assembler offered
+	To: Pratt at SCORE
+	
+	Bill MacGregor has informed me that you are using the MIT C compiler and
+	assembler for the M68000 in conjunction with the SUN workstation.  
+	(I am working with Bill on the Distributed Operating System project at BBN.)
+	
+	I would like to offer you a M68000 assembler that we have developed at BBN
+	which is compatible with the MIT compiler's output, and which is both faster
+	and produces better code.  The assembler is written in C using YACC and LEX,
+	and does more sophisticated span-dependent instruction processing than the MIT
+	assembler.  It is incompatible with the MIT assembler in a few respects, most
+	of which would not affect practical program portability.  It correctly handles
+	all compiler output.  However, for hand-coded assembly language the following
+	are problems which might be encountered:
+	
+		1>  It offers no macro facility.
+	
+		2>  Code which assumes the length of generated code may not work,
+			since our assembler assembles code in as short a manner as
+			possible, subject to identical semantics and side effects.
+	
+		3>  Our assembler will assemble correct code in many cases where it
+			requires a longer instruction than the user indicated (the
+			MIT assembler flags it as an error).
+	
+	The assembler currently runs on a VAX and C70 running version 7 UNIX.  To port
+	it to any version 7 machine should require only rebuilding YACC with larger
+	than normal tables.
+	
+	If you're interested in the assembler, please send me a message at mdh@bbn-clxx
+	or mhoffman@bbn, and I will send you the sources and manual (modified version
+	of the MIT manual.  Please specify whether your mail reader can handle very
+	large messages (UNIX and TOPS20 mail readers can).
+	
+	Mort Hoffman
+	
+	P. S. ... of course it is all free.
+	
+	
+-------
+
+-------
+
+
+From pratt@Shasta@Sumex-Aim  Sat Jan 23 13:40:46 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 23-Jan-82 1039-PST
+Date: 23 Jan 1982 10:39:00-PST
+From: pratt@Shasta at Sumex-Aim
+To: pratt@su-shasta at sumex-aim, terman@MIT-VAX
+Subject: 68000 assembler
+
+Ok, I'll try to pack up c68 and a68 as soon as I can get to it, maybe I
+can get Bill Nowicki to do this.
+
+I'll buy the Berkeley a.out file and loader format, I think, especially if
+it is faster.
+
+Provided the user can be insulated from either solution I don't care which
+of _ and changing the assembler names is done.
+
+-v
+
+
+From nowicki@Shasta@Sumex-Aim  Tue Jan 26 09:31:35 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 23-Jan-82 2100-PST
+Date: 23 Jan 1982 21:00:31-PST
+From: nowicki@Shasta at Sumex-Aim
+To: terman@mit-vax at mit-xx
+Subject: 68000 assembler and compiler
+Cc: pratt
+
+I have tried to clean up the Shasta versions of the 68k compiler and assembler,
+and move the latest versions to Diablo.  There is now a tar file on Sail under
+AC68.TAR[1,WIN] which can be ftp'ed via the default login over the arpanet.
+
+The top level in this file contains our cc68 program, and the c68, a68, and ld68
+subdirectories.  c68 contains the compiler, a68 the assembler and optimizer,
+and ld68 the linker, and other utilities like pr68, rec68, and dl68 etc.
+We would appreciate these bug fixes and improvements to be incorporated in the
+next MIT release.
+
+	Thanks,  Bill 
+
+
+From pratt@Shasta@Sumex-Aim  Fri Feb 12 13:52:55 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 12-Feb-82 1019-PST
+Date: 12 Feb 1982 10:19:30-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: cc.c
+Date: 12 February 1982   10:19:29-PST (Friday)
+
+What are you using for a cc.c?  I didn't see a src/cmd/cc.c in the Unix
+tape you sent us about a year ago.  I presume you have one running on the Nu
+terminal.
+
+We hacked up our own from the one on Berkeley Unix, called cc68 when it runs
+on the Vax.  John Seamons used it for the cc.c in his port of your Unix to the
+Sun.  We ought to merge our cc(68).c with whatever you are using on the Nu
+terminal, or possibly just use yours straight (ours is rife with Macsbug
+and Vax-68000 byte-swapping hacks that are unused on a self-contained Unix).
+
+-v
+
+
+From pratt@Shasta@Sumex-Aim  Fri Feb 12 15:16:03 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 12-Feb-82 1138-PST
+Date: 12 Feb 1982 11:38:50-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: switch tables
+Date: 12 February 1982   11:38:49-PST (Friday)
+
+One major difference that you'll find in c68 is in the format of the
+switch tables.  These have been moved from .text to .data.  In addition
+they have been changed from short relative entries to long absolute
+entries.  The former was because the Sun distinguishes between pure
+executable code and code that is both readable and executable.  (One use
+for the former would be for proprietary code.)   Obviously one can't read from
+a table in an execute-only text segment.  The latter, not quite so
+essential, was to ease the task of debugging using a naive assembly-level
+debugger.
+
+Since this change tickles a bug (or two) in o68, you will need to use our o68
+if and when you go with this change.
+
+-v
+
+
+From pratt@Shasta@Sumex-Aim  Fri Feb 12 20:41:16 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 12-Feb-82 1736-PST
+Date: 12 Feb 1982 17:36:50-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@mit-ml, pratt@su-shasta at sumex-aim, terman@MIT-VAX
+Subject: switch tables
+Cc: pratt
+
+	Of course in a paging environment you pay the cost of extra page accesses
+	when the jump tables get moved into .data.  
+
+That's true for any read-only data, e.g. most string constants.  Jump tables
+just happen to be provably read-only as far as the compiler is concerned.
+
+	Also, unless you invent new
+	mechanism for pure, read-only data you lose some sharing and
+	robustness.
+
+Again, true for any read-only data.  You might argue that it is particularly
+wicked to clobber the pc, but then the stack (which contains return
+addresses) should be protected better, and (*f)() should be forbidden.  A
+randomly clobbered PC has a good chance of accessing a non-executable segment
+on the Sun (addresses below 32768 are nonexecutable, to begin with), so I'm
+not too concerned about clobbered PC's doing much damage or being hard to
+trace.
+
+In the absence of a paging 68000 to measure it's hard to evaluate the paging
+cost of not putting read-only information like strings and switch tables into
+the .text segment.  My guess is that it will be down in the noise compared
+with other paging costs (e.g. paging in string constants).  
+
+One could go a step further by arranging to put jump tables at the start of
+.data and having the paging strategy lock down the first .data page of each
+process.  Whether such a strategy is needed however remains to be seen.
+
+One other reason for moving the jump tables out of the code is to make the
+code parsable by a disassembler.  Right now whenever our disassembler reaches
+a jump table it gets all confused by it, and has to be manually restarted at
+the next instruction after the table.  This could be fixed by grouping the
+jump tables at the end of .text preceded by a label such as '_table', a
+modification involving only the compiler, I think.  A symbolic disassembler
+could then tell where the tables started from the '_tables' symbol.
+
+The real villain here is Unix, which identifies executable with readonly in a
+hard-to-change way.  It would be nice, as you suggest, to invent a new
+mechanism in which Unix can have readonly segments and executable segments as
+separate entities.  I think I'd be happy to forgo segments that were both
+readable and executable, making .data nonexecutable and .table readonly.  I
+would however like yet another segment, one that is readable, writable, and
+executable, called .free (or .blithe or something).
+
+-v
+
+
+From pratt@Shasta@Sumex-Aim  Tue Feb 16 03:40:00 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 15-Feb-82 1748-PST
+Date: 15 Feb 1982 17:48:49-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: c68
+Date: 15 February 1982   17:48:46-PST (Monday)
+
+Another idea you'll find in our C compiler is special-casing of struct fields
+when the total field size is at most 16 bits.  In this case the struct is
+taken to be a short rather than a long.  This was done to mainly to permit
+fields to be extracted from the various 16-bit words in the Sun hardware,
+including the two memory maps.  The alternative was to do the field extraction
+explicitly with & and >>, which seemed silly.  A beneficial side effect is
+that it speeds up accesses to such fields substantially, by reducing shift
+distances by 16 bits (fields are packed starting at the left in c68).
+
+Unfortunately this change modifies the semantics of some structs by making them
+of size only 2 bytes instead of 4.  I doubt that very many programs wi
+
+
+From pratt@Shasta@Sumex-Aim  Tue Feb 16 14:57:24 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 16-Feb-82 0933-PST
+Date: 16 Feb 1982 09:33:41-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: enum == enum
+Date: 16 February 1982   09:33:40-PST (Tuesday)
+
+Do you have the fix that makes the type of 'enum == enum'
+int rather than enum?
+-v
+
+
+From pratt@Shasta@Sumex-Aim  Sat Mar 13 17:09:45 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 13-Mar-82 1407-PST
+Date: 13 Mar 1982 14:05:32-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: switch tables revisited
+Date: 13 March 1982   14:05:31-PST (Saturday)
+
+I forgot to mention my original reason for wanting to move switch tables
+from where they presently are: they interfere with disassemblers and with
+any other algorithms used to understand the instruction stream, e.g.
+algorithms for backing up the instruction pointer (we plan to do virtual
+text with the 68000, though not virtual data).
+
+For that application it suffices merely to move the tables to the end of the
+text space, with the very last item a label pointing to the start of the
+table area (to make it easier to find the text-table boundary).  Would you
+settle for that change?
+
+-v
+
+
+From GNU@MIT-AI  Tue Mar 16 05:11:39 1982
+Date: 16 March 1982 04:57-EST
+From: John C. Gilmore <GNU at MIT-AI>
+Subject:  Code generation for Switch statements in c68
+To: pratt@Shasta at SUMEX-AIM
+cc: GNU at MIT-AI, CJT at MIT-AI
+
+Note that if you generate the object code right (which you don't), the
+68000 is smart about classifying a reference to PC-relative data as a
+program reference instead of a data reference, thus reading tables out
+of .text won't blow a --x protection.  The code you're using does a
+gronking  MOVL #address,a0   MOVL a0@(0,d0),a0   when   ADDIW #offset,d0 
+MOVL pc@(0,d0),a0 (2 bytes shorter) would have done better.  You can even
+eliminate the ADDI real easy if you just generate the table following
+the JMP, since then the displacement fits in the 8 bits of the indexed
+MOVL, and you'll never need to insert a JMP around the table since you
+have one handy anyway.  (I think if you just put a JMP at the top of
+the switch, and generate this code and the table at the end of the
+switch block, the optimizer will move it to the top to save the jump.
+If not you can make it do so.)
+
+I agree that the reasons for the change were reasonable; I just hate
+to see ANY changes that take the horrible code this generates
+and make it worse.  And since it appears you had to remove an
+optimization or two to get the change to work (since the optimizer
+wouldn't find the label reference in the MOVE #.Lnnn,a0 instruction,
+it would delete label .Lnnn, so let's not delete any labels, etc...)
+the loss is even greater.
+
+Note, however, that I think you introduced the compiler's first
+knowledge of the 68000 indexed addressing mode.  Good going, let's see
+if someday we can actually subscript with it!  (Note also that the
+optimizer can't parse it, since it doesn't know about commas inside
+parens not delimiting operands.)
+
+
+From GNU@MIT-AI  Tue Mar 16 05:33:13 1982
+Date: 16 March 1982 05:14-EST
+From: John C. Gilmore <GNU at MIT-AI>
+Subject:  Can we get the latest c68/068?
+To: CJT at MIT-AI
+cc: GNU at MIT-AI, pratt@shasta at SUMEX-AIM
+
+Hans Spiller of Microsoft says he sent you a copy of their c68/o68,
+which included his&my changes to procedure entry and exit, and to
+re-enable the condition code optimizer and make the operand parser in
+the optimizer work.  Can we get a copy of that and any other bugfixes
+that've come in, for SUN Unix work?  Hans said it ended up saving
+about 5% of the generated code.  I think a little more work along
+those lines can probably get another 5% without much trouble.  (Wanna
+10% faster/smaller Unix?)
+
+As it was at Microsoft, my work on c68 is just spare-time, but having the
+latest stuff (including my previous work) will help me be productive
+when a spare evening comes along.
+
+If so, send it to Vaughan, please, as I'm a guest on his system.
+
+
+From GNU@MIT-AI  Tue Mar 16 05:46:38 1982
+Date: 16 March 1982 05:44-EST
+From: John C. Gilmore <GNU at MIT-AI>
+Subject: "bits of fluff" in o68
+To: CJT at MIT-AI
+cc: GNU at MIT-AI, pratt@shasta at SUMEX-AIM
+
+Oh yeah, you also might want to run lint over c68 and o68.  In o68
+it found a few uninitialized variables and such, as well as a lot of defaulted
+procedures which really returned  struct node *'s.  But a few real bugs,
+and the rest should probably be cleaned up too.
+
+
+From pratt@Shasta@Sumex-Aim  Tue Mar 16 11:34:42 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 16-Mar-82 0824-PST
+Date: 16 Mar 1982 08:23:09-PST
+From: pratt@Shasta at Sumex-Aim
+To: GNU@MIT-AI, pratt@Shasta at SUMEX-AIM
+Subject: Code generation for Switch statements in c68
+Cc: CJT@MIT-AI
+
+You're right about PC-relative addressing!  Disposes of one reason for
+putting switch tables in .data.  The other reason, that it upsets static
+text parsers (the processor parses dynamically, a disassembler parses
+statically since it doesn't execute), only requires that the tables be
+moved out of line.  In that case how about restoring the table to the .text
+segment.  
+
+Moving the table out of line has some problems.  So instead how about marking
+the beginning and end of the table with something distinctive, say an illegal
+instruction at the beginning with bits identifying it as the start of a
+switch table, and either an impossible switch entry at the end or a
+length-of-table entry at the start.  Tell me the convention you use and I'll
+fix the debugger to display switch tables properly.  At which point I can
+also display the table properly even if it contains only short offsets.
+
+This all means that the only change needed to MIT's version is the addition of
+information showing the boundaries of the switch table.  Buy that, Chris?
+
+-v
+
+
+From pratt@Shasta@Sumex-Aim  Sat Apr  3 01:51:32 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 2-Apr-82 2252-PST
+Date: 2 Apr 1982 22:50:58-PST
+From: pratt@Shasta at Sumex-Aim
+To: cjt@ml
+From: pratt@Shasta at Sumex-Aim
+Subject: Nu utilities
+Date: 2 April 1982   22:50:57-PST (Friday)
+
+Some Unix utilities were not on the Nu Unix tape we received from you a
+year ago.  Was the problem that they hadn't yet been ported?  Are they
+available now?
+
+They are:
+
+awk
+cron
+eqn
+learn
+lex
+lint
+man
+neqn
+nohup
+roff
+script
+struct
+tar
+tbl
+tp
+uucp
+uux
+nroff
+troff
+
+	Vaughan
+
+
+From pratt@Shasta@Sumex-Aim  Sun Jun 20 14:11:21 1982
+Mail-from: SU-NET host SU-SHASTA rcvd at 20-Jun-82 1106-PDT
+Date: 20 June 1982   11:06:41-PDT (Sunday)
+From: pratt@Shasta at Sumex-Aim
+Subject: Re:  Compiler Synchronization
+To: cjt@mit-vax at mit-xx, jat@mit-vax at mit-xx, jks, nowicki
+
+Great.  Start phase 1 with diablo/~pratt/nlynx/src/cmd.  Diff this with
+diablo/~pratt/lynx/src/cmd just in case, if there are any differences I'd
+like to understand them (there shouldn't be).  Presumably phase 2 can be done
+in the same breath...
+-v
+
+(Text of Bill's original msg follows, for Jack and Chris at MIT.)
+	From nowicki Sat Jun 19 16:54:44 1982
+	Date: 19 June 1982   16:54:42-PDT (Saturday)
+	From: nowicki
+	Subject: Compiler Synchronization
+	To: jks pratt
+	
+	The recent comment about MIT made me realize that we never did
+	merge the Lynx and Stanford compilers and assemblers.  I really
+	think that this should be done, and that it is the responsibility
+	of ALL of us, so we should all (Stanford, LucasFilms, SMI) contribute
+	some effort.  Especially since Vaughan is wearing two hats, he should
+	(hopefully) want the stand-alone and Unix compilers to be compatible.
+	We have not changed the compiler for about six months, and would like
+	to slowly adopt the Lynx compiler if it would not make all our
+	current code break.  There should be no reason why there cannot be
+	all four compilers derrived from the same sources:
+		1. Vax -> Stand alone (Current Stanford)
+		2. Vax -> 68000 Unix .b (BOOTSTRAP version)
+		3. Vax -> 68000 Unix .o
+		4. 68000 Unit -> Unix .o
+	
+	I propose the following three stage effort:
+	
+	1. Make sure Stanford has the latest Lynx release.
+	   LucasFilms freezes the tools until phase two is complete.
+	   I can print out all the changes, and merge the obvious ones
+	   into Stanford's sources.
+	   Stanford can debug this new version.
+	   
+	2. (Any last-minute changes at LucasFilms can be inserted at this point).
+	   We run diff -b -DStanford /moxie/lynx/src/cmd/... /usr/sun/src/cmd/...
+	   which creates a merged file with # ifdef Stanford's scattered through
+	   the code.  This version, after some initial testing, becomes the
+	   standard production version at ALL sites.  ALL changes are made to this
+	   version and propagated to the maintainer (LucasFIlms?).
+	   The alternative is to use "Lynx" as the symbol, since others like
+	   CalTech, Fairchild, SRI, etc. are using our stand-alone version.
+	
+	3. At our leisure we look at all occurences of # ifdef Stanford's that are
+	   undocumented and uncommented, and try to make sense of them.
+	   If we can figure out which one is the bug and which one is the fix,
+	   we remove the one with the bug and make the fix the real code.
+	
+	Any comments?  Where is the latest release? I see
+	[Diablo] ~pratt/lynx/src/cmd
+	[Diablo] ~pratt/nlynx/src/cmd
+	[Shasta] /moxie/lynx/src/cmd
+	[Shasta] /moxie/lynx/nlynx/src/cmd
+	
+	I am willing to start phase 1 above as soon as possible.
+		-- Bill
+	
+	
+	
+	
+
+

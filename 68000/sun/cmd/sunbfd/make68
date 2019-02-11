@@ -1,0 +1,26 @@
+# makefile for newbfd (boot file directory) program - 68k version
+# JCM 19 Feb 81, 9 June 1981
+
+CFLAGS= -c
+COPTS= -O -DMC68000
+
+OBJS= newbfd.b sunbddecode.b msunbootdnew.b
+
+install: newbfd68
+	rev68 newbfd68 /usr/sun/bootfile/newbfd
+	chmod g+x /usr/sun/bootfile/newbfd
+
+newbfd68: $(OBJS)
+	cc68 -o newbfd68 $(OBJS) -lpup
+
+newbfd.b: newbfd.c sunbfd.h
+	cc68 $(COPTS) $(CFLAGS) newbfd.c
+
+sunbddecode.b: sunbddecode.c sunbfd.h
+	cc68 $(COPTS) $(CFLAGS) sunbddecode.c
+
+msunbootdnew.b: msunbootdnew.c
+	cc68 $(COPTS) $(CFLAGS) msunbootdnew.c
+
+clean:
+	rm $(OBJS)

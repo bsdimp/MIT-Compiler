@@ -1,0 +1,19 @@
+		Changes by Bill O'Farrell
+
+changed mical.h -- change this back
+28-Jun-82: Changed ps.c to add Paragraph()
+           Changed ins.c to add .para
+           Changed inst.h to add i_para
+           Changed init.c to add ".para"
+
+07-Jul-82: Changed jumpi in ins.c to force the second operand
+           of a direct intersegment jump to be an immediate
+           value (i.e. jumpi  0,#_fctn  is a typical procedure 
+           call).
+
+13-Jul-82: Changed ins.c to only do long brances.  This is because
+           .para does not currently fit in to the assembler's scheme
+           for determining which branches are long and which are
+           short.  It would seem reasonable that this should not be
+           hard to do, but I don't have time right now to figure this
+           out.

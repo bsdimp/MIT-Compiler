@@ -1,0 +1,10 @@
+This directory contains sources and other stuff for
+the Pascal compiler and system for the Sun.
+Note there is also stuff on ~star and its subdirectories (on Shasta only).
+
+Sub-directories:
+run	run-time library
+ugen	library for ucode-to-assembler stage of compiler
+
+Note:
+Some files have two links: one from this directory, and one from ugen.

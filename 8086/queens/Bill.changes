@@ -1,0 +1,57 @@
+		Changes by Bill O'Farrell
+
+The 8086 cross-compiler system has been modified by Bill O'Farrell
+to enable it to cope with text spaces larger than 64K.  Now
+every procedure is its own segment, and a call to a procedure is
+a long call to that segment, with an offset of 0. The way
+this is achieved is by having the compiler generate calls as
+"calli 0,#_procnam".  The assembler now accepts this format, and the
+linker ld has been modified to insert a proper paragraph address in
+such circumstances.  Note, though, that the linker must perform absolute
+loading, and thus must accept an absolute load address as an argument.
+Indirect calls are compiled as:
+     "mov ax,[indirect thing]"
+     "mov calltmp+2,ax"
+     "calli @calltmp"
+Naturally, all returns are now reti.
+
+Because procedures must be paragraph aligned, the compiler now generates
+the new pseudo-op ".para" at the end of every procedure.  The assembler
+understands this to mean "generate as many NOPs as necessary to ensure
+paragraph alignment.  Note also that the compiler now generates increased
+offsets for parameters, to account for the extra (segment) return pointer
+on the stack.  For more documentation on individual system components,
+read the Bill.Changes files in a86, c86 and the new ld directories.
+Every source file that has been modified has individual changes documented
+within it; every such change is preceded by a comment with 
+"Bill O'Farrell" in it.  Therefore, just search for "Bill" to
+find all the changed lines.  
+
+Note that cvt86 is no longer used.  The linker produces
+the final (.com) output, which includes the unix header,
+but with a new magic number (017353).  This happens to be 8086 code for
+a jump over the header.  Sizes can be read with the modified size program
+located in this directory.  Also, xsize gives the sizes in Hex (useful
+for checking that the text segment does indeed end at a paragraph boundary).
+A version of nm in this directory will work on .com files if ld was used 
+without the -s flag.  Of course, if the symbol table is in the .com file,
+it will be loaded into core with the rest of the file -- not good if
+memory is limited.
+
+Note also, of course, that all the library procedures had to be re-compiled
+so that they would be paragraph aligned.
+
+In order to run large programs such as PC'Nial, it was necessary to write
+a loader, because the PC/DOS native loader does not apparently expect .com
+files to be bigger than 64KB.  The diskette file called load.asm contains
+the assembler source for the new loader.  To use it to load, for instance,
+Nial, one would type the DOS command load nial.com.  To make life easier,
+a .bat file may be used to load a specific command.  We have named nial
+bnial.com so that we may have nial.bat file which contains the command
+"load bnial.com".  Typing the command "nial" therefore runs nial.
+
+				Bill O'Farrell
+				PC'Nial Project
+				Queen's University at Kingston
+
+				July 12, 1982

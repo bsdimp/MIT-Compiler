@@ -1,0 +1,23 @@
+Implement read real
+
+File I/O
+
+Procedure parameters
+
+Try out under Vkernel
+
+Handle double floating correctly
+
+Optimize to use auto-increment modes
+
+Fix pc68 - .lst
+
+Block and string compares (direction, =, <>, ...)
+
+Handle compilation (source) errors gracefully
+
+Documentation, incl. man pc68
+
+Clean directories: where are things supposed to go?
+
+Replace DIV, MOD of 2**i by shift or mask? Mul by 10?

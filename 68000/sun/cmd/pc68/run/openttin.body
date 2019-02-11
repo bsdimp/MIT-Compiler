@@ -1,0 +1,33 @@
+
+procedure $get (var fdb:txtfdb); extern;
+procedure $open(var fdb:txtfdb; s:identifier; slength: integer; inputfile:boolean; protection:integer);extern;
+
+procedure $openttin (var fdb:txtfdb);
+   begin
+   with fdb do
+   begin
+   filetype := charfile;
+(*   name[1] := 't';
+   name[2] := 't';
+   name[3] := 'y';
+   name[4] := ':';
+   namelength := 4;
+ *)
+   device := ttydev;
+   status := notopen;
+   eofflag := false;
+   eolnflag := false;
+   tabcount := 0;
+   bufferinvalid := false;
+   pbuffersize := 8;
+   ttymode := true;
+   end;
+   $open (fdb,'TTY:            ',4,true,0);
+   $get (fdb);
+   end;
+
+
+   (* dummy main program *)
+
+.
+

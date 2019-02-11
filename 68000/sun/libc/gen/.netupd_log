@@ -1,0 +1,94 @@
+Sun Jun 27 02:11:36 1982
+  created file _exit.c[diablo], author: nowicki on Sun Apr  4 16:40:35 1982
+Sun Jun 27 02:11:37 1982
+  created file abs.c[diablo], author: pratt on Tue Jun 16 16:42:09 1981
+Sun Jun 27 02:11:38 1982
+  created file allocs.c[diablo], author: pratt on Tue Jun 16 16:42:09 1981
+Sun Jun 27 02:11:40 1982
+  created file atof.c[diablo], author: pratt on Tue Jun 16 16:42:10 1981
+Sun Jun 27 02:11:41 1982
+  created file atoi.c[diablo], author: pratt on Tue Jun 16 16:42:10 1981
+Sun Jun 27 02:11:42 1982
+  created file atol.c[diablo], author: pratt on Tue Jun 16 16:42:10 1981
+Sun Jun 27 02:11:44 1982
+  created file blt.s[diablo], author: pratt on Tue Jun 16 18:08:09 1981
+Sun Jun 27 02:11:45 1982
+  created file calloc.c[diablo], author: pratt on Tue Jun 16 16:42:11 1981
+Sun Jun 27 02:11:47 1982
+  created file clear.s[diablo], author: pratt on Tue Jun 16 18:08:09 1981
+Sun Jun 27 02:11:49 1982
+  created file crypt.c[diablo], author: pratt on Tue Jun 16 17:27:56 1981
+Sun Jun 27 02:11:50 1982
+  created file ctime.c[diablo], author: pratt on Tue Jun 16 16:42:14 1981
+Sun Jun 27 02:11:52 1982
+  created file ctype_.c[diablo], author: pratt on Tue Jun 16 17:41:40 1981
+Sun Jun 27 02:11:53 1982
+  created file cuexit.c[diablo], author: pratt on Tue Jun 16 16:42:16 1981
+Sun Jun 27 02:11:54 1982
+  created file ecvt.c[diablo], author: pratt on Tue Jun 16 16:42:18 1981
+Sun Jun 27 02:11:55 1982
+  created file errlst.c[diablo], author: pratt on Tue Jun 16 17:28:34 1981
+Sun Jun 27 02:11:56 1982
+  created file execvp.c[diablo], author: pratt on Tue Jun 16 16:42:19 1981
+Sun Jun 27 02:11:57 1982
+  created file fakcu.c[diablo], author: pratt on Tue Jun 16 16:42:20 1981
+Sun Jun 27 02:11:58 1982
+  created file frexp.c[diablo], author: pratt on Wed Jun 17 11:34:58 1981
+Sun Jun 27 02:11:59 1982
+  created file getenv.c[diablo], author: pratt on Tue Jun 16 16:42:21 1981
+Sun Jun 27 02:12:00 1982
+  created file index.c[diablo], author: pratt on Tue Jun 16 16:42:22 1981
+Sun Jun 27 02:12:01 1982
+  created file isatty.c[diablo], author: pratt on Tue Jun 16 16:42:22 1981
+Sun Jun 27 02:12:03 1982
+  created file l3.c[diablo], author: pratt on Tue Jun 16 16:42:22 1981
+Sun Jun 27 02:12:04 1982
+  created file makefile[diablo], author: pratt on Sun Apr  4 16:48:54 1982
+Sun Jun 27 02:12:06 1982
+  created file malloc.c[diablo], author: pratt on Tue Jun 16 16:42:23 1981
+Sun Jun 27 02:12:07 1982
+  created file mktemp.c[diablo], author: pratt on Tue Jun 16 16:42:29 1981
+Sun Jun 27 02:12:08 1982
+  created file mon.c[diablo], author: pratt on Tue Jun 16 16:42:29 1981
+Sun Jun 27 02:12:09 1982
+  created file perror.c[diablo], author: pratt on Tue Jun 16 16:42:32 1981
+Sun Jun 27 02:12:10 1982
+  created file qsort.c[diablo], author: pratt on Tue Jun 16 16:42:33 1981
+Sun Jun 27 02:12:13 1982
+  created file rand.c[diablo], author: pratt on Tue Jun 16 16:42:34 1981
+Sun Jun 27 02:12:14 1982
+  created file rindex.c[diablo], author: pratt on Tue Jun 16 16:42:34 1981
+Sun Jun 27 02:12:15 1982
+  created file setjmp.s[diablo], author: pratt on Tue Jun 16 18:08:09 1981
+Sun Jun 27 02:12:16 1982
+  created file sleep.c[diablo], author: pratt on Tue Jun 16 16:42:35 1981
+Sun Jun 27 02:12:16 1982
+  created file strcat.c[diablo], author: pratt on Tue Jun 16 16:42:36 1981
+Sun Jun 27 02:12:18 1982
+  created file strcatn.c[diablo], author: pratt on Tue Jun 16 16:42:36 1981
+Sun Jun 27 02:12:19 1982
+  created file strcmp.c[diablo], author: pratt on Tue Jun 16 16:42:36 1981
+Sun Jun 27 02:12:20 1982
+  created file strcmpn.c[diablo], author: pratt on Tue Jun 16 16:42:36 1981
+Sun Jun 27 02:12:21 1982
+  created file strcpy.c[diablo], author: pratt on Tue Jun 16 16:42:37 1981
+Sun Jun 27 02:12:22 1982
+  created file strcpyn.c[diablo], author: pratt on Tue Jun 16 16:42:37 1981
+Sun Jun 27 02:12:24 1982
+  created file strlen.c[diablo], author: pratt on Tue Jun 16 16:42:37 1981
+Sun Jun 27 02:12:25 1982
+  created file strncat.c[diablo], author: pratt on Tue Jun 16 16:42:38 1981
+Sun Jun 27 02:12:26 1982
+  created file strncmp.c[diablo], author: pratt on Tue Jun 16 16:42:38 1981
+Sun Jun 27 02:12:27 1982
+  created file strncpy.c[diablo], author: pratt on Tue Jun 16 16:42:39 1981
+Sun Jun 27 02:12:28 1982
+  created file stty.c[diablo], author: pratt on Tue Jun 16 16:42:39 1981
+Sun Jun 27 02:12:29 1982
+  created file swab.c[diablo], author: pratt on Tue Jun 16 16:42:39 1981
+Sun Jun 27 02:12:30 1982
+  created file timezone.c[diablo], author: pratt on Tue Jun 16 16:42:40 1981
+Sun Jun 27 02:12:31 1982
+  created file ttyname.c[diablo], author: pratt on Tue Jun 16 16:42:41 1981
+Sun Jun 27 02:12:32 1982
+  created file ttyslot.c[diablo], author: pratt on Tue Jun 16 16:42:42 1981

@@ -1,0 +1,74 @@
+	.data
+	.comm	dope,800
+	.comm	table,0
+	.comm	rwtable,4
+	.comm	opptr,400
+	.text
+	.globl	setrew
+setrew:
+	link	a6,#-_F1
+	moveml	#_S1,a6@(-_F1)
+	movl	#table,a5
+.L19:
+	cmpl	#10,a5@
+	beq	.L18
+	cmpl	#100,a5@(4)
+	bne	.L20
+	movl	a5,rwtable
+	bra	.L21
+.L20:
+.L17:
+	addl	#88,a5
+	bra	.L19
+.L18:
+	.text
+	movl	#.L23,sp@-
+	jsr	cerror
+	addql	#4,sp
+.L21:
+	clrl	d7
+.L26:
+	cmpl	#111,d7
+	bge	.L25
+	movl	d7,d0
+	asll	#2,d0
+	addl	#dope,d0
+	movl	d0,a0
+	tstl	a0@
+	beq	.L27
+	movl	#table,a5
+.L30:
+	cmpl	#10,a5@
+	beq	.L29
+	cmpl	#101,a5@
+	bge	.L31
+	movl	a5@,d0
+	cmpl	d7,d0
+	bne	.L32
+	bra	.L29
+.L32:
+.L31:
+.L28:
+	addl	#88,a5
+	bra	.L30
+.L29:
+	movl	d7,d0
+	asll	#2,d0
+	addl	#opptr,d0
+	movl	d0,a0
+	movl	a5,a0@
+.L27:
+.L24:
+	addql	#1,d7
+	bra	.L26
+.L25:
+	bra	.L16
+.L16:	moveml	a6@(-_F1),#8320
+	unlk	a6
+	rts
+_F1 = 8
+_S1 = 8320
+	.data
+.L23:
+	.byte	98,97,100,32,115,101,116,114
+	.byte	101,119,0

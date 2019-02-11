@@ -1,0 +1,15 @@
+
+procedure $put (var fdb:txtfdb); extern;
+
+procedure $wln (var fdb:txtfdb);
+   begin
+   fdb.pbuffer := chr(13);	(* Line feed *)
+   $put (fdb);
+   fdb.pbuffer := chr(10);	(* Carridge return *)
+   $put (fdb);
+   end;
+
+
+   (* dummy main program *)
+
+.

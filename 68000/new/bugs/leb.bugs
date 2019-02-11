@@ -1,0 +1,16 @@
+From G.LEB@MIT-EECS  Tue Jan 19 15:07:29 1982
+Date: 19 Jan 1982 0341-EST
+From: lawrence e bakst <G.LEB at MIT-EECS>
+Subject: 68000 c compiler bugs
+To: terman at MIT-VAX
+
+finaly got our auto dialer so mailing you is now easier via cu.
+here is the list of c compiler bugs:
+
+short		WCOLS;int		(*Putchar)();int		listchar();char		IN;#define		NOSTR	(char *) 0#define		BUF_SIZ	4096main(argc, argv)char *argv[];{register	fd;register	i;	register int d;/* comment the next line out and get a compiler error on the `d = ...' line */char	buf[BUF_SIZ];{	d = (column(NOSTR) + WCOLS - 1 + (Putchar == listchar) + IN) / WCOLS;	return (d == 0 ? 1 : d);}struct foo {int bar,bletch,fart;};f(bp)struct foo *bp;{static struct foo new;    new = *bp;}int var;foo(d){register d;		/* this line should be fla
+let me know if i can be of any help.
+						thanks
+						larry
+-------
+
+

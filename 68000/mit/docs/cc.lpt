@@ -1,0 +1,63 @@
+ cc(1)                     UNIX Programmmer's Manual                     cc(1)
+
+
+ _N_A_M_E
+    _c_c -- C compiler
+
+ _S_Y_N_O_P_S_I_S
+    _c_c [_-_o output] [_-_c_n_O_S_P_I] file . . .
+
+ _D_E_S_C_R_I_P_T_I_O_N
+ _C_c  is the Trix C compiler.  When no options are given, the specified C files
+ are compiled and loaded by default into _b_._o_u_t.
+
+ _C_c is a shell file which calls the  C  preprocesspr  (_c_p_p),  the  C  compiler
+ (_c_6_8),  the  assembler (_a_6_8), the link editor (_l_d_6_8), and the optimizer (_o_6_8)
+ if the _-_O option is used.  C source files should be suffixed  _._c.    Assembly
+ files, suffixed _._a_6_8, may be compiled using the _-_c option.
+
+ The following are the _c_c options.
+
+ _-_o  Places the output in the file following _-_o, _b_._o_u_t is not used.
+ _-_c  The  loading  phase  of  the compilation is suppressed, and the output is
+    placed in corresponding files suffixed _._b.
+ _-_n  Creates a 410 file.
+ _-_O  Compiles the named files, invoking an object code optimizer.
+ _-_S  Compiles  the  named  files,  leaves   assembler   language   output   on
+    corresponding files suffixed _._a_6_8
+ _-_P  Runs  the  C  macro  preprocessor  on  the named files, output is left in
+    corresponding files suffixed _._i.
+ _-_D_x_x_x Marks the symbol _x_x_x defined, so _#_i_f_d_e_f _x_x_x preprocessor statements are
+    evaluated as true.
+ _-_U_x_x_x Marks the symbol _x_x_x undefined, so _#_i_f_n_d_e_f _x_x_x preprocessor  statements
+    are evaluated as true.
+ _-_I_y_y_y Changes the default _i_n_c_l_u_d_e directory to _y_y_y, instead of _/_i_n_c_l_u_d_e.
+
+
+ _F_I_L_E_S
+
+ file.c      input file
+ file.a68   assembler file
+ file.b      object file
+ file.i      output from C preprocessor
+ /tmp/c68.$pid  temporary
+ /lib/crt0.b  runtime startoff
+ /lib/libc.a  default library
+
+
+    _S_E_E _A_L_S_O
+    a68(1), b.out(5), ld68(1)
+
+
+
+
+
+
+
+
+
+
+
+
+ 7th Edition                    March 20, 1981                               1
+

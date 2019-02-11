@@ -1,0 +1,48 @@
+Sun Jun 27 02:13:31 1982
+  created file clrerr.c[diablo], author: pratt on Sun Jul 19 13:16:10 1981
+Sun Jun 27 02:13:32 1982
+  created file data.c[diablo], author: pratt on Mon Oct 19 18:32:48 1981
+Sun Jun 27 02:13:34 1982
+  created file doprnt.c[diablo], author: pratt on Sun Jul 19 13:16:10 1981
+Sun Jun 27 02:13:36 1982
+  created file doscan.c[diablo], author: pratt on Sun Jul 19 13:16:10 1981
+Sun Jun 27 02:13:37 1982
+  created file fgetc.c[diablo], author: pratt on Sun Jul 19 13:16:11 1981
+Sun Jun 27 02:13:39 1982
+  created file fgets.c[diablo], author: pratt on Sun Jul 19 13:16:11 1981
+Sun Jun 27 02:13:40 1982
+  created file filbuf.c[diablo], author: pratt on Mon Oct 19 18:32:31 1981
+Sun Jun 27 02:13:42 1982
+  created file flsbuf.c[diablo], author: pratt on Mon Oct 19 18:34:40 1981
+Sun Jun 27 02:13:43 1982
+  created file fprintf.c[diablo], author: pratt on Sun Jul 19 13:16:11 1981
+Sun Jun 27 02:13:44 1982
+  created file fputc.c[diablo], author: pratt on Sun Jul 19 13:16:11 1981
+Sun Jun 27 02:13:46 1982
+  created file fputs.c[diablo], author: pratt on Sun Jul 19 13:16:12 1981
+Sun Jun 27 02:13:47 1982
+  created file gcvt.c[diablo], author: pratt on Sun Jul 19 13:16:12 1981
+Sun Jun 27 02:13:49 1982
+  created file gets.c[diablo], author: pratt on Sun Jul 19 13:16:13 1981
+Sun Jun 27 02:13:50 1982
+  created file getw.c[diablo], author: pratt on Sun Jul 19 13:16:14 1981
+Sun Jun 27 02:13:51 1982
+  created file makefile[diablo], author: pratt on Sun Apr  4 16:34:17 1982
+Sun Jun 27 02:13:53 1982
+  created file popen.c[diablo], author: pratt on Sun Jul 19 13:16:14 1981
+Sun Jun 27 02:13:55 1982
+  created file puts.c[diablo], author: pratt on Sun Jul 19 13:16:14 1981
+Sun Jun 27 02:13:57 1982
+  created file putw.c[diablo], author: pratt on Sun Jul 19 13:16:14 1981
+Sun Jun 27 02:13:58 1982
+  created file scanf.c[diablo], author: pratt on Sun Jul 19 13:16:15 1981
+Sun Jun 27 02:14:00 1982
+  created file setbuf.c[diablo], author: pratt on Sun Jul 19 13:16:15 1981
+Sun Jun 27 02:14:01 1982
+  created file sprintf.c[diablo], author: pratt on Sun Jul 19 13:16:15 1981
+Sun Jun 27 02:14:02 1982
+  created file strout.c[diablo], author: pratt on Sun Jul 19 13:16:15 1981
+Sun Jun 27 02:14:05 1982
+  created file stub2.c[diablo], author: pratt on Thu Jun 18 16:46:16 1981
+Sun Jun 27 02:14:06 1982
+  created file ungetc.c[diablo], author: pratt on Sun Jul 19 13:16:16 1981

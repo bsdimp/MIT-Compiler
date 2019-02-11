@@ -1,0 +1,80 @@
+Sun Jun 27 01:50:09 1982
+  created file BUGS[diablo], author: bothner on Sat May 29 18:09:33 1982
+Sun Jun 27 01:50:10 1982
+  created file Makefile[diablo], author: bothner on Thu Jun 24 22:14:25 1982
+Sun Jun 27 01:50:11 1982
+  created file exit.h[diablo], author: bothner on Thu Jun 24 22:14:54 1982
+Sun Jun 27 01:50:13 1982
+  created file float10to2.p[diablo], author: bothner on Thu Jun 24 22:15:10 1982
+Sun Jun 27 01:50:14 1982
+  created file frame.txt[diablo], author: bothner on Thu Jun 24 22:15:17 1982
+Sun Jun 27 01:50:15 1982
+  created file mesg[diablo], author: bothner on Thu Jun 24 22:15:29 1982
+Sun Jun 27 01:50:18 1982
+  created file ucode.h[diablo], author: bothner on Thu Jun 24 22:16:14 1982
+Sun Jun 27 01:50:21 1982
+  created file ug.h[diablo], author: bothner on Thu Jun 24 22:16:18 1982
+Sun Jun 27 01:50:22 1982
+  created file ugat.h[diablo], author: bothner on Thu Jun 24 22:16:22 1982
+Sun Jun 27 01:50:26 1982
+  created file ugat.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:50:28 1982
+  created file ugat.p[diablo], author: bothner on Thu Jun 24 22:16:34 1982
+Sun Jun 27 01:50:30 1982
+  created file ugcd.h[diablo], author: bothner on Thu Jun 24 22:16:39 1982
+Sun Jun 27 01:50:39 1982
+  created file ugcd.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:50:46 1982
+  created file ugcd.p[diablo], author: bothner on Thu Jun 24 22:17:03 1982
+Sun Jun 27 01:51:27 1982
+  created file ugen68[diablo], author: bothner on Thu Jun 24 22:30:40 1982
+Sun Jun 27 01:51:28 1982
+  created file ugrg.h[diablo], author: bothner on Thu Jun 24 22:18:29 1982
+Sun Jun 27 01:51:34 1982
+  created file ugrg.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:51:41 1982
+  created file ugrg.p[diablo], author: bothner on Thu Jun 24 22:19:22 1982
+Sun Jun 27 01:51:46 1982
+  created file ugrg.p.old[diablo], author: bothner on Thu Jun 24 22:19:32 1982
+Sun Jun 27 01:51:49 1982
+  created file ugsp.h[diablo], author: bothner on Thu Jun 24 22:19:40 1982
+Sun Jun 27 01:52:00 1982
+  created file ugsp.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:52:10 1982
+  created file ugsp.p[diablo], author: bothner on Thu Jun 24 22:21:08 1982
+Sun Jun 27 01:52:12 1982
+  created file ugst.h[diablo], author: bothner on Thu Jun 24 22:22:09 1982
+Sun Jun 27 01:52:16 1982
+  created file ugst.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:52:19 1982
+  created file ugst.p[diablo], author: bothner on Thu Jun 24 22:22:31 1982
+Sun Jun 27 01:52:20 1982
+  created file ugtm.h[diablo], author: bothner on Thu Jun 24 22:22:53 1982
+Sun Jun 27 01:52:25 1982
+  created file ugtm.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:52:29 1982
+  created file ugtm.p[diablo], author: bothner on Thu Jun 24 22:23:15 1982
+Sun Jun 27 01:52:36 1982
+  created file ugtp.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:52:45 1982
+  created file ugtp.p[diablo], author: bothner on Thu Jun 24 22:23:52 1982
+Sun Jun 27 01:52:53 1982
+  created file ugtp.p.old[diablo], author: bothner on Thu Jun 24 22:24:24 1982
+Sun Jun 27 01:52:55 1982
+  created file uini.h[diablo], author: bothner on Thu Jun 24 22:24:30 1982
+Sun Jun 27 01:52:58 1982
+  created file uini.o[diablo], author: bothner on Thu Jun 24 22:30:39 1982
+Sun Jun 27 01:53:02 1982
+  created file uini.p[diablo], author: bothner on Thu Jun 24 22:24:48 1982
+Sun Jun 27 01:53:05 1982
+  created file uread.h[diablo], author: bothner on Thu Jun 24 22:24:52 1982
+Sun Jun 27 01:53:08 1982
+  created file uread.o[diablo], author: bothner on Thu Jun 24 22:30:40 1982
+Sun Jun 27 01:53:13 1982
+  created file uread.p[diablo], author: bothner on Thu Jun 24 22:25:10 1982
+Sun Jun 27 01:53:14 1982
+  created file uscan.h[diablo], author: bothner on Thu Jun 24 22:25:15 1982
+Sun Jun 27 01:53:17 1982
+  created file uscan.o[diablo], author: bothner on Thu Jun 24 22:30:40 1982
+Sun Jun 27 01:53:19 1982
+  created file uscan.p[diablo], author: bothner on Thu Jun 24 22:25:26 1982

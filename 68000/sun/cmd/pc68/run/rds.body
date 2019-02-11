@@ -1,0 +1,17 @@
+
+procedure $rdc ( var ch:char; var fdb:txtfdb); extern;
+
+procedure $rds ( var str:identifier; var fdb:txtfdb;  length: integer);
+   var i:integer;
+   ch: char;
+   begin
+   for i := 1 to length do
+   begin
+   $rdc (ch, fdb);
+   str[i] := ch;
+   end;
+   end;
+
+   (* dummy main program *)
+
+.

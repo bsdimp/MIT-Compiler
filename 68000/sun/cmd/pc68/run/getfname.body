@@ -1,0 +1,59 @@
+
+procedure $close (var fdb:txtfdb); extern;
+procedure $get (var fdb:txtfdb); extern;
+procedure $openttin (var fdb:txtfdb); extern;
+procedure $opnttout (var fdb:txtfdb); extern;
+procedure $wrs ( var str:identifier; var fdb:txtfdb;  
+                     length: integer; fldw: integer); extern;
+function $bufval (var fdb:txtfdb): char; extern;
+function $eln (var fdb:txtfdb): boolean; extern;
+
+function $getfname (prompt: identifier; VAR name: stdstring): integer;
+   var ttyinbuf, ttyoutbuf: txtfdb;
+   ch:char;
+   i, namelength:integer;
+   tempstr: identifier;
+   comment: boolean;
+   promptlength: integer;
+   begin
+   $opnttout (ttyoutbuf);
+   $openttin (ttyinbuf);
+   promptlength:= identlength;
+   while (prompt[promptlength] = ' ') AND (promptlength > 0) DO
+      promptlength := promptlength - 1;
+   if promptlength = 0 then
+	 begin
+	 prompt := 'file            ';
+	 promptlength := 4;
+	 end;
+   $wrs (prompt,ttyoutbuf,promptlength,promptlength);
+   tempstr := ' ?              ';
+   i := 3;
+   $wrs (tempstr,ttyoutbuf,i,i);
+   namelength := 0;
+   comment := false;
+   while not $eln (ttyinbuf) do
+	 begin
+	 ch := $bufval (ttyinbuf);
+	 $get (ttyinbuf);
+	 (* ignore all characters after a semicolon*)
+    if ch = ';' then comment := true;
+	 (* ignore spaces *)
+	 if (ch <> ' ') and (namelength < stdstringlength) and not comment 
+            then begin
+(*	    if (ord(ch) >= lowercasea) and (ord(ch) <= lowercasez) then
+	       ch := chr (ord(ch)-uplowdif); *)
+	    namelength := namelength + 1;
+	    name[namelength] := ch;
+	    end;
+	 end;
+   $close (ttyinbuf);
+   $close (ttyoutbuf);
+   $getfname := namelength;
+   end;
+
+
+   (* dummy main program *)
+
+.
+

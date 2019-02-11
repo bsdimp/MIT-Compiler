@@ -1,0 +1,21 @@
+
+|| input from port: int inp(port) int port;
+
+	.globl _inp
+_inp:	mov	bx,sp
+	mov	dx,*4(bx)
+	in
+	xorb	ah,ah
+	reti
+        .para
+
+|| output to port: outp(port,value) int port,value;
+
+	.globl _outp
+_outp:	mov	bx,sp
+	mov	dx,*4(bx)
+	mov	ax,*6(bx)
+	out
+	reti
+        .para
+

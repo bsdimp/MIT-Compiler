@@ -1,0 +1,65 @@
+(*#B-,U0,G+*)
+module inits;
+
+(* runtimes for pascal programs *)
+
+const
+   tabsetting = 8;
+   identlength = 16;    (* length of scalar identifiers *)
+   maxdigits = 24;   (* max number of digits in integer *)
+   underbar = '_';
+   stdstringlength = 132;  (* length of all strings within these runtimes *)
+   runbufsize = 11;   (* number of words occupied by primitive run-time
+ 			 buffers, flags, etc. *)
+   cape = 69;     (* ord(upper case e)*)
+   lowere = 101;    (* ord(lower case e)*)
+   (* do not change without changing primitive runtimes!*)
+
+   lowercasea = 97;      (* ord (lower case a) *)
+   lowercasez = 122;  (* ord (lower case z) *)
+   uplowdif = 32;    (* ord (lower case a) - ord (upper case a) *)
+  setunitmax = 31;
+  setunitsize = 32;
+  setmax = 319;
+  setsperset = 10;
+
+type
+   errorstring = packed array [1..28] of char;
+   alfa = packed array[1..10] of char;
+   typeoffile = (binary,charfile,asciifile);
+   longinteger = integer;
+   digitarray = array[1..maxdigits] of 0..9;
+   digitctr = 0..maxdigits;
+   stdstring = packed array [1..stdstringlength] of char;
+   identifier = packed array [1..identlength] of char;
+   chararray = array [1..stdstringlength] of char;
+   standardset = set of 0..setmax;
+
+   setsub = 1..setsperset;    (*chd*)
+   targetset = array[setsub] of set of 0..setunitmax;  (*used to build a target set*)
+
+   scalarvector = array[0..100] of identifier;
+   scalarvptr = ^scalarvector;
+   scalarform = (integerform,charform,declaredform);
+   filestatus = (notopen,openforinput,openforoutput);
+   txtfdb = record
+(*	   namelength : 0..stdstringlength;*);
+(*	   name : stdstring; *)
+	   status : filestatus;
+	   device : (anydev,ttydev,leafdev);
+	   eofflag : boolean;
+	   bufferinvalid : boolean;
+	   filetype : typeoffile;
+	   ttymode : boolean;  (* true = line at a time input *);
+	   channel : integer;
+	   prompt: identifier;
+	   eolnflag : boolean;
+	   eopageflag : boolean;
+	   charcount : integer;
+	   linecount : integer;
+	   pagecount : integer;
+	   tabcount : integer;
+	   pbuffersize : integer;	(* Size of buffer in bits *)
+	   runbufs : array[1..runbufsize] of integer;
+	   pbuffer : char;
+	    end;

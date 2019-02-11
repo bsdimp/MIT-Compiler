@@ -1,0 +1,22 @@
+
+procedure $wrs ( var str:identifier; var fdb:txtfdb;  length: integer; fldw: integer); extern;
+
+procedure $wrb ( sourcevalue: boolean; var fdb:txtfdb;  fldw: integer);
+   var tempstr: identifier;
+   begin
+   if sourcevalue then
+      begin
+      tempstr := 'true            ';
+      $wrs (tempstr,fdb,4,fldw);
+      end
+   else
+   begin
+      tempstr := 'false           ';
+      $wrs (tempstr,fdb,5,fldw);
+      end;
+   end;
+
+
+   (* dummy main program *)
+
+.

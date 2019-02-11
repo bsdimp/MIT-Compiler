@@ -1,0 +1,35 @@
+Directory setup:
+   c86, lib86:	for 8087-equiped systems.
+  nc86,nlib86:	for non-8087 systems.
+
+You should install the following files into some directory on your
+search path (on our system we use /usr/local):
+
+	cc86		; shell script implements "cc" but for 8086
+	a86/a86		; the assembler
+	a86/ld86	; the loader
+	a86/cvt86	; .ld output to .com file (a la IBM DOS) conversion
+	c86/c86		; the C compiler
+
+Regular 4.1BSD programs used:
+
+	ar		; used for preparing loader libraries
+	/lib/cpp	; C preprocessor
+
+The cc86 script expects to find the libc.a and crt files in
+/projects/compilers/8086/lib86 -- if you don't put them there, you'll
+have to update cc86...
+
+The compiler produces assembly language output suitable for a86.
+It is a 16-bit compiler; output code does not touch the segment
+regs, so it is possible to have separate instruction and data
+segments (see lib86/csu/crt0.a86 for the start up routine we use
+on our IBM Personal computer to set up the segment regs, etc. from
+info in the .com file).  Currently floating point and long arithmetic
+is implemented using 8087 instructions.
+
+Although the assembler produces ".b" files, they have exactly the
+same format as ".o" files under 4.1BSD -- things like nm and size will
+work, and, most importantly, ld.  Using ld with the -N, -X and -r
+options (see cc86 for an example) will produce a file that cvt86 can
+convert into an IBM DOS format .com file for the IBM Personal Computer.

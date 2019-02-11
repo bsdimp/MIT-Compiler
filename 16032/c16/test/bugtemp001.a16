@@ -1,0 +1,2063 @@
+	.data
+	.comm	lt,4
+	.comm	it,2
+	.comm	ut,2
+	.comm	ct,1
+	.comm	v1,4
+	.comm	v2,4
+	.text
+	.globl	set_it
+set_it:
+	enter	_S1,_F1
+	movqw	#1,it
+	movqd	#1,.r0
+	br	.L18
+	br	.L18
+.L18:	exit	0
+	ret	0
+_F1 = 0
+_S1 = 0
+	.data
+	.comm	l,4
+	.comm	la,4
+	.comm	lb,4
+	.comm	pl,4
+	.comm	ls,4
+	.comm	las,4
+	.comm	lbs,4
+	.comm	pls,4
+	.comm	i,2
+	.comm	ia,2
+	.comm	ib,2
+	.comm	pi,4
+	.comm	is,2
+	.comm	ias,2
+	.comm	ibs,2
+	.comm	pis,4
+	.comm	u,2
+	.comm	ua,2
+	.comm	ub,2
+	.comm	pu,4
+	.comm	us,2
+	.comm	uas,2
+	.comm	ubs,2
+	.comm	pus,4
+	.comm	c,1
+	.comm	ca,1
+	.comm	cb,1
+	.comm	pc,4
+	.comm	cs,1
+	.comm	cas,1
+	.comm	cbs,1
+	.comm	pcs,4
+	.comm	s,4
+	.comm	ss,4
+	.comm	ps,4
+	.comm	pss,4
+	.text
+	.globl	lfunct
+lfunct:
+	enter	_S2,_F2
+	movd	8(.fp),.r0
+	br	.L56
+	br	.L56
+.L56:	exit	0
+	ret	0
+_F2 = 0
+_S2 = 0
+	.data
+	.text
+	.globl	clear
+clear:
+	enter	_S3,_F3
+	movqd	#0,lb
+	movqd	#0,la
+	movqd	#0,l
+	movd	#l,pl
+	movqw	#0,ib
+	movqw	#0,ia
+	movqw	#0,i
+	movd	#i,pi
+	movqw	#0,ub
+	movqw	#0,ua
+	movqw	#0,u
+	movd	#u,pu
+	movqb	#0,cb
+	movqb	#0,ca
+	movqb	#0,c
+	movd	#c,pc
+	movqd	#0,s
+	movd	#s,ps
+	br	.L58
+.L58:	exit	0
+	ret	0
+_F3 = 0
+_S3 = 0
+	.data
+	.text
+	.globl	save
+save:
+	enter	_S4,_F4
+	movd	l,ls
+	movd	la,las
+	movd	lb,lbs
+	movd	pl,pls
+	movw	i,is
+	movw	ia,ias
+	movw	ib,ibs
+	movd	pi,pis
+	movw	u,us
+	movw	ua,uas
+	movw	ub,ubs
+	movd	pu,pus
+	movb	c,cs
+	movb	ca,cas
+	movb	cb,cbs
+	movd	pc,pcs
+	movd	s,ss
+	movd	ps,pss
+	jsr	clear
+	br	.L60
+.L60:	exit	0
+	ret	0
+_F4 = 0
+_S4 = 0
+	.data
+	.text
+	.globl	check
+check:
+	enter	_S5,_F5
+	cmpd	l,ls
+	bne	.L10000
+	cmpd	la,las
+	bne	.L10000
+	cmpd	lb,lbs
+	bne	.L10000
+	cmpd	pl,pls
+	beq	.L63
+.L10000:
+	movqd	#1,.r0
+	br	.L62
+.L63:
+	cmpw	i,is
+	bne	.L10001
+	cmpw	ia,ias
+	bne	.L10001
+	cmpw	ib,ibs
+	bne	.L10001
+	cmpd	pi,pis
+	beq	.L64
+.L10001:
+	movqd	#1,.r0
+	br	.L62
+.L64:
+	cmpw	u,us
+	bne	.L10002
+	cmpw	ua,uas
+	bne	.L10002
+	cmpw	ub,ubs
+	bne	.L10002
+	cmpd	pu,pus
+	beq	.L65
+.L10002:
+	movqd	#1,.r0
+	br	.L62
+.L65:
+	cmpb	c,cs
+	bne	.L10003
+	cmpb	ca,cas
+	bne	.L10003
+	cmpb	cb,cbs
+	bne	.L10003
+	cmpd	pc,pcs
+	beq	.L66
+.L10003:
+	movqd	#1,.r0
+	br	.L62
+.L66:
+	cmpd	s,ss
+	bne	.L10004
+	cmpd	pss,ps
+	beq	.L67
+.L10004:
+	movqd	#1,.r0
+	br	.L62
+.L67:
+	movqd	#0,.r0
+	br	.L62
+	br	.L62
+.L62:	exit	0
+	ret	0
+_F5 = 0
+_S5 = 0
+	.data
+	.text
+	.globl	main
+main:
+	enter	_S6,_F6
+	movqd	#2,v1
+.L72:
+	cmpd	v1,#0
+	beq	.L71
+	cmpd	v1,#32768
+	bge	.L10006
+	cmpd	v1,#-32768
+	bgt	.L10005
+.L10006:
+	movqd	#0,v1
+	cmpd	#0,#0
+	bne	.L71
+.L10005:
+	movqd	#2,v2
+.L75:
+	cmpd	v2,#32768
+	bge	.L74
+	cmpd	v2,#-32768
+	ble	.L74
+	jsr	clear
+	movw	v1,u
+	movw	v2,ua
+	movzwd	u,lt
+	movzwd	ua,.r0
+	movd	lt,.r1
+	divd	.r0,.r1
+	movd	.r1,lt
+	movd	lt,l
+	jsr	save
+	movw	v1,u
+	movw	v2,ua
+	movzwd	u,.r0
+	movzwd	ua,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L76
+	.text
+	.text
+	movd	#.L79,.tos
+	movd	#.L78,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L80
+.L76:
+.L73:
+	movd	v2,.r0
+	negd	.r0,.r0
+	muld	#3,.r0
+	divd	#2,.r0
+	movd	.r0,v2
+	br	.L75
+.L74:
+.L70:
+	movd	v1,.r0
+	negd	.r0,.r0
+	muld	#3,.r0
+	divd	#2,.r0
+	movd	.r0,v1
+	br	.L72
+.L71:
+.L80:
+	movqd	#2,v1
+.L83:
+	cmpd	v1,#0
+	beq	.L82
+	cmpd	v1,#32768
+	bge	.L10008
+	cmpd	v1,#-32768
+	bgt	.L10007
+.L10008:
+	movqd	#0,v1
+	cmpd	#0,#0
+	bne	.L82
+.L10007:
+	movqd	#2,v2
+.L86:
+	cmpd	v2,#32768
+	bge	.L85
+	cmpd	v2,#-32768
+	ble	.L85
+	jsr	clear
+	movw	v1,u
+	movw	v2,ua
+	movzwd	u,lt
+	movzwd	ua,.r0
+	movd	lt,.r1
+	modd	.r0,.r1
+	movd	.r1,lt
+	movd	lt,l
+	jsr	save
+	movw	v1,u
+	movw	v2,ua
+	movzwd	u,.r0
+	movzwd	ua,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L87
+	.text
+	.text
+	movd	#.L89,.tos
+	movd	#.L88,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L90
+.L87:
+.L84:
+	movd	v2,.r0
+	negd	.r0,.r0
+	muld	#3,.r0
+	divd	#2,.r0
+	movd	.r0,v2
+	br	.L86
+.L85:
+.L81:
+	movd	v1,.r0
+	negd	.r0,.r0
+	muld	#3,.r0
+	divd	#2,.r0
+	movd	.r0,v1
+	br	.L83
+.L82:
+.L90:
+	jsr	clear
+	movqw	#4,i
+	movw	#8,ia
+	jsr	save
+	movqw	#2,i
+	movqw	#4,ia
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L91
+	.text
+	.text
+	movd	#.L93,.tos
+	movd	#.L92,.tos
+	jsr	printf
+	adjspb	#-8
+.L91:
+	jsr	clear
+	movqw	#0,i
+	jsr	save
+	movqw	#0,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L94
+	.text
+	.text
+	movd	#.L96,.tos
+	movd	#.L95,.tos
+	jsr	printf
+	adjspb	#-8
+.L94:
+	jsr	clear
+	movqb	#-1,c
+	movxbw	c,i
+	jsr	save
+	movqb	#-1,c
+	movxbw	c,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L97
+	.text
+	.text
+	movd	#.L99,.tos
+	movd	#.L98,.tos
+	jsr	printf
+	adjspb	#-8
+.L97:
+	movqd	#-3,v1
+.L102:
+	cmpd	v1,#3
+	bgt	.L101
+	movqd	#1,v2
+.L105:
+	cmpd	v2,#4
+	bgt	.L104
+	jsr	clear
+	movw	v1,ia
+	movw	v2,u
+	movw	ia,ut
+	movzwd	ut,.r0
+	movzwd	u,.r1
+	negd	.r1,.r1
+	lshd	.r1,.r0
+	movw	.r0,ut
+	movw	ut,ib
+	jsr	save
+	movw	v1,ia
+	movw	v2,u
+	movxwd	ia,.r0
+	movzwd	u,.r1
+	negd	.r1,.r1
+	lshd	.r1,.r0
+	movw	.r0,ib
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L106
+	.text
+	.text
+	movd	#.L108,.tos
+	movd	#.L107,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L109
+.L106:
+.L103:
+	addqd	#1,v2
+	br	.L105
+.L104:
+.L100:
+	addqd	#1,v1
+	br	.L102
+.L101:
+.L109:
+	jsr	clear
+	movqd	#-1,lb
+	movqd	#-1,la
+	movd	la,.r0
+	subd	lb,.r0
+	movw	.r0,it
+	movxwd	it,.r0
+	ashd	#2,.r0
+	addd	pl,.r0
+	addqd	#1,(.r0)
+	addqd	#1,lb
+	jsr	save
+	movqd	#-1,lb
+	movqd	#-1,la
+	movd	la,.r0
+	subd	lb,.r0
+	ashd	#2,.r0
+	addd	pl,.r0
+	addqd	#1,(.r0)
+	addqd	#1,lb
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L110
+	.text
+	.text
+	movd	#.L112,.tos
+	movd	#.L111,.tos
+	jsr	printf
+	adjspb	#-8
+.L110:
+	jsr	clear
+	movw	#8,i
+	movqw	#1,ia
+	jsr	save
+	movqw	#1,ia
+	movqw	#1,i
+	movqb	#1,.r7
+.L115:
+	ashb	ia,.r7
+	cmpb	.r7,#0
+	beq	.L114
+.L113:
+	addqw	#1,i
+	br	.L115
+.L114:
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L116
+	.text
+	.text
+	movd	#.L118,.tos
+	movd	#.L117,.tos
+	jsr	printf
+	adjspb	#-8
+.L116:
+	jsr	clear
+	movw	#8,i
+	movqw	#1,ia
+	jsr	save
+	movqw	#1,ia
+	movqw	#1,i
+	movqb	#1,c
+.L121:
+	ashb	ia,c
+	cmpb	c,#0
+	beq	.L120
+.L119:
+	addqw	#1,i
+	br	.L121
+.L120:
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L122
+	.text
+	.text
+	movd	#.L124,.tos
+	movd	#.L123,.tos
+	jsr	printf
+	adjspb	#-8
+.L122:
+	jsr	clear
+	movb	#128,ct
+	movxbd	ct,.r0
+	ashd	#-2,.r0
+	movw	.r0,i
+	jsr	save
+	movqb	#0,.r7
+	orb	#128,.r7
+	ashb	#-2,.r7
+	movxbw	.r7,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L125
+	.text
+	.text
+	movd	#.L127,.tos
+	movd	#.L126,.tos
+	jsr	printf
+	adjspb	#-8
+.L125:
+	movqd	#-3,v1
+.L130:
+	cmpd	v1,#3
+	bgt	.L129
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L131
+	br	.L128
+.L131:
+	addqw	#1,i
+	movxwd	it,.r0
+	addd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movxwd	.r0,.r0
+	addd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L132
+	.text
+	.text
+	movd	#.L134,.tos
+	movd	#.L133,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L135
+.L132:
+.L128:
+	addqd	#1,v1
+	br	.L130
+.L129:
+.L135:
+	movqd	#-3,v1
+.L138:
+	cmpd	v1,#3
+	bgt	.L137
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L139
+	br	.L136
+.L139:
+	addqw	#1,i
+	movxwd	it,.r0
+	subd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movxwd	.r0,.r0
+	subd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L140
+	.text
+	.text
+	movd	#.L142,.tos
+	movd	#.L141,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L143
+.L140:
+.L136:
+	addqd	#1,v1
+	br	.L138
+.L137:
+.L143:
+	movqd	#-3,v1
+.L146:
+	cmpd	v1,#3
+	bgt	.L145
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L147
+	br	.L144
+.L147:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	negw	.r1,.r1
+	movxwd	.r1,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L148
+	.text
+	.text
+	movd	#.L150,.tos
+	movd	#.L149,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L151
+.L148:
+.L144:
+	addqd	#1,v1
+	br	.L146
+.L145:
+.L151:
+	movqd	#-3,v1
+.L154:
+	cmpd	v1,#3
+	bgt	.L153
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L155
+	br	.L152
+.L155:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	negw	.r1,.r1
+	movxwd	.r1,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L156
+	.text
+	.text
+	movd	#.L158,.tos
+	movd	#.L157,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L159
+.L156:
+.L152:
+	addqd	#1,v1
+	br	.L154
+.L153:
+.L159:
+	movqd	#-3,v1
+.L162:
+	cmpd	v1,#3
+	bgt	.L161
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L163
+	br	.L160
+.L163:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	muld	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	negw	.r1,.r1
+	movxwd	.r1,.r1
+	muld	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L164
+	.text
+	.text
+	movd	#.L166,.tos
+	movd	#.L165,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L167
+.L164:
+.L160:
+	addqd	#1,v1
+	br	.L162
+.L161:
+.L167:
+	movqd	#-3,v1
+.L170:
+	cmpd	v1,#3
+	bgt	.L169
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L171
+	br	.L168
+.L171:
+	addqw	#1,i
+	movxwd	it,.r0
+	ord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movxwd	.r0,.r0
+	ord	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L172
+	.text
+	.text
+	movd	#.L174,.tos
+	movd	#.L173,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L175
+.L172:
+.L168:
+	addqd	#1,v1
+	br	.L170
+.L169:
+.L175:
+	movqd	#-3,v1
+.L178:
+	cmpd	v1,#3
+	bgt	.L177
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L179
+	br	.L176
+.L179:
+	addqw	#1,i
+	movxwd	it,.r0
+	xord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movxwd	.r0,.r0
+	xord	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L180
+	.text
+	.text
+	movd	#.L182,.tos
+	movd	#.L181,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L183
+.L180:
+.L176:
+	addqd	#1,v1
+	br	.L178
+.L177:
+.L183:
+	movqd	#-3,v1
+.L186:
+	cmpd	v1,#3
+	bgt	.L185
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L187
+	br	.L184
+.L187:
+	addqw	#1,i
+	movxwd	it,.r0
+	andd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	negw	.r0,.r0
+	movxwd	.r0,.r0
+	andd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L188
+	.text
+	.text
+	movd	#.L190,.tos
+	movd	#.L189,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L191
+.L188:
+.L184:
+	addqd	#1,v1
+	br	.L186
+.L185:
+.L191:
+	movqd	#-3,v1
+.L194:
+	cmpd	v1,#3
+	bgt	.L193
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L195
+	br	.L192
+.L195:
+	addqw	#1,i
+	movxwd	it,.r0
+	addd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movxwd	.r0,.r0
+	addd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L196
+	.text
+	.text
+	movd	#.L198,.tos
+	movd	#.L197,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L199
+.L196:
+.L192:
+	addqd	#1,v1
+	br	.L194
+.L193:
+.L199:
+	movqd	#-3,v1
+.L202:
+	cmpd	v1,#3
+	bgt	.L201
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L203
+	br	.L200
+.L203:
+	addqw	#1,i
+	movxwd	it,.r0
+	subd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movxwd	.r0,.r0
+	subd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L204
+	.text
+	.text
+	movd	#.L206,.tos
+	movd	#.L205,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L207
+.L204:
+.L200:
+	addqd	#1,v1
+	br	.L202
+.L201:
+.L207:
+	movqd	#-3,v1
+.L210:
+	cmpd	v1,#3
+	bgt	.L209
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L211
+	br	.L208
+.L211:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	comw	.r1,.r1
+	movxwd	.r1,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L212
+	.text
+	.text
+	movd	#.L214,.tos
+	movd	#.L213,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L215
+.L212:
+.L208:
+	addqd	#1,v1
+	br	.L210
+.L209:
+.L215:
+	movqd	#-3,v1
+.L218:
+	cmpd	v1,#3
+	bgt	.L217
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L219
+	br	.L216
+.L219:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	comw	.r1,.r1
+	movxwd	.r1,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L220
+	.text
+	.text
+	movd	#.L222,.tos
+	movd	#.L221,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L223
+.L220:
+.L216:
+	addqd	#1,v1
+	br	.L218
+.L217:
+.L223:
+	movqd	#-3,v1
+.L226:
+	cmpd	v1,#3
+	bgt	.L225
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L227
+	br	.L224
+.L227:
+	addqw	#1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	muld	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	comw	.r1,.r1
+	movxwd	.r1,.r1
+	muld	.r1,.r0
+	movd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L228
+	.text
+	.text
+	movd	#.L230,.tos
+	movd	#.L229,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L231
+.L228:
+.L224:
+	addqd	#1,v1
+	br	.L226
+.L225:
+.L231:
+	movqd	#-3,v1
+.L234:
+	cmpd	v1,#3
+	bgt	.L233
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L235
+	br	.L232
+.L235:
+	addqw	#1,i
+	movxwd	it,.r0
+	ord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movxwd	.r0,.r0
+	ord	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L236
+	.text
+	.text
+	movd	#.L238,.tos
+	movd	#.L237,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L239
+.L236:
+.L232:
+	addqd	#1,v1
+	br	.L234
+.L233:
+.L239:
+	movqd	#-3,v1
+.L242:
+	cmpd	v1,#3
+	bgt	.L241
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L243
+	br	.L240
+.L243:
+	addqw	#1,i
+	movxwd	it,.r0
+	xord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movxwd	.r0,.r0
+	xord	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L244
+	.text
+	.text
+	movd	#.L246,.tos
+	movd	#.L245,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L247
+.L244:
+.L240:
+	addqd	#1,v1
+	br	.L242
+.L241:
+.L247:
+	movqd	#-3,v1
+.L250:
+	cmpd	v1,#3
+	bgt	.L249
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L251
+	br	.L248
+.L251:
+	addqw	#1,i
+	movxwd	it,.r0
+	andd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	comw	.r0,.r0
+	movxwd	.r0,.r0
+	andd	.r0,l
+	addqw	#1,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L252
+	.text
+	.text
+	movd	#.L254,.tos
+	movd	#.L253,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L255
+.L252:
+.L248:
+	addqd	#1,v1
+	br	.L250
+.L249:
+.L255:
+	movqd	#-3,v1
+.L258:
+	cmpd	v1,#3
+	bgt	.L257
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10009
+	movqd	#1,.r0
+	br	.L10010
+.L10009:
+	movqd	#0,.r0
+.L10010:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L259
+	br	.L256
+.L259:
+	addqw	#-1,i
+	movxwd	it,.r0
+	addd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	addqw	#-1,i
+	cmpw	.r0,#0
+	bne	.L10011
+	movqd	#1,.r0
+	br	.L10012
+.L10011:
+	movqd	#0,.r0
+.L10012:
+	addd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L260
+	.text
+	.text
+	movd	#.L262,.tos
+	movd	#.L261,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L263
+.L260:
+.L256:
+	addqd	#1,v1
+	br	.L258
+.L257:
+.L263:
+	movqd	#-3,v1
+.L266:
+	cmpd	v1,#3
+	bgt	.L265
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10013
+	movqd	#1,.r0
+	br	.L10014
+.L10013:
+	movqd	#0,.r0
+.L10014:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L267
+	br	.L264
+.L267:
+	addqw	#-1,i
+	movxwd	it,.r0
+	subd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	addqw	#-1,i
+	cmpw	.r0,#0
+	bne	.L10015
+	movqd	#1,.r0
+	br	.L10016
+.L10015:
+	movqd	#0,.r0
+.L10016:
+	subd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L268
+	.text
+	.text
+	movd	#.L270,.tos
+	movd	#.L269,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L271
+.L268:
+.L264:
+	addqd	#1,v1
+	br	.L266
+.L265:
+.L271:
+	movqd	#-3,v1
+.L274:
+	cmpd	v1,#3
+	bgt	.L273
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10017
+	movqd	#1,.r0
+	br	.L10018
+.L10017:
+	movqd	#0,.r0
+.L10018:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L275
+	br	.L272
+.L275:
+	addqw	#-1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	divd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	addqw	#-1,i
+	cmpw	.r1,#0
+	bne	.L10019
+	movqd	#1,.r1
+	br	.L10020
+.L10019:
+	movqd	#0,.r1
+.L10020:
+	divd	.r1,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L276
+	.text
+	.text
+	movd	#.L278,.tos
+	movd	#.L277,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L279
+.L276:
+.L272:
+	addqd	#1,v1
+	br	.L274
+.L273:
+.L279:
+	movqd	#-3,v1
+.L282:
+	cmpd	v1,#3
+	bgt	.L281
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10021
+	movqd	#1,.r0
+	br	.L10022
+.L10021:
+	movqd	#0,.r0
+.L10022:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L283
+	br	.L280
+.L283:
+	addqw	#-1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	modd	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	addqw	#-1,i
+	cmpw	.r1,#0
+	bne	.L10023
+	movqd	#1,.r1
+	br	.L10024
+.L10023:
+	movqd	#0,.r1
+.L10024:
+	modd	.r1,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L284
+	.text
+	.text
+	movd	#.L286,.tos
+	movd	#.L285,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L287
+.L284:
+.L280:
+	addqd	#1,v1
+	br	.L282
+.L281:
+.L287:
+	movqd	#-3,v1
+.L290:
+	cmpd	v1,#3
+	bgt	.L289
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10025
+	movqd	#1,.r0
+	br	.L10026
+.L10025:
+	movqd	#0,.r0
+.L10026:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L291
+	br	.L288
+.L291:
+	addqw	#-1,i
+	movd	l,.r0
+	movxwd	it,.r1
+	muld	.r1,.r0
+	movd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movd	l,.r0
+	movw	i,.r1
+	addqw	#-1,i
+	cmpw	.r1,#0
+	bne	.L10027
+	movqd	#1,.r1
+	br	.L10028
+.L10027:
+	movqd	#0,.r1
+.L10028:
+	muld	.r1,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L292
+	.text
+	.text
+	movd	#.L294,.tos
+	movd	#.L293,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L295
+.L292:
+.L288:
+	addqd	#1,v1
+	br	.L290
+.L289:
+.L295:
+	movqd	#-3,v1
+.L298:
+	cmpd	v1,#3
+	bgt	.L297
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10029
+	movqd	#1,.r0
+	br	.L10030
+.L10029:
+	movqd	#0,.r0
+.L10030:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L299
+	br	.L296
+.L299:
+	addqw	#-1,i
+	movxwd	it,.r0
+	ord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	addqw	#-1,i
+	cmpw	.r0,#0
+	bne	.L10031
+	movqd	#1,.r0
+	br	.L10032
+.L10031:
+	movqd	#0,.r0
+.L10032:
+	ord	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L300
+	.text
+	.text
+	movd	#.L302,.tos
+	movd	#.L301,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L303
+.L300:
+.L296:
+	addqd	#1,v1
+	br	.L298
+.L297:
+.L303:
+	movqd	#-3,v1
+.L306:
+	cmpd	v1,#3
+	bgt	.L305
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10033
+	movqd	#1,.r0
+	br	.L10034
+.L10033:
+	movqd	#0,.r0
+.L10034:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L307
+	br	.L304
+.L307:
+	addqw	#-1,i
+	movxwd	it,.r0
+	xord	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	addqw	#-1,i
+	cmpw	.r0,#0
+	bne	.L10035
+	movqd	#1,.r0
+	br	.L10036
+.L10035:
+	movqd	#0,.r0
+.L10036:
+	xord	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L308
+	.text
+	.text
+	movd	#.L310,.tos
+	movd	#.L309,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L311
+.L308:
+.L304:
+	addqd	#1,v1
+	br	.L306
+.L305:
+.L311:
+	movqd	#-3,v1
+.L314:
+	cmpd	v1,#3
+	bgt	.L313
+	jsr	clear
+	movw	v1,i
+	movd	#99991,l
+	cmpw	i,#0
+	bne	.L10037
+	movqd	#1,.r0
+	br	.L10038
+.L10037:
+	movqd	#0,.r0
+.L10038:
+	movw	.r0,it
+	cmpw	it,#0
+	bne	.L315
+	br	.L312
+.L315:
+	addqw	#-1,i
+	movxwd	it,.r0
+	andd	.r0,l
+	jsr	save
+	movw	v1,i
+	movd	#99991,l
+	movw	i,.r0
+	addqw	#-1,i
+	cmpw	.r0,#0
+	bne	.L10039
+	movqd	#1,.r0
+	br	.L10040
+.L10039:
+	movqd	#0,.r0
+.L10040:
+	andd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L316
+	.text
+	.text
+	movd	#.L318,.tos
+	movd	#.L317,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L319
+.L316:
+.L312:
+	addqd	#1,v1
+	br	.L314
+.L313:
+.L319:
+	jsr	clear
+	movqw	#1,u
+	movzwd	u,lt
+	movd	lt,.r0
+	negd	.r0,.r0
+	movd	.r0,l
+	jsr	save
+	movqw	#1,u
+	movzwd	u,.r0
+	negd	.r0,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L320
+	.text
+	.text
+	movd	#.L322,.tos
+	movd	#.L321,.tos
+	jsr	printf
+	adjspb	#-8
+.L320:
+	jsr	clear
+	movqw	#1,u
+	movzwd	u,lt
+	movd	lt,.r0
+	comd	.r0,.r0
+	movd	.r0,l
+	jsr	save
+	movqw	#1,u
+	movzwd	u,.r0
+	comd	.r0,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L323
+	.text
+	.text
+	movd	#.L325,.tos
+	movd	#.L324,.tos
+	jsr	printf
+	adjspb	#-8
+.L323:
+	jsr	clear
+	movqw	#1,i
+	movxwd	i,lt
+	movd	lt,.r0
+	negd	.r0,.r0
+	movd	.r0,l
+	jsr	save
+	movqw	#1,i
+	movxwd	i,.r0
+	negd	.r0,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L326
+	.text
+	.text
+	movd	#.L328,.tos
+	movd	#.L327,.tos
+	jsr	printf
+	adjspb	#-8
+.L326:
+	jsr	clear
+	movqw	#1,i
+	movxwd	i,lt
+	movd	lt,.r0
+	comd	.r0,.r0
+	movd	.r0,l
+	jsr	save
+	movqw	#1,i
+	movxwd	i,.r0
+	comd	.r0,.r0
+	movd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L329
+	.text
+	.text
+	movd	#.L331,.tos
+	movd	#.L330,.tos
+	jsr	printf
+	adjspb	#-8
+.L329:
+	jsr	clear
+	addqb	#1,c
+	movxbw	c,i
+	jsr	save
+	movb	c,.r0
+	addqb	#1,c
+	cmpb	.r0,#0
+	beq	.L10041
+	movxbd	c,.r0
+	br	.L10042
+.L10041:
+	movxbd	c,.r0
+.L10042:
+	movw	.r0,i
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L332
+	.text
+	.text
+	movd	#.L334,.tos
+	movd	#.L333,.tos
+	jsr	printf
+	adjspb	#-8
+.L332:
+	movqd	#-3,v1
+.L337:
+	cmpd	v1,#3
+	bgt	.L336
+	jsr	clear
+	movw	v1,u
+	movw	u,.r0
+	comw	.r0,.r0
+	movw	.r0,ut
+	movw	ut,it
+	movw	it,.r0
+	comw	.r0,.r0
+	movw	.r0,it
+	movxwd	it,l
+	jsr	save
+	movw	v1,u
+	movw	u,.r0
+	comw	.r0,.r0
+	comw	.r0,.r0
+	movxwd	.r0,l
+	jsr	check
+	cmpd	.r0,#0
+	beq	.L338
+	.text
+	.text
+	movd	#.L340,.tos
+	movd	#.L339,.tos
+	jsr	printf
+	adjspb	#-8
+	br	.L341
+.L338:
+.L335:
+	addqd	#1,v1
+	br	.L337
+.L336:
+.L341:
+	br	.L69
+.L69:	exit	1
+	ret	0
+_F6 = 4
+_S6 = 128
+	.data
+.L78:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,58,32,37,115
+	.byte	10,0
+.L79:
+	.byte	32,108,61,117,47,117,97,59
+	.byte	0
+.L88:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,58,32,37,115
+	.byte	10,0
+.L89:
+	.byte	32,108,61,117,37,117,97,59
+	.byte	0
+.L92:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,58,32,37,115
+	.byte	10,0
+.L93:
+	.byte	32,105,61,115,105,122,101,111
+	.byte	102,40,40,115,104,111,114,116
+	.byte	41,99,41,59,32,105,97,61
+	.byte	115,105,122,101,111,102,40,40
+	.byte	102,108,111,97,116,41,99,41
+	.byte	59,0
+.L95:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,52,58,32,37,115
+	.byte	10,0
+.L96:
+	.byte	32,105,61,115,105,122,101,111
+	.byte	102,40,99,104,97,114,91,49
+	.byte	48,93,41,45,115,105,122,101
+	.byte	111,102,40,99,104,97,114,91
+	.byte	50,48,93,41,62,61,48,59
+	.byte	0
+.L98:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,53,58,32,37,115
+	.byte	10,0
+.L99:
+	.byte	32,105,61,40,115,104,111,114
+	.byte	116,32,117,110,115,105,103,110
+	.byte	101,100,41,99,59,0
+.L107:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,54,58,32,37,115
+	.byte	10,0
+.L108:
+	.byte	32,105,98,61,105,97,62,62
+	.byte	117,59,0
+.L111:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,55,58,32,37,115
+	.byte	10,0
+.L112:
+	.byte	32,112,108,91,108,97,45,108
+	.byte	98,43,43,93,43,43,59,0
+.L117:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,56,58,32,37,115
+	.byte	10,0
+.L118:
+	.byte	32,102,111,114,40,114,101,103
+	.byte	95,99,61,105,61,105,97,61
+	.byte	49,59,32,114,101,103,95,99
+	.byte	60,60,61,105,97,59,32,105
+	.byte	43,43,41,59,0
+.L123:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,57,58,32,37,115
+	.byte	10,0
+.L124:
+	.byte	32,102,111,114,40,99,61,105
+	.byte	61,105,97,61,49,59,32,99
+	.byte	60,60,61,105,97,59,32,105
+	.byte	43,43,41,59,0
+.L126:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,48,58,32,37
+	.byte	115,10,0
+.L127:
+	.byte	32,114,101,103,95,99,61,48
+	.byte	59,32,114,101,103,95,99,124
+	.byte	61,48,50,48,48,59,32,114
+	.byte	101,103,95,99,62,62,61,50
+	.byte	59,32,105,61,114,101,103,95
+	.byte	99,59,0
+.L133:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,49,58,32,37
+	.byte	115,10,0
+.L134:
+	.byte	32,108,43,61,32,45,105,43
+	.byte	43,59,0
+.L141:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,50,58,32,37
+	.byte	115,10,0
+.L142:
+	.byte	32,108,45,61,32,45,105,43
+	.byte	43,59,0
+.L149:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,51,58,32,37
+	.byte	115,10,0
+.L150:
+	.byte	32,108,47,61,32,45,105,43
+	.byte	43,59,0
+.L157:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,52,58,32,37
+	.byte	115,10,0
+.L158:
+	.byte	32,108,37,61,32,45,105,43
+	.byte	43,59,0
+.L165:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,53,58,32,37
+	.byte	115,10,0
+.L166:
+	.byte	32,108,42,61,32,45,105,43
+	.byte	43,59,0
+.L173:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,54,58,32,37
+	.byte	115,10,0
+.L174:
+	.byte	32,108,124,61,32,45,105,43
+	.byte	43,59,0
+.L181:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,55,58,32,37
+	.byte	115,10,0
+.L182:
+	.byte	32,108,94,61,32,45,105,43
+	.byte	43,59,0
+.L189:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,56,58,32,37
+	.byte	115,10,0
+.L190:
+	.byte	32,108,38,61,32,45,105,43
+	.byte	43,59,0
+.L197:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,49,57,58,32,37
+	.byte	115,10,0
+.L198:
+	.byte	32,108,43,61,32,126,105,43
+	.byte	43,59,0
+.L205:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,48,58,32,37
+	.byte	115,10,0
+.L206:
+	.byte	32,108,45,61,32,126,105,43
+	.byte	43,59,0
+.L213:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,49,58,32,37
+	.byte	115,10,0
+.L214:
+	.byte	32,108,47,61,32,126,105,43
+	.byte	43,59,0
+.L221:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,50,58,32,37
+	.byte	115,10,0
+.L222:
+	.byte	32,108,37,61,32,126,105,43
+	.byte	43,59,0
+.L229:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,51,58,32,37
+	.byte	115,10,0
+.L230:
+	.byte	32,108,42,61,32,126,105,43
+	.byte	43,59,0
+.L237:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,52,58,32,37
+	.byte	115,10,0
+.L238:
+	.byte	32,108,124,61,32,126,105,43
+	.byte	43,59,0
+.L245:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,53,58,32,37
+	.byte	115,10,0
+.L246:
+	.byte	32,108,94,61,32,126,105,43
+	.byte	43,59,0
+.L253:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,54,58,32,37
+	.byte	115,10,0
+.L254:
+	.byte	32,108,38,61,32,126,105,43
+	.byte	43,59,0
+.L261:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,55,58,32,37
+	.byte	115,10,0
+.L262:
+	.byte	32,108,43,61,32,33,105,45
+	.byte	45,59,0
+.L269:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,56,58,32,37
+	.byte	115,10,0
+.L270:
+	.byte	32,108,45,61,32,33,105,45
+	.byte	45,59,0
+.L277:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,50,57,58,32,37
+	.byte	115,10,0
+.L278:
+	.byte	32,108,47,61,32,33,105,45
+	.byte	45,59,0
+.L285:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,48,58,32,37
+	.byte	115,10,0
+.L286:
+	.byte	32,108,37,61,32,33,105,45
+	.byte	45,59,0
+.L293:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,49,58,32,37
+	.byte	115,10,0
+.L294:
+	.byte	32,108,42,61,32,33,105,45
+	.byte	45,59,0
+.L301:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,50,58,32,37
+	.byte	115,10,0
+.L302:
+	.byte	32,108,124,61,32,33,105,45
+	.byte	45,59,0
+.L309:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,51,58,32,37
+	.byte	115,10,0
+.L310:
+	.byte	32,108,94,61,32,33,105,45
+	.byte	45,59,0
+.L317:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,52,58,32,37
+	.byte	115,10,0
+.L318:
+	.byte	32,108,38,61,32,33,105,45
+	.byte	45,59,0
+.L321:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,53,58,32,37
+	.byte	115,10,0
+.L322:
+	.byte	32,108,61,32,45,40,108,111
+	.byte	110,103,41,117,59,0
+.L324:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,54,58,32,37
+	.byte	115,10,0
+.L325:
+	.byte	32,108,61,32,126,40,108,111
+	.byte	110,103,41,117,59,0
+.L327:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,55,58,32,37
+	.byte	115,10,0
+.L328:
+	.byte	32,108,61,32,45,40,108,111
+	.byte	110,103,41,105,59,0
+.L330:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,56,58,32,37
+	.byte	115,10,0
+.L331:
+	.byte	32,108,61,32,126,40,108,111
+	.byte	110,103,41,105,59,0
+.L333:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,51,57,58,32,37
+	.byte	115,10,0
+.L334:
+	.byte	32,105,61,99,43,43,63,99
+	.byte	58,99,59,0
+.L339:
+	.byte	102,97,105,108,115,32,116,101
+	.byte	115,116,32,52,48,58,32,37
+	.byte	115,10,0
+.L340:
+	.byte	32,108,61,32,126,40,115,104
+	.byte	111,114,116,41,126,117,59,0

@@ -1,0 +1,3 @@
+This optimizer is still fairly experimental, i.e., there are known
+circumstances in which its optimizations get carried away to the
+point of producing incorrect code --  let the user beware!

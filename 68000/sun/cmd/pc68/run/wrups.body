@@ -1,0 +1,25 @@
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $wrups ( var str:chararray; var fdb:txtfdb;  length: integer; fldw: integer);
+   var i:integer;
+   ch: char;
+   begin
+   if fldw > length then
+   begin
+   for i := 1 to fldw - length do
+	 $wr1c (fdb,' ');
+   fldw := length;
+   end;
+   for i := 1 to fldw do
+   begin
+   ch := str[i];
+   $wr1c (fdb, ch);
+   end;
+   end;
+
+
+
+   (* dummy main program *)
+
+.

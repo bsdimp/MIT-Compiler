@@ -1,0 +1,345 @@
+__sctab: sbp->attr 5 5 
+sbp->value_s 0 
+in Put_Text, Dot = 0 Line_no = 5
+in Put_Text, Dot = 2 Line_no = 6
+in Put_Text, Dot = 4 Line_no = 7
+in Put_Text, Dot = 6 Line_no = 8
+in Put_Text, Dot = 8 Line_no = 9
+in Put_Text, Dot = 10 Line_no = 10
+in Put_Text, Dot = 12 Line_no = 11
+in Put_Text, Dot = 14 Line_no = 12
+in Put_Text, Dot = 16 Line_no = 13
+in Put_Text, Dot = 18 Line_no = 14
+in Put_Text, Dot = 20 Line_no = 15
+in Put_Text, Dot = 22 Line_no = 16
+in Put_Text, Dot = 24 Line_no = 17
+in Put_Text, Dot = 26 Line_no = 18
+in Put_Text, Dot = 28 Line_no = 19
+in Put_Text, Dot = 30 Line_no = 20
+in Put_Text, Dot = 32 Line_no = 21
+in Put_Text, Dot = 34 Line_no = 22
+in Put_Text, Dot = 36 Line_no = 23
+in Put_Text, Dot = 38 Line_no = 24
+in Put_Text, Dot = 40 Line_no = 25
+in Put_Text, Dot = 42 Line_no = 26
+in Put_Text, Dot = 44 Line_no = 27
+in Put_Text, Dot = 46 Line_no = 28
+in Put_Text, Dot = 48 Line_no = 29
+in Put_Text, Dot = 50 Line_no = 30
+in Put_Text, Dot = 52 Line_no = 31
+in Put_Text, Dot = 54 Line_no = 32
+in Put_Text, Dot = 56 Line_no = 33
+in Put_Text, Dot = 58 Line_no = 34
+in Put_Text, Dot = 60 Line_no = 35
+in Put_Text, Dot = 62 Line_no = 36
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+in Put_Text, Dot = 64 Line_no = 37
+__doscan: sbp->attr 5 5 
+sbp->value_s 0 
+in Put_Text, Dot = 0 Line_no = 41
+in Put_Text, Dot = 1 Line_no = 42
+in Put_Text, Dot = 3 Line_no = 43
+in Put_Text, Dot = 4 Line_no = 44
+in Put_Text, Dot = 5 Line_no = 45
+in Put_Text, Dot = 9 Line_no = 46
+in Put_Text, Dot = 13 Line_no = 47
+in Put_Text, Dot = 17 Line_no = 48
+in Put_Text, Dot = 22 Line_no = 49
+L24: sbp->attr 0 0 
+sbp->value_s 27 
+in Put_Text, Dot = 27 Line_no = 51
+in Put_Text, Dot = 29 Line_no = 52
+in Put_Text, Dot = 30 Line_no = 53
+in Put_Text, Dot = 32 Line_no = 54
+in Put_Text, Dot = 33 Line_no = 55
+in Put_Text, Dot = 36 Line_no = 56
+L27: sbp->attr 0 0 
+sbp->value_s 38 
+in Put_Text, Dot = 38 Line_no = 58
+in Put_Text, Dot = 41 Line_no = 59
+L28: sbp->attr 0 0 
+sbp->value_s 43 
+in Put_Text, Dot = 43 Line_no = 61
+in Put_Text, Dot = 45 Line_no = 62
+in Put_Text, Dot = 46 Line_no = 63
+in Put_Text, Dot = 48 Line_no = 64
+in Put_Text, Dot = 49 Line_no = 65
+in Put_Text, Dot = 52 Line_no = 66
+in Put_Text, Dot = 55 Line_no = 67
+in Put_Text, Dot = 57 Line_no = 68
+L29: sbp->attr 0 0 
+sbp->value_s 59 
+in Put_Text, Dot = 59 Line_no = 70
+in Put_Text, Dot = 64 Line_no = 71
+in Put_Text, Dot = 68 Line_no = 72
+in Put_Text, Dot = 70 Line_no = 73
+in Put_Text, Dot = 72 Line_no = 74
+in Put_Text, Dot = 75 Line_no = 75
+in Put_Text, Dot = 78 Line_no = 76
+L31: sbp->attr 0 0 
+sbp->value_s 80 
+in Put_Text, Dot = 80 Line_no = 78
+in Put_Text, Dot = 82 Line_no = 79
+in Put_Text, Dot = 83 Line_no = 80
+in Put_Text, Dot = 85 Line_no = 81
+in Put_Text, Dot = 86 Line_no = 82
+L32: sbp->attr 0 0 
+sbp->value_s 89 
+in Put_Text, Dot = 89 Line_no = 84
+in Put_Text, Dot = 94 Line_no = 85
+L33: sbp->attr 0 0 
+sbp->value_s 99 
+in Put_Text, Dot = 99 Line_no = 87
+in Put_Text, Dot = 103 Line_no = 88
+in Put_Text, Dot = 105 Line_no = 89
+in Put_Text, Dot = 109 Line_no = 90
+in Put_Text, Dot = 111 Line_no = 91
+in Put_Text, Dot = 114 Line_no = 92
+in Put_Text, Dot = 117 Line_no = 93
+in Put_Text, Dot = 119 Line_no = 94
+in Put_Text, Dot = 122 Line_no = 95
+in Put_Text, Dot = 125 Line_no = 96
+in Put_Text, Dot = 128 Line_no = 97
+in Put_Text, Dot = 130 Line_no = 98
+in Put_Text, Dot = 131 Line_no = 99
+in Put_Text, Dot = 133 Line_no = 100
+in Put_Text, Dot = 134 Line_no = 101
+in Put_Text, Dot = 137 Line_no = 102
+L34: sbp->attr 0 0 
+sbp->value_s 139 
+in Put_Text, Dot = 139 Line_no = 104
+in Put_Text, Dot = 143 Line_no = 105
+in Put_Text, Dot = 145 Line_no = 106
+L35: sbp->attr 0 0 
+sbp->value_s 150 
+in Put_Text, Dot = 150 Line_no = 108
+in Put_Text, Dot = 154 Line_no = 109
+in Put_Text, Dot = 156 Line_no = 110
+in Put_Text, Dot = 158 Line_no = 111
+in Put_Text, Dot = 159 Line_no = 112
+in Put_Text, Dot = 161 Line_no = 113
+in Put_Text, Dot = 162 Line_no = 114
+in Put_Text, Dot = 165 Line_no = 115
+in Put_Text, Dot = 170 Line_no = 116
+L36: sbp->attr 0 0 
+sbp->value_s 172 
+in Put_Text, Dot = 172 Line_no = 118
+in Put_Text, Dot = 176 Line_no = 119
+in Put_Text, Dot = 178 Line_no = 120
+in Put_Text, Dot = 183 Line_no = 121
+in Put_Text, Dot = 185 Line_no = 122
+in Put_Text, Dot = 186 Line_no = 123
+in Put_Text, Dot = 188 Line_no = 124
+in Put_Text, Dot = 189 Line_no = 125
+in Put_Text, Dot = 192 Line_no = 126
+L38: sbp->attr 0 0 
+sbp->value_s 194 
+in Put_Text, Dot = 194 Line_no = 128
+in Put_Text, Dot = 198 Line_no = 129
+in Put_Text, Dot = 200 Line_no = 130
+in Put_Text, Dot = 201 Line_no = 131
+in Put_Text, Dot = 206 Line_no = 132
+in Put_Text, Dot = 209 Line_no = 133
+L40: sbp->attr 0 0 
+sbp->value_s 211 
+L39: sbp->attr 0 0 
+sbp->value_s 211 
+L37: sbp->attr 0 0 
+sbp->value_s 211 
+in Put_Text, Dot = 211 Line_no = 137
+in Put_Text, Dot = 214 Line_no = 138
+in Put_Text, Dot = 218 Line_no = 139
+in Put_Text, Dot = 219 Line_no = 140
+in Put_Text, Dot = 222 Line_no = 141
+in Put_Text, Dot = 224 Line_no = 142
+in Put_Text, Dot = 227 Line_no = 143
+in Put_Text, Dot = 230 Line_no = 144
+in Put_Text, Dot = 233 Line_no = 145
+L41: sbp->attr 0 0 
+sbp->value_s 238 
+in Put_Text, Dot = 238 Line_no = 147
+in Put_Text, Dot = 242 Line_no = 148
+in Put_Text, Dot = 244 Line_no = 149
+in Put_Text, Dot = 247 Line_no = 150
+L42: sbp->attr 0 0 
+sbp->value_s 249 
+in Put_Text, Dot = 249 Line_no = 152
+in Put_Text, Dot = 252 Line_no = 153
+in Put_Text, Dot = 253 Line_no = 154
+in Put_Text, Dot = 256 Line_no = 155
+in Put_Text, Dot = 259 Line_no = 156
+in Put_Text, Dot = 262 Line_no = 157
+in Put_Text, Dot = 265 Line_no = 158
+in Put_Text, Dot = 268 Line_no = 159
+in Put_Text, Dot = 273 Line_no = 160
+in Put_Text, Dot = 276 Line_no = 161
+in Put_Text, Dot = 278 Line_no = 162
+in Put_Text, Dot = 280 Line_no = 163
+in Put_Text, Dot = 284 Line_no = 164
+in Put_Text, Dot = 286 Line_no = 165
+L44: sbp->attr 0 0 
+sbp->value_s 289 
+in Put_Text, Dot = 289 Line_no = 167
+in Put_Text, Dot = 293 Line_no = 168
+in Put_Text, Dot = 295 Line_no = 169
+in Put_Text, Dot = 299 Line_no = 170
+in Put_Text, Dot = 301 Line_no = 171
+in Put_Text, Dot = 304 Line_no = 172
+L10000: sbp->attr 0 0 
+sbp->value_s 306 
+in Put_Text, Dot = 306 Line_no = 174
+L10001: sbp->attr 0 0 
+sbp->value_s 309 
+in Put_Text, Dot = 309 Line_no = 176
+L45: sbp->attr 0 0 
+sbp->value_s 311 
+in Put_Text, Dot = 311 Line_no = 178
+L46: sbp->attr 0 0 
+sbp->value_s 313 
+L47: sbp->attr 0 0 
+sbp->value_s 313 
+L48: sbp->attr 0 0 
+sbp->value_s 313 
+L50: sbp->attr 0 0 
+sbp->value_s 313 
+in Put_Text, Dot = 313 Line_no = 183
+in Put_Text, Dot = 316 Line_no = 184
+in Put_Text, Dot = 320 Line_no = 185
+in Put_Text, Dot = 322 Line_no = 186
+in Put_Text, Dot = 325 Line_no = 187
+in Put_Text, Dot = 327 Line_no = 188
+in Put_Text, Dot = 329 Line_no = 189
+in Put_Text, Dot = 330 Line_no = 190
+in Put_Text, Dot = 332 Line_no = 191
+in Put_Text, Dot = 334 Line_no = 192
+in Put_Text, Dot = 335 Line_no = 193
+in Put_Text, Dot = 338 Line_no = 194
+L10003: sbp->attr 0 0 
+sbp->value_s 340 
+in Put_Text, Dot = 340 Line_no = 196
+in Put_Text, Dot = 343 Line_no = 197
+in Put_Text, Dot = 348 Line_no = 198
+L10004: sbp->attr 0 0 
+sbp->value_s 351 
+in Put_Text, Dot = 351 Line_no = 200
+in Put_Text, Dot = 354 Line_no = 201
+in Put_Text, Dot = 357 Line_no = 202
+in Put_Text, Dot = 359 Line_no = 203
+in Put_Text, Dot = 363 Line_no = 204
+in Put_Text, Dot = 365 Line_no = 205
+in Put_Text, Dot = 369 Line_no = 206
+L10002: sbp->attr 0 0 
+sbp->value_s 371 
+in Put_Text, Dot = 371 Line_no = 208
+L51: sbp->attr 0 0 
+sbp->value_s 373 
+in Put_Text, Dot = 373 Line_no = 210
+in Put_Text, Dot = 377 Line_no = 211
+in Put_Text, Dot = 379 Line_no = 212
+in Put_Text, Dot = 382 Line_no = 213
+in Put_Text, Dot = 385 Line_no = 214
+in Put_Text, Dot = 390 Line_no = 215
+L52: sbp->attr 0 0 
+sbp->value_s 393 
+in Put_Text, Dot = 393 Line_no = 217
+L54: sbp->attr 0 0 
+sbp->value_s 395 
+L30: sbp->attr 0 0 
+sbp->value_s 395 
+in Put_Text, Dot = 395 Line_no = 220
+in Put_Text, Dot = 398 Line_no = 221
+in Put_Text, Dot = 402 Line_no = 222
+in Put_Text, Dot = 404 Line_no = 223
+in Put_Text, Dot = 407 Line_no = 224
+in Put_Text, Dot = 409 Line_no = 225
+in Put_Text, Dot = 411 Line_no = 226
+in Put_Text, Dot = 412 Line_no = 227
+in Put_Text, Dot = 414 Line_no = 228
+in Put_Text, Dot = 416 Line_no = 229
+in Put_Text, Dot = 417 Line_no = 230
+in Put_Text, Dot = 420 Line_no = 231
+L10005: sbp->attr 0 0 
+sbp->value_s 422 
+in Put_Text, Dot = 422 Line_no = 233
+in Put_Text, Dot = 425 Line_no = 234
+in Put_Text, Dot = 430 Line_no = 235
+L10006: sbp->attr 0 0 
+sbp->value_s 433 
+in Put_Text, Dot = 433 Line_no = 237
+in Put_Text, Dot = 436 Line_no = 238
+in Put_Text, Dot = 439 Line_no = 239
+in Put_Text, Dot = 442 Line_no = 240
+in Put_Text, Dot = 444 Line_no = 241
+in Put_Text, Dot = 448 Line_no = 242
+in Put_Text, Dot = 450 Line_no = 243
+in Put_Text, Dot = 453 Line_no = 244
+L56: sbp->attr 0 0 
+sbp->value_s 455 
+in Put_Text, Dot = 455 Line_no = 246
+in Put_Text, Dot = 458 Line_no = 247
+in Put_Text, Dot = 461 Line_no = 248
+in Put_Text, Dot = 466 Line_no = 249
+in Put_Text, Dot = 469 Line_no = 250
+in Put_Text, Dot = 472 Line_no = 251
+L55: sbp->attr 0 0 
+sbp->value_s 474 
+in Put_Text, Dot = 474 Line_no = 253
+L26: sbp->attr 0 0 
+sbp->value_s 476 
+in Put_Text, Dot = 476 Line_no = 255
+in Put_Text, Dot = 479 Line_no = 256
+in Put_Text, Dot = 481 Line_no = 257
+in Put_Text, Dot = 484 Line_no = 258
+in Put_Text, Dot = 486 Line_no = 259
+in Put_Text, Dot = 489 Line_no = 260
+in Put_Text, Dot = 491 Line_no = 261
+in Put_Text, Dot = 494 Line_no = 262
+in Put_Text, Dot = 496 Line_no = 263
+in Put_Text, Dot = 499 Line_no = 264
+in Put_Text, Dot = 501 Line_no = 265
+L25: sbp->attr 0 0 
+sbp->value_s 503 
+L22: sbp->attr 0 0 
+sbp->value_s 503 
+in Put_Text, Dot = 503 Line_no = 268
+L23: sbp->attr 0 0 
+sbp->value_s 505 
+L21: sbp->attr 0 0 
+sbp->value_s 505 
+in Put_Text, Dot = 505 Line_no = 271
+in Put_Text, Dot = 508 Line_no = 272
+in Put_Text, Dot = 509 Line_no = 273
+in Put_Text, Dot = 510 Line_no = 274
+in Put_Text, Dot = 511 Line_no = 275
+__innum: sbp->attr 5 5 
+sbp->value_s 512 

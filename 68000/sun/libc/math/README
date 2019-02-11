@@ -1,0 +1,3 @@
+These are a bunch of math routines stolen from MIT NU
+terminal software.  Only the sin.c module has been tested.
+	-- Bill Nowicki March 1982

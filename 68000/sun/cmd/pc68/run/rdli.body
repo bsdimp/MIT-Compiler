@@ -1,0 +1,37 @@
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $parseinteger (var fdb:txtfdb; var digits: digitarray;
+		 var negative,octal: boolean; var dctr: digitctr); extern;
+
+procedure $rdli ( var sourcevalue:longinteger; var fdb:txtfdb);
+
+   var
+   negative,octal: boolean;
+   ival: longinteger;
+   digits: digitarray;
+   dctr: digitctr;
+   k: digitctr;
+
+   begin
+
+   ival := 0;
+   $parseinteger (fdb,digits,negative,octal,dctr);
+   if octal then
+   for k := 1 to dctr do
+	 begin
+	 if digits[k] in [8,9] then
+	    $perror(fdb,'non-octal digit in oct num  ');
+	 ival := 8*ival + digits[k]
+	 end
+   else
+   for k := 1 to dctr do
+	 if negative then ival := -ival;
+   (*bug*)
+   sourcevalue := ival;
+   end;
+
+
+   (* dummy main program *)
+
+.

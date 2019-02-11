@@ -1,0 +1,16 @@
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdli ( var sourcevalue:longinteger; var fdb:txtfdb); extern;
+
+procedure $rdlirange(var sourcevalue:longinteger;
+		  var fdb:txtfdb;
+		  minvalue,maxvalue:longinteger);
+   begin
+   $rdli (sourcevalue,fdb);
+   if (sourcevalue < minvalue) or (sourcevalue > maxvalue) then
+   $perror(fdb,'value out of range          ');
+   end;
+
+   (* dummy main program *)
+
+.

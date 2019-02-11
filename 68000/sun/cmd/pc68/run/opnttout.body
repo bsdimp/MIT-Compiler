@@ -1,0 +1,25 @@
+
+procedure $open(var fdb:txtfdb; s:identifier; slength: integer; inputfile:boolean; protection:integer);extern;
+
+procedure $opnttout (var fdb:txtfdb);
+   begin
+   with fdb do
+   begin
+   filetype := charfile;
+(*   name[1] := 't';
+   name[2] := 't';
+   name[3] := 'y';
+   name[4] := ':';
+   namelength := 4;
+ *)
+   device := ttydev;
+   status := notopen;
+   pbuffersize := 8;
+   end;
+   $open (fdb,'TTY:            ',4,false,0);
+   end;
+
+   (* dummy main program *)
+
+.
+

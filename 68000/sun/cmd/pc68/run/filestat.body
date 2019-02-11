@@ -1,0 +1,28 @@
+
+  procedure $filepos (var filevar: txtfdb; var pagenum, linenum, charnum: integer); extern;
+
+  function $filestatus (var filevar: txtfdb; var filename: stdstring; length: integer):
+   integer;
+
+    (* returns 0 if file closed, 1 if open for input, 2 if open for
+	   output;  if open; returns name of file in filename, padded
+	   with blanks *)
+   var i,j: integer;
+
+   begin
+   with filevar do
+    begin
+    $filestatus := status;
+(*    if length < namelength then j := length
+	 else j := namelength;
+	 for i := 1 to j do
+	   filename[i] := filevar.name[i];
+	 for i := j+1 to length do
+	   filename[i] := ' ';
+ *)
+	 end;
+   end;
+
+   (* dummy main program *)
+
+.

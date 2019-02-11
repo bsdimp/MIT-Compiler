@@ -1,0 +1,43 @@
+
+var digitchars: packed array [1..16] of char;
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $wri (i:integer; var fdb:txtfdb;  fldw:integer; base: integer);
+   var negative: boolean;
+
+   procedure $wrd1;
+   var digit: 0..15;
+   begin
+   digit := abs(i mod base);
+   i := i div base;
+   fldw := fldw-1;
+   if i <> 0 then $wrd1;
+   while fldw > 0 do
+	 begin
+	 $wr1c (fdb,' ');
+	 fldw := fldw-1;
+	 end;
+   if negative then
+	 begin
+	 $wr1c(fdb,'-');
+	 negative := false;
+	 end;
+   $wr1c (fdb, digitchars[digit + 1]);
+   end;
+
+   begin
+   digitchars := '0123456789ABCDEF';
+   negative := (i < 0);
+   if negative then
+   begin
+   (*i := -i;*)
+   fldw := fldw-1;
+   end;
+   $wrd1;
+   end;
+
+
+   (* dummy main program *)
+
+.

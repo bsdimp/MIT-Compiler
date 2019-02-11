@@ -1,0 +1,54 @@
+
+function $bufval (var fdb:txtfdb): char; extern;
+
+function $eof (var fdb:txtfdb): boolean; extern;
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdc ( var ch:char;var fdb:txtfdb); extern;
+
+procedure $parseinteger (var fdb:txtfdb; var digits: digitarray;
+			 var negative,octal: boolean; var dctr: digitctr);
+
+   var ch:char;
+
+   begin
+   while ($bufval(fdb) in [' ',',']) and not $eof(fdb) do
+       $rdc (ch,fdb);
+   $rdc (ch,fdb);
+   if ch in ['+','-'] then
+       begin
+       negative := ch = '-';
+       $rdc(ch,fdb);
+       end
+   else negative := false;
+
+   if not (ch in ['0'..'9']) then
+       $perror(fdb,'digit expected              ');
+
+   digits[1] := ord(ch) - ord ('0');
+   dctr := 1;
+   while $bufval(fdb) in ['0'..'9'] do
+       begin
+       if dctr = maxdigits then
+          $perror(fdb,'integer too large           ')
+       else
+	  begin
+	  dctr := dctr + 1;
+	  digits [dctr] := ord($bufval(fdb)) - ord ('0');
+	  end;
+   $rdc (ch,fdb);
+   end;
+
+   if $bufval(fdb) = 'b' then                    (*octal*)
+      begin
+      $rdc(ch,fdb);
+      octal := true;
+      end
+   else octal := false;
+   end;
+
+
+   (* dummy main program *)
+
+.

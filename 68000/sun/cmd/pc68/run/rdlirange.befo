@@ -1,0 +1,101 @@
+(*rdlirange*)
+(*#B-,U0,G+*)
+(**setf s-1*)
+(**sett ten*)
+(**setf assem*)  (* some of these have been recoded in assembly language *)
+
+module runtimes;
+
+(* runtimes for pascal programs *)
+
+const
+   tabsetting = 8;
+   identlength = 16;    (* length of scalar identifiers *)
+   maxdigits = 24;   (* max number of digits in integer *)
+(**ift s-1*)
+{   underbar = '$';}
+{   stdstringlength = 28;   (* length of all strings within these runtimes *)}
+{   runbufsize = 1031;   (* number of words occupied by primitive run-time}
+{			 buffers, flags, etc. *)}
+(**else*)
+   underbar = '_';
+   stdstringlength = 132;  (* length of all strings within these runtimes *)
+   runbufsize = 8;   (* number of words occupied by primitive run-time
+ 			 buffers, flags, etc. *)
+(**endc*)
+   cape = 69;     (* ord(upper case e)*)
+   lowere = 101;    (* ord(lower case e)*)
+   (* do not change without changing primitive runtimes!*)
+
+   lowercasea = 97;      (* ord (lower case a) *)
+   lowercasez = 122;  (* ord (lower case z) *)
+   uplowdif = 32;    (* ord (lower case a) - ord (upper case a) *)
+(**ift s-1*)		
+{   setunitmax = 71;   (*chdd*)}
+{   setunitsize = 72; }
+{   setmax = 143;    (* max value of a set *)}
+{   setsperset = 2;   (* maximum size of a set, in set units *)}
+(**endc*)
+(**ift ten*)
+  setunitmax = 31;
+  setunitsize = 32;
+  setmax = 319;
+  setsperset = 10;
+(**endc*)
+
+type
+   errorstring = packed array [1..28] of char;
+   alfa = packed array[1..10] of char;
+   typeoffile = (binary,charfile,asciifile);
+   longinteger = integer;
+   digitarray = array[1..maxdigits] of 0..9;
+   digitctr = 0..maxdigits;
+   stdstring = packed array [1..stdstringlength] of char;
+   identifier = packed array [1..identlength] of char;
+   chararray = array [1..stdstringlength] of char;
+   standardset = set of 0..setmax;
+
+   setsub = 1..setsperset;    (*chd*)
+   targetset = array[setsub] of set of 0..setunitmax;  (*used to build a target set*)
+
+   scalarvector = array[0..100] of identifier;
+   scalarvptr = ^scalarvector;
+   scalarform = (integerform,charform,declaredform);
+   filestatus = (notopen,openforinput,openforoutput);
+   txtfdb = record
+(*	   namelength : 0..stdstringlength;*);
+(*	   name : stdstring;*)
+	   status : filestatus;
+	   device : (anydev,ttydev);
+	   eofflag : boolean;
+	   bufferinvalid : boolean;
+	   filetype : typeoffile;
+	   ttymode : boolean;  (* true = line at a time input *);
+	   promptlength: integer;
+	   prompt: identifier;
+	   eolnflag : boolean;
+	   eopageflag : boolean;
+	   charcount : integer;
+	   linecount : integer;
+	   pagecount : integer;
+	   tabcount : integer;
+	   pbuffersize : integer;
+	   runbufs : array[1..runbufsize] of integer;
+	   pbuffer : ascii;
+	    end;
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdli ( var sourcevalue:longinteger; var fdb:txtfdb); extern;
+
+procedure $rdlirange(var sourcevalue:longinteger;
+		  var fdb:txtfdb;
+		  minvalue,maxvalue:longinteger);
+   begin
+   $rdli (sourcevalue,fdb);
+   if (sourcevalue < minvalue) or (sourcevalue > maxvalue) then
+   $perror(fdb,'value out of range          ');
+   end;
+
+   (* dummy main program *)
+
+.

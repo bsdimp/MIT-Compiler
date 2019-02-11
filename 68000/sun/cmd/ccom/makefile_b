@@ -1,0 +1,21 @@
+# Makefile for 68000 compiler - Vax compiler making 68000 version
+
+.SUFFIXES:	.c .b
+
+CFLAGS =	-c -DFLEXNAMES
+
+BFILES =	cgram.b xdefs.b scan.b pftn.b trees.b optim.b code.b local.b\
+		reader.b local2.b order.b match.b allo.b comm1.b table.b
+
+DEST	=	.
+#DEST	=	../../../bin
+
+ccom:	 	$(BFILES)
+		cc68 -r -n -s -o $(DEST)/ccom $(BFILES)
+
+.c.b:
+		cc68 $(CFLAGS) $*.c
+
+cgram.c:	cgram.y
+		yacc cgram.y
+		mv y.tab.c cgram.c

@@ -1,0 +1,17 @@
+
+procedure $get (var fdb:txtfdb); extern;
+
+function $bufval (var fdb:txtfdb): char;
+   begin
+   with fdb do
+   if (device = ttydev) and bufferinvalid then
+	 begin
+	 $get (fdb);
+	 bufferinvalid := false;
+	 end;
+   $bufval := fdb.pbuffer;
+   end;
+
+   (* dummy main program *)
+
+.

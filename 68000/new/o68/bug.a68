@@ -1,0 +1,10 @@
+	.text
+.L:
+	.data
+	.word 0
+	.text
+	bra	.L
+	.data
+
+
+

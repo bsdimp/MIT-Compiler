@@ -1,0 +1,20 @@
+
+procedure $put (var fdb:txtfdb); extern;
+
+procedure $wrc ( ch:char; var fdb:txtfdb;  fldw:integer);
+   var i:integer;
+   begin
+   fdb.pbuffer := ' ';
+   for i := 1 to fldw-1 do $put (fdb);
+   (* this line added: *)
+   if fldw > 0 then
+   begin
+   fdb.pbuffer := ch;
+   $put (fdb);
+   end;
+   end;
+
+
+   (* dummy main program *)
+
+.

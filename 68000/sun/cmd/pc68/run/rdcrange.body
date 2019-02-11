@@ -1,0 +1,17 @@
+
+procedure $rdc ( var ch:char;var fdb:txtfdb); extern;
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdcrange( var sourcevalue: char;
+		    var fdb:txtfdb;
+		    minvalue, maxvalue: char);
+   begin
+   $rdc (sourcevalue,fdb);
+   if (sourcevalue < minvalue) or (sourcevalue > maxvalue) then
+   $perror(fdb,'value out of range          ');
+   end;
+
+   (* dummy main program *)
+
+.

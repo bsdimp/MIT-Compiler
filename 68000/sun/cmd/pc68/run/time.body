@@ -1,0 +1,34 @@
+
+function $ptime:integer; extern;
+
+procedure $time (var str: alfa; length: integer);
+
+   (* returns the current time in the format 'hh:mm:ss' *)
+
+   var
+   i,hours,minutes,seconds,zerochar: integer;
+
+   begin
+   i := $ptime;
+   i := i div 60;
+   hours := i div 3600;
+   i := i mod 3600;
+   minutes := i div 60;
+   seconds := i mod 60;
+
+   zerochar := ord ('0');
+   str[1] := chr(hours div 10 + zerochar);
+   str[2] := chr(hours mod 10 + zerochar);
+   str[3] := ':';
+   str[4] := chr(minutes div 10 + zerochar);
+   str[5] := chr(minutes mod 10 + zerochar);
+   str[6] := ':';
+   str[7] := chr(seconds div 10 + zerochar);
+   str[8] := chr(seconds mod 10 + zerochar);
+   for i := 9 to length do
+  str[i] := ' ';
+   end;
+
+   (* dummy main program *)
+
+.

@@ -1,0 +1,13 @@
+
+procedure $put (var fdb:txtfdb); extern;
+
+procedure $wr1c (var fdb:txtfdb; ch:char);
+   begin
+   fdb.pbuffer := ch;
+   $put (fdb);
+   end;
+
+   (* dummy main program *)
+
+.
+

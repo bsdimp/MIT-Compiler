@@ -1,0 +1,17 @@
+Procedure frame on mc68000:
+
+infinity-->
+
+
+	Param-n
+	...
+	Param-1
+	Return addr.
+Fp-->	Old Fp (a6)
+	Locals
+	...
+sp--->
+
+
+
+0-->

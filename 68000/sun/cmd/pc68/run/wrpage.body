@@ -1,0 +1,12 @@
+
+procedure $put (var fdb:txtfdb); extern;
+
+procedure $wrpage (var fdb:txtfdb);
+   begin
+   fdb.pbuffer := chr(12);	(* Form Feed *)
+   $put (fdb);
+   end;
+
+   (* dummy main program *)
+
+.

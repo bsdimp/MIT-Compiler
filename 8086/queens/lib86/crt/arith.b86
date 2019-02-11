@@ -1,0 +1,142 @@
+
+| 8087 based arithmetic support.
+| modified to work with Bill's compilier --- ljh
+
+	.text
+
+	.globl	fpinit
+fpinit:	finit			| initialize 8087 to known state
+	push	ax		| get of word of storage to play with
+	mov	bx,sp
+	fstcw	(bx)		| get control word so we can diddle bits
+	or	(bx),#0x0C00	| set rounding control to chop mode
+	fldcw	(bx)
+	pop	ax
+	reti
+        .para
+
+|	double modf (value, iptr)
+|		double value;
+|		double *iptr;
+|
+|	Modf returns the fractional part of "value", and stores the integer
+|	part indirectly through "iptr".
+|
+
+	.globl	_modf
+_modf:	mov	bx,sp		| so we can address operands
+	fldd	*4(bx)		| get VALUE
+	fld	0		| and make a copy
+	frndint			| get integer part
+	mov	bx,*12(bx)	| get IPTR
+	fstd	(bx)		| and save integer part where ever it says
+	fsubrp	1,0		| now calculate fraction
+	fabs			| and make positive
+	reti
+        .para			| fractional part returned as result
+
+|	double ldexp (value, exp)
+|		double value;
+|		int exp;
+|
+|	Ldexp returns value*2**exp, if that result is in range.
+|	If underflow occurs, it returns zero.  If overflow occurs,
+|	it returns a value of appropriate sign and largest
+|	possible magnitude.  In case of either overflow or underflow,
+|	the external int "errno" is set to ERANGE.  Note that errno is
+|	not modified if no error occurs, so if you intend to test it
+|	after you use ldexp, you had better set it to something
+|	other than ERANGE first (zero is a reasonable value to use).
+
+	erange = 34
+
+	.data
+	.globl	_errno		| error flag
+
+Lhuge:	.word	0xffff		| The largest number that can
+	.word	0xffff		|   be represented in a long floating
+	.word	0xffff		|   number.  This is given in hex in order
+	.word	0x7fff		|   to avoid floating conversions
+
+	.text
+	.globl	_ldexp
+
+_ldexp:	mov	bx,sp		| so we can address operands
+	mov	ax,*10(bx)	| get word containing exponent
+	movb	cl,*4		| shift and mask to get it
+	shl	ax,cl
+	and	ax,*0x3FF
+	jz	Ld1
+
+	add	ax,*12(bx)	| ax = new biased exponent
+	jle	Lunder		| if it's <= 0, we have an underflow
+	cmp	ax,#0x3FF	| otherwise check it it's too big
+	jg	Lover		| jump if overflow
+
+	shr	ax,cl		| shift exponent back to where it belongs
+	and	*10(bx),#0x800F	| get rid of old one
+	or	*10(bx),ax	| and install new
+	fldd	*4(bx)		| return resulting number as answer
+Ld1:	reti
+        .para
+
+Lunder:	fldz			| Result is zero
+	j	Lerr		| Join general error code
+
+Lover:	fldd	Lhuge		| Largest possible floating magnitude
+	test	*10(bx),#0x8000	| make answer same sign as operand
+	jz	Lerr
+	fchs
+
+Lerr:	mov	_errno,#erange	| Indicate range error
+	reti
+        .para
+
+| long arithmetic routines...  uses 8087.
+
+	.globl	lmul
+lmul:	mov	bx,sp
+	fldl	*4(bx)
+	fmull	*8(bx)
+	fstpl	*4(bx)
+        fwait                 | ljh
+	mov	ax,*4(bx)
+	mov	dx,*6(bx)
+	reti
+        .para
+
+	.globl	ldiv
+ldiv:	mov	bx,sp
+	fldl	*4(bx)
+	fdivl	*8(bx)
+	fstpl	*4(bx)		| must be in chop mode
+	fwait
+	mov	ax,*4(bx)
+	mov	dx,*6(bx)
+	reti
+        .para
+
+	.globl	almul
+almul:	mov	bx,sp
+	fldl	*6(bx)
+	mov	bx,*4(bx)
+	fmull	(bx)
+	fstpl	(bx)
+	fwait
+	mov	ax,(bx)
+	mov	dx,*4(bx)
+	reti
+        .para
+
+	.globl	aldiv
+aldiv:	mov	bx,sp
+	fldl	*6(bx)
+	mov	bx,*4(bx)
+	fdivrl	(bx)
+	fstpl	(bx)
+	fwait
+	mov	ax,(bx)
+	mov	dx,*4(bx)
+	reti
+        .para
+

@@ -1,0 +1,106 @@
+From agn@BBN-RSM  Mon Nov 23 11:30:01 1981
+Mail-from: ARPANET site BBN-RSM rcvd at 23-Nov-81 1123-EST
+Date: 23 Nov 1981 11:07:01 EST (Monday)
+From: Alan G. Nemeth <agn at BBN-RSM>
+Subject: C compiler bugs and fixes
+To: cjt@mit-xx
+Cc: nemeth at BBN-RSM
+
+Chris,
+	As of today, we have fixed several bugs in the compiler/optimizer
+pair which I have documented below.  In addition, I have an
+outstanding bug described in the attached message which I am about to 
+examine.
+
+Current outstanding bug:
+Date: 21 Nov 1981 14:01:35 EST (Saturday)
+From: Robert E. Wells <rwells at BBN-VAX>
+Subject: c68 bug (using asm)
+To: agn at BBN-VAX
+Cc: rwells at BBN-VAX, rwf at BBN-VAX
+
+I started experimenting with the "asm" facility in the compiler and have
+suffered a class of control flow problems with it when I define labels
+myself.  In the following code the compiler has put one of its labels
+after my first asm instruction rather than before it, making it incorrect
+and in this case making it get assembly errors since 10$ is then on the
+wrong side of a real label.  If the first instruction isn't labeled, it
+often just disappears in the optimiser.  I have simplified this procedure
+a lot; taking both the for loop and the if test out makes the bug
+disappear.  Also, taking the 10$ label and the dbf instruction out seems
+to make the bug disappear.  Even if asm use isn't really supported, this
+may be symptomatic of deeper illness and worth checking out.
+- Robert
+
+******** c68 source text ********
+
+test ()
+    {
+    register short  x_left;  /* D7 */    
+    register int    bit;     /* D6 */
+    register short  y_bad;   /* D5 */
+    register short  c;       /* D4 */
+    register short  bits;    /* D3 */
+    register char  *addr;    /* A5 */
+    register char  *stepx;   /* A4 */
+    asm ("      .defrs  x_left, d7  ");
+    asm ("      .defrs  bit   , d6  ");
+    asm ("      .defrs  y_bad , d5  ");
+    asm ("      .defrs  c     , d4  ");
+    asm ("      .defrs  bits  , d3  ");
+    asm ("      .defrs  addr  , a5  ");
+    asm ("      .defrs  stepx , a4  ");
+    for (;;)
+	{
+    	if (y_bad)              /* skip if cury is out of bounds */
+    	    continue;
+        asm ("10$:  lslw    #1,bits     "); /* shift left and test MSB */
+        asm ("      bcc     20$         ");
+        asm ("      bclr    bit,addr@   "); /*$$$$$ needs fix for ops */
+        asm ("20$:  addl    stepx,addr  "); /* bump addr right one column */
+        asm ("      dbf     c,10$       ");
+	}
+    }
+
+******** Before optimisation *********
+      ...
+      .defrs  stepx , a4  
+..L15:
+	tstw	d5
+	beq	.L16
+	bra	.L13
+10$:  lslw    #1,bits     
+..L16:                               ;<<<<<<<< this is the offending label.
+      bcc     20$         
+      bclr    bit,addr@   
+20$:  addl    stepx,addr  
+      dbf     c,10$       
+..L13:
+	bra	.L15
+..L14:
+	bra	.L12
+..L12:	moveml	a6@(-_F1),#32
+	unlk	a6
+	rts
+
+******** After optimisation **********
+
+      .defrs  stepx , a4  
+..L18:
+	tstw	d5
+	jne	.L18
+	jra	.L19
+10$:
+	lslw	#1,bits     
+..L19:                                 ;<<<<<<<< this is the offending label.
+	jcc	20$         
+      bclr    bit,addr@   
+20$:
+	addl	stepx,addr  
+      dbf     c,10$       
+	jra	.L18
+	rts
+
+
+
+

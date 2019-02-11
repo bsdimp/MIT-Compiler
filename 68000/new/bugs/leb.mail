@@ -1,0 +1,63 @@
+From leb  Thu Mar 11 06:37:22 1982
+To: terman
+Subject: c compiler bug (68000)
+
+main()
+{
+register char *p;
+char *vp, op;
+char **vecp;
+char bool;
+int foobar;
+
+	vecp = 0;
+}
+
+produces `clrl a6@(-9)' with c68 running on the 68000.
+produces `clrl a6@(-10) with c68 running on my pdp11.
+
+do you have the same bug?
+did you get my mail about the switch statement bug?
+
+regards
+larry
+
+please reply to g.leb@eecs
+
+From leb  Tue Mar 16 04:58:15 1982
+To: terman
+Subject: c68 bugs fixed
+
+the clrl a6@(-9) bug was caused by the switch statement bug.
+i forgot to recompile c68 for the 68000 after i fixed the 
+the switch statement bug.  a switch statement in talign wasn't
+working right.
+
+could you take a look at /usr/leb/optbug.c.
+the fucntion is match.c pcc.
+
+the following happens:
+
+.L21:
+	clrl	d7
+.L26:
+	cmpl #111,d7
+	bge .L25
+
+is turned into:
+
+.L21:
+	clrl	d7
+	jra	.L21
+
+i looked at the opt code and didn't have any luck, could
+you take a look?
+
+i think that it's time to start using -O again.  my unix kernel
+as well as many cusps are compiled with -O and work fine.
+this is the only bug i could find.  found it when i tried to
+port c68 to run on 68000.
+
+regards
+larry
+

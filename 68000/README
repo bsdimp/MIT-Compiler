@@ -1,0 +1,10 @@
+This subtree contains versions of the 68000 C software from several
+sources:
+
+  mit	The original software as developed and maintained at MIT
+
+  sun	Versions for the S.U.N. terminal project at Stanford
+
+  hp	Versions for the Chipmonk at HP/Fort Collins
+
+Someday, I'll merge the different versions to produce a "master" copy.

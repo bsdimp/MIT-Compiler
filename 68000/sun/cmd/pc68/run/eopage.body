@@ -1,0 +1,17 @@
+
+procedure $get (var fdb:txtfdb); extern;
+
+function $eopage (var fdb:txtfdb): boolean;
+   begin
+   with fdb do
+   if (device = ttydev) and bufferinvalid then
+	 begin
+	 $get (fdb);
+	 bufferinvalid := false;
+	 end;
+   $eopage := fdb.eopageflag;
+   end;
+
+   (* dummy main program *)
+
+.

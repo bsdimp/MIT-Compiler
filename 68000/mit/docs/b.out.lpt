@@ -1,0 +1,187 @@
+ b.out(5)                  UNIX Programmmer's Manual                  b.out(5)
+
+
+ _N_A_M_E
+    _b_._o_u_t -- executable file format
+
+ _D_E_S_C_R_I_P_T_I_O_N
+ The  assembler  (_a_6_8)  and  linker  (_l_d_6_8)  produce  executable files in this
+ format.  The system call _e_x_e_c expects files of this format.
+
+ _b_._o_u_t has six sections:
+
+ 1. header
+ 2. program text
+ 3. data text
+ 4. symbol table
+ 5. text relocation commands
+ 6. data relocation commands
+
+ These sections are always in the above order.
+
+ The header always contains the following 8 longwords.
+
+ 1  magic number (default is 407)
+ 2  the size of the program text segment
+ 3  the size of the initialized portion of the data segment
+ 4  the size of the uninitialized (bss) portion of the data segment
+ 5  the size of the symbol table
+ 6  the size of the text relocation commands
+ 7  the size of the data relocation commands
+ 8  the entry location for program execution
+
+ The sizes of all _b_._o_u_t segments are in bytes.  The sizes of the  text,  data,
+ and  bss  segments are rounded multiples of 4, adjusting to the next longword
+ boundary.  Starting points for all other segments depend upon the size of the
+ preceeding segments.  Listed below are the abbreviations used,  for  clarity,
+ in discussing the starting points for _b_._o_u_t segments.
+
+ st   size of the text segment
+ sd   size of the data segment
+ ss   size of the symbol table
+ str  size of the text relocation segment
+
+ The starting positions, in bytes, for _b_._o_u_t segments are:
+
+ text segment   32
+ data segment  32 + st
+ symbol table  32 + st + sd
+ text relocation  32 + st + sd + ss
+ data relocation  32 + st + sd + ss + str
+
+
+ Three  logical  segments  are  set  up when a file produced by _l_d_6_8 or _a_6_8 is
+ loaded into core for execution.
+
+
+
+
+
+
+
+ 7th Edition                    March 20, 1981                               1
+ b.out(5)                  UNIX Programmmer's Manual                  b.out(5)
+
+
+ 1. text segment - loaded starting at 0x400.
+ 2. data  segment  -  divided  into  _d_a_t_a  and  _b_s_s.    The _d_a_t_a part contains
+    initialized data.  The _b_s_s contains uninitialized data which starts off as
+    all 0 upon execution.  The data segment may be extended by using  the  _b_r_k
+    system call.
+ 3. stack  -  occupies  the  highest possible location in the core image.  The
+    stack grows down from 0x80000.
+
+
+ The symbol table consists  of  variable  length  entries.    The  first  byte
+ contains  the  symbol  type,  the  next  four bytes comprize a longword which
+ contains the value of the symbol, and the remaining bytes contain the  symbol
+ name (zero-padded).  The possible symbol types are:
+
+  00  undefined symbol
+  01  absolute symbol
+  02  text segment symbol
+  03  data segment symbol
+  04  bss segment symbol
+  06  register symbol
+ 040  undefined external (.globl) symbol
+ 041  absolute external symbol
+ 042  text segment external symbol
+ 043  data segment external symbol
+ 044  bss segment external symbol
+
+
+    _N_O_T_E_:    _0_4_0  _i_s  _O_R_e_d  (40|n)  _t_o  _s_y_m_b_o_l  _t_y_p_e_s  _0_0  _-  _0_4  _t_o  _i_d_e_n_t_i_f_y
+    _c_o_r_r_e_s_p_o_n_d_i_n_g _e_x_t_e_r_n_a_l _s_y_m_b_o_l_s_.
+
+    _l_d_6_8 _i_n_t_e_r_p_r_e_t_s _t_y_p_e _4_0 _(_u_n_d_e_f_i_n_e_d _e_x_t_e_r_n_a_l_) _s_y_m_b_o_l_s _w_i_t_h _n_o_n_-_z_e_r_o  _v_a_l_u_e_s
+    _a_s _c_o_m_m_o_n _r_e_g_i_o_n_s _w_i_t_h _a _s_i_z_e _e_q_u_a_l _t_o _t_h_e _s_y_m_b_o_l _v_a_l_u_e_.
+
+
+ The  loader,  _l_d_6_8, defines information which is undefined prior to the load,
+ and adjusts data after linking several files together.  Information from  the
+ loader  is  required  when  a  word  is to be relocated, or when a relocation
+ command refers to an undefined external symbol.  When files are  linked,  all
+ undefined  external  symbols  are  defined, and the values of the symbols are
+ added into the correct words in the output.  Words which are to be relocated,
+ but do not involve external references, contain the  value  which  should  be
+ present  if  the  file  is executed without linking.  If linking modifies the
+ word, it should be adjusted by adding the new address of the beginning of the
+ region in which it was relocated.
+
+ Relocation information consists of a sequence of commands which  specify  how
+ to  fix  up  bytes  in  the  text  and  data portion of the file.  Relocation
+ information comes in two parts:  commands for the text segment, and  commands
+ for  the  data  segment.    Each  command  has four parts (_N_O_T_E_: _B_i_t _0 _i_s _t_h_e
+ _r_i_g_h_t_m_o_s_t _b_i_t _i_n _t_h_e _b_y_t_e):
+
+ 1. Bits 1-0 of the first byte specify which segment this  relocation  command
+    refers to:
+           00  add the address of the start of the text segment
+           01  add the address of the start of initialized data
+
+
+
+ 7th Edition                    March 20, 1981                               2
+ b.out(5)                  UNIX Programmmer's Manual                  b.out(5)
+
+
+           02  add the address of the start of bss (uninitialized data)
+           03  the value of the external symbol is put into the word
+
+ 2. Bits 3-2 of the first byte indicate the number of bytes to be relocated:
+           00  byte
+           01  word
+           02  long
+
+ 3. The  second  word in the relocation command is used for undefined external
+    symbols.  All undefined external symbols are read into a symbol array.   A
+    C-style index is used.  The value of the word is the index into the symbol
+    array.
+
+ 4. A  longword  is  given  which  indicates  the  position  of the data to be
+    modified.  This position is relative to the start of the segment,  _n_o_t  _t_o
+    _t_h_e  _s_t_a_r_t _o_f _t_h_e _f_i_l_e.  Thus, a command to relocate the first byte of the
+    data segment would have a position of zero.
+
+ The following is the C structure for the relocation information.
+
+ struct reloc {
+   unsigned rsegment:2;      /* RTEXT, RDATA, RBSS, or REXTERN */
+   unsigned rsize:2;                 /* RBYTE, RWORD, or RLONG */
+   unsigned rdisp:1;                 /* 1 => a displacement */
+   short rsymbol;            /* id of the symbol of external relocations */
+   long rpos;                  /* position of relocation in segment */
+ };
+
+ _S_E_E _A_L_S_O
+    a68(1), ld68(1), exec(2), brk(2), nlist(3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 7th Edition                    March 20, 1981                               3
+

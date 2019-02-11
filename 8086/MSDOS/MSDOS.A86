@@ -1,0 +1,339 @@
+| Stubs to MSDOS (2.0 and greater) calls...			SAW 5/83
+| Emulates UNIX system interface.
+
+|	XENIX calls
+
+DOSF_MKDIR	= 57		| Make directory
+DOSF_RMDIR	= 58		| Remove directory
+DOSF_CHDIR	= 59		| Change directory
+
+|	File group
+
+DOSF_CREATH	= 60		| Create file
+DOSF_OPENH	= 61		| Open file
+ DOSFO_RED	 = 0		|  Open for read
+ DOSFO_WRT	 = 1		|  Open for write
+ DOSFO_RW	 = 2		|  Open for read/write
+DOSF_CLOSEH	= 62		| Close file
+DOSF_READH	= 63		| Read file
+DOSF_WRITEH	= 64		| Write file
+DOSF_UNLINK	= 65		| Unlink file
+DOSF_LSEEK	= 66		| Logical seek file
+ DOSFL_BEG	 = 0		|  Seek from begining
+ DOSFL_CUR	 = 1		|  Seek from current
+ DOSFL_END	 = 2		|  Seek from end
+DOSF_CHMOD	= 67		| CHMOD of file
+DOSF_IOCTL	= 68		| IOCTL value
+ DOSFI_GDI	 = 0		|  Get device information
+ DOSFI_SDI	 = 1		|  Set device information
+ DOSFI_RED	 = 2		|  Read from device
+ DOSFI_WRT	 = 3		|  Write to device
+DOSF_XDUP	= 69		| DUP handle
+DOSF_XDUP2	= 70		| DUP2 handle
+DOSF_CWD	= 71		| Current directory
+
+|	Memory allocation group
+
+DOSF_ALLOC	= 72		| Allocate block
+DOSF_DEALLOC	= 73		| Deallocate block
+DOSF_SETBLK	= 74		| Set block to size
+
+|	Process group
+
+DOSF_EXEC	= 75		| Execute
+ DOSX_GO	 = 0		|  EXEC program
+ DOSX_LOAD	 = 2		|  Load only, no PHD, don't run
+DOSF_EXIT	= 76		| Exit
+DOSF_WAIT	= 77		| Wait
+DOSF_FFIRST	= 78		| Find first
+
+|	Special group
+
+DOSF_FNEXT	= 79		| Find next
+
+|	System group
+
+DOSF_GVOW	= 84		| Get verify on write
+DOSF_RENAME	= 86		| Rename into directory
+DOSF_FTIMES	= 87		| File write date/time
+
+|	NOTE: All XENIX calls return with 'CY' set if error
+|	occurs, and AX = error code. If no error, 'CY' is
+|	clear and AX contains returned data
+
+|	The following are 2.0 error codes
+
+DOSE_NOERR	= 0		| No error
+DOSE_INVFUNC	= 1		| Unknown function
+DOSE_NOFILE	= 2		| File not found
+DOSE_NOPATH	= 3		| Path not found
+DOSE_TMFILES	= 4		| Too many open files
+DOSE_ACCESS	= 5		| Access denied
+DOSE_NOHNDL	= 6		| Invalid handle
+DOSE_ARENA	= 7		| Arena trashed (?)
+DOSE_NORAM	= 8		| Not enough RAM
+DOSE_NOBLK	= 9		| Bad Block
+DOSE_NOENV	= 10		| Bad environment (DOSF_EXEC)
+DOSE_NOFMT	= 11		| Bad format (DOSF_EXEC)
+DOSE_INVACC	= 12		| Bad Access code
+DOSE_INVDAT	= 13		| Bad data
+DOSE_INVDRV	= 15		| Bad drive
+DOSE_CURDIR	= 16		| Current directory
+DOSE_NOTSAM	= 17		| Not same device
+DOSE_NMFILES	= 18		| No more files
+
+| mkdir(name)
+	.globl	_mkdir
+_mkdir:
+	mov	ah,#DOSF_MKDIR
+
+msdos1:	push	bp
+	mov	bp,sp
+	push	dx
+	mov	dx,4[bp]
+	int	0x21
+	jc	msdose		| error.
+	pop	dx
+	pop	bp
+	ret
+
+msdose:	neg	ax		| return -(error code)
+	pop	dx
+	pop	bp
+	ret
+
+| rmdir(name)
+	.globl	_rmdir
+_rmdir:	mov	ah,#DOSF_RMDIR
+	jmp	msdos1
+
+| chdir(name)
+	.globl	_chdir
+_chdir:	mov	ah,#DOSF_CHDIR
+	jmp	msdos1
+
+| creat(name, mode)
+	.globl	_creat
+_creat:	
+	mov	ah,#DOSF_CREATH
+
+msdos2:	push	bp
+	mov	bp,sp
+	push	cx
+	push	dx
+	mov	dx,4[bp]
+	mov	cx,6[bp]
+	int	0x21
+	jc	msdose1		| error.
+	pop	dx
+	pop	cx
+	pop	bp
+	ret
+
+msdose1:
+	neg	ax		| return -(error code)
+	pop	dx
+	pop	cx
+	pop	bp
+	ret
+
+| rename(from, to)
+	.globl	_rename
+_rename:
+	push	bp
+	mov	bp,sp
+	push	dx
+	push	di
+	mov	dx,4[bp]
+	mov	di,6[bp]
+	
+    Name:   *   Rename - move a directory entry
+
+    Assembler usage:
+            LDS     DX, source
+            LES     DI, dest
+            MOV     AH, Rename
+            INT     21h
+
+    Description:
+            Rename will attempt to rename a file into  another
+        path.  The paths must be on the same device.
+
+    Name:   *   SetBlock - modify allocated blocks
+
+    Assembler usage:
+            MOV     ES,block
+            MOV     BX,newsize
+            MOV     AH,setblock
+            INT     21h
+        ; if setblock  fails  for  growing, BX will have the
+        ; maximum size possible
+
+    Description:
+            Setblock will attempt to grow/shrink an  allocated
+        block of memory.
+
+    Error return:
+        AX = error_invalid_block
+
+    Name:   *   KeepProcess -  terminate  process  and  remain
+                resident
+
+    Assembler usage:
+            MOV     AL, exitcode
+            MOV     DX, parasize
+            MOV     AH, KeepProcess
+            INT     21h
+
+    Description:
+            This  call  terminates  the  current  process  and
+        attempts  to  set  the  initial  allocation block to a
+        specific size in paragraphs.  It will not free up  any
+        other  allocation  blocks  belonging  to that process.
+        The exit code passed  in  AX  is  retrievable  by  the
+        parent via Wait.
+
+    Error Returns:
+            None.
+
+
+
+    Name:   *   ChMod - change write protection
+
+    Assembler usage:
+            LDS     DX, name
+            MOV     CX, attribute
+            MOV     AL, func
+            MOV     AH, ChMod
+            INT     21h
+
+    Name:   *   Close - close a file handle
+
+    Assembler usage:
+            MOV     BX, handle
+            MOV     AH, Close
+            INT     21h
+
+    Description:
+    Name:   *   Dup - duplicate a file handle
+
+    Assembler usage:
+            MOV     BX, fh
+            MOV     AH, Dup
+            INT     21h
+        ; AX has the returned handle
+
+    Name:   *   Dup2 - force a duplicate of a handle
+
+    Assembler usage:
+            MOV     BX, fh
+            MOV     CX, newfh
+            MOV     AH, Dup2
+            INT     21h
+
+    Description:
+            Dup2 will cause newfh to refer to the same  stream
+        as fh.  If there was an open file on newfh, then it is
+        closed first.
+    Name:   *   Exec - load / execute a program
+
+    Assembler usage:
+            LDS     DX, name
+            LES     BX, blk
+            MOV     AH, Exec
+            MOV     AL, func
+            INT     21h
+
+    Description:
+            This call allows a program to load another program
+        into  memory  and  (default)  begin  execution  of it.
+        DS:DX points to the ASCIZ  name  of  the  file  to  be
+        loaded.   ES:BX  points  to  a parameter block for the
+        load.
+
+    Name:   *   Exit - terminate a process
+
+    Assembler usage:
+            MOV     AL, code
+            MOV     AH, Exit
+            INT     21h
+    Name:   *   Ioctl - I/O control for devices
+
+    Assembler usage:
+            MOV     BX, Handle
+
+        (or MOV     BL, drive   for calls AL=4,5
+                                0=default,A=1...)
+
+            MOV     DX, Data
+
+        (or LDS     DX, buf     and
+            MOV     CX, count   for calls AL=2,3,4,5)
+
+            MOV     AH, Ioctl
+            MOV     AL, func
+            INT     21h
+    ; For calls AL=2,3,4,5 AX is the number of bytes
+    ; transferred (same as READ and WRITE).
+    ; For calls AL=6,7 AL is status returned, AL=0 if
+    ; status is not ready, AL=0FFH otherwise.
+    Name:   *   LSeek - move file read/write pointer
+
+    Assembler usage:
+            MOV     DX, offsetlow
+            MOV     CX, offsethigh
+            MOV     AL, method
+            MOV     BX, handle
+            MOV     AH, LSeek
+            INT     21h
+        ; DX:AX has the new location of the pointer
+
+    Assembler usage:
+            LDS     DX, name
+            MOV     AH, Open
+            MOV     AL, access
+            INT     21h
+        ; AX has error or file handle
+        ; If successful open
+
+    Name:   *   Read - Do file/device I/O
+
+    Assembler usage:
+            LDS     DX, buf
+            MOV     CX, count
+            MOV     BX, handle
+            MOV     AH, Read
+            INT     21h
+        ; AX has number of bytes read
+
+    Name:   *   Unlink - delete a directory entry
+
+    Assembler usage:
+            LDS     DX, name
+            MOV     AH, Unlink
+            INT     21h
+
+    Description:
+            Unlink removes a directory entry associated with a
+        filename.   If  the  file is currently open on another
+        handle, then no removal will take place.
+
+    Name:   *   Wait - retrieve the return code of a child
+
+    Assembler usage:
+            MOV     AH, Wait
+            INT 21h
+        ; AX has the exit code
+
+    Description:
+    Name:   *   Write - write to a file
+
+    Assembler usage:
+            LDS     DX, buf
+            MOV     CX, count
+            MOV     BX, handle
+            MOV     AH, Write
+            INT     21h
+        ; AX has number of bytes written
+
+

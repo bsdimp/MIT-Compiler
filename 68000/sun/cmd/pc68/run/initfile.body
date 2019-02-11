@@ -1,0 +1,45 @@
+
+procedure $initfile (var fdb:txtfdb; initstatus:filestatus;
+		filevarname:identifier; ftype:typeoffile; flength: integer);
+   var i: integer;
+   begin
+   with fdb do
+   	begin
+	status:= initstatus;
+(*   	namelength := 0;*)
+(*   	promptlength := 0;*)
+   	pbuffersize := flength;
+   	filetype := ftype;
+	prompt := filevarname;
+(*   	for i := 1 to identlength do
+    		if filevarname[i] <> ' ' then
+	 	   begin
+		   promptlength := promptlength + 1;
+	 	   prompt[promptlength] := filevarname[i];
+	 	   end;
+ *)
+	 (**ift vax or ift 68000*)
+	 if initstatus <> notopen then
+	     begin
+	     for i := 1 to runbufsize do
+	         runbufs[i] := 0;
+	     eofflag := initstatus = openforoutput;
+	     eolnflag := false;
+	     eopageflag := false;
+ 	     charcount := 0;
+	     linecount := 1;
+	     pagecount := 1;
+	     tabcount := 0;
+	     ttymode := true;
+	     device := ttydev;
+	     pbuffer := ' ';
+             bufferinvalid := true;
+	     end;
+         (**endc*)
+         end;
+   end;
+
+   (* dummy main program *)
+
+.
+

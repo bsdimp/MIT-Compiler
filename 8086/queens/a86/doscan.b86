@@ -1,0 +1,923 @@
+	.data
+	.comm	calltmp,4
+	.globl	__sctab
+__sctab:
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 256
+	.word 1
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 1
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.word 0
+	.zerow	32
+	.text
+	.globl	__doscan
+__doscan:
+	push	bp
+	mov	bp,sp
+	push	si
+	push	di
+	sub	sp,#LF1
+	mov	di,8(bp)
+	mov	si,10(bp)
+	mov	*-8(bp),*0
+	mov	*-16(bp),*0
+L24:
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+	br	L26
+L27:
+	mov	ax,*-8(bp)
+	br	L21
+L28:
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+	cmp	ax,*37
+	bne	L29
+	br	L30
+L29:
+	mov	*-14(bp),*0
+	cmp	*-6(bp),*42
+	beq	L31
+	mov	ax,si
+	add	si,*2
+	mov	*-14(bp),ax
+	br	L32
+L31:
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+L32:
+	mov	*-10(bp),*0
+	mov	*-18(bp),*1
+L33:
+	cmp	*-6(bp),*48
+	blt	L34
+	cmp	*-6(bp),*57
+	bgt	L34
+	mov	ax,*-10(bp)
+	mov	dx,*10
+	imul	dx
+	add	ax,*-6(bp)
+	sub	ax,*48
+	mov	*-10(bp),ax
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+	br	L33
+L34:
+	cmp	*-10(bp),*0
+	bne	L35
+	mov	*-10(bp),#30000
+L35:
+	cmp	*-6(bp),*108
+	bne	L36
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+	mov	*-18(bp),*2
+	br	L37
+L36:
+	cmp	*-6(bp),*104
+	bne	L38
+	mov	*-18(bp),*0
+	mov	bx,di
+	inc	di
+	movb	ax,(bx)
+	cbw
+	mov	*-6(bp),ax
+	br	L39
+L38:
+	cmp	*-6(bp),*91
+	bne	L40
+	push	di
+	calli	0,#__getccl
+	add	sp,*2
+	mov	di,ax
+L40:
+L39:
+L37:
+	mov	bx,*-6(bp)
+	movb	ax,__ctype_+1(bx)
+	cbw
+	test	ax,*1
+	beq	L41
+	mov	ax,*-6(bp)
+	add	ax,*32
+	mov	*-6(bp),ax
+	mov	*-18(bp),*2
+L41:
+	cmp	*-6(bp),*0
+	bne	L42
+	mov	ax,*-1
+	br	L21
+L42:
+	lea	ax,*-16(bp)
+	push	ax
+	push	*6(bp)
+	push	*-18(bp)
+	push	*-10(bp)
+	push	*-6(bp)
+	push	*-14(bp)
+	calli	0,#__innum
+	add	sp,*12
+	or	ax,ax
+	beq	L44
+	cmp	*-14(bp),*0
+	beq	L44
+	inc	*-8(bp)
+L44:
+	cmp	*-16(bp),*0
+	beq	L45
+	cmp	*-8(bp),*0
+	beq	L10000
+	mov	ax,*-8(bp)
+	br	L10001
+L10000:
+	mov	ax,*-1
+L10001:
+	br	L21
+L45:
+	br	L25
+L46:
+L47:
+L48:
+L50:
+	mov	bx,*6(bp)
+	sub	*2(bx),*1
+	blt	L10003
+	mov	bx,*6(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10004
+L10003:
+	push	*6(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10004:
+	mov	*-12(bp),ax
+	cmp	ax,*32
+	beq	L10002
+	cmp	*-12(bp),*9
+	beq	L10002
+	cmp	*-12(bp),*10
+	bne	L51
+L10002:
+	br	L50
+L51:
+	cmp	*-12(bp),*-1
+	beq	L52
+	push	*6(bp)
+	push	*-12(bp)
+	calli	0,#_ungetc
+	add	sp,*4
+L52:
+	br	L25
+L54:
+L30:
+	mov	bx,*6(bp)
+	sub	*2(bx),*1
+	blt	L10005
+	mov	bx,*6(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10006
+L10005:
+	push	*6(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10006:
+	mov	*-12(bp),ax
+	mov	ax,*-12(bp)
+	cmp	ax,*-6(bp)
+	beq	L55
+	cmp	*-12(bp),*-1
+	bne	L56
+	mov	ax,*-1
+	br	L21
+L56:
+	push	*6(bp)
+	push	*-12(bp)
+	calli	0,#_ungetc
+	add	sp,*4
+	mov	ax,*-8(bp)
+	br	L21
+L55:
+	br	L25
+L26:
+	cmp	ax,#0
+	beq	L27
+	cmp	ax,#9
+	beq	L48
+	cmp	ax,#10
+	beq	L47
+	cmp	ax,#32
+	beq	L46
+	cmp	ax,#37
+	beq	L28
+	br	L54
+L25:
+L22:
+	br	L24
+L23:
+L21:
+	lea	sp,*-4(bp)
+	pop	di
+	pop	si
+	pop	bp
+	reti
+	.para
+	LF1 = 14
+	.data
+	.text
+	.globl	__innum
+__innum:
+	push	bp
+	mov	bp,sp
+	push	si
+	push	di
+	sub	sp,#LF2
+	cmp	*8(bp),*99
+	beq	L10007
+	cmp	*8(bp),*115
+	beq	L10007
+	cmp	*8(bp),*91
+	bne	L59
+L10007:
+	push	*16(bp)
+	push	*14(bp)
+	push	*10(bp)
+	push	*8(bp)
+	cmp	*6(bp),*0
+	beq	L10008
+	mov	bx,*6(bp)
+	mov	ax,(bx)
+	br	L10009
+L10008:
+	mov	ax,*0
+L10009:
+	push	ax
+	calli	0,#__instr
+	add	sp,*10
+	br	L57
+L59:
+	mov	*-84(bp),*0
+	mov	*-82(bp),*0
+	mov	*-80(bp),*0
+	mov	*-74(bp),*0
+	cmp	*8(bp),*101
+	beq	L10010
+	cmp	*8(bp),*102
+	bne	L61
+L10010:
+	mov	*-74(bp),*1
+L61:
+	mov	*-70(bp),*10
+	cmp	*8(bp),*111
+	bne	L62
+	mov	*-70(bp),*8
+	br	L63
+L62:
+	cmp	*8(bp),*120
+	bne	L64
+	mov	*-70(bp),*16
+L64:
+L63:
+	lea	ax,*-68(bp)
+	mov	di,ax
+	mov	*-72(bp),*0
+	mov	*-76(bp),*0
+L65:
+	mov	bx,*14(bp)
+	sub	*2(bx),*1
+	blt	L10012
+	mov	bx,*14(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10013
+L10012:
+	push	*14(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10013:
+	mov	si,ax
+	cmp	ax,*32
+	beq	L10011
+	cmp	si,*9
+	beq	L10011
+	cmp	si,*10
+	bne	L66
+L10011:
+	br	L65
+L66:
+	cmp	si,*45
+	bne	L67
+	inc	*-76(bp)
+	mov	bx,di
+	inc	di
+	mov	cx,si
+	movb	(bx),cx
+	mov	bx,*14(bp)
+	sub	*2(bx),*1
+	blt	L10014
+	mov	bx,*14(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10015
+L10014:
+	push	*14(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10015:
+	mov	si,ax
+	dec	*10(bp)
+	br	L68
+L67:
+	cmp	si,*43
+	bne	L69
+	dec	*10(bp)
+	mov	bx,*14(bp)
+	sub	*2(bx),*1
+	blt	L10016
+	mov	bx,*14(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10017
+L10016:
+	push	*14(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10017:
+	mov	si,ax
+L69:
+L68:
+L72:
+	sub	*10(bp),*1
+	blt	L71
+	cmp	si,*48
+	blt	L10019
+	cmp	si,*57
+	ble	L10018
+L10019:
+	cmp	*-70(bp),*16
+	bne	L73
+	cmp	si,*97
+	blt	L10021
+	cmp	si,*102
+	ble	L10020
+L10021:
+	cmp	si,*65
+	blt	L73
+	cmp	si,*70
+	bgt	L73
+L10020:
+L10018:
+	inc	*-80(bp)
+	cmp	*-70(bp),*8
+	bne	L74
+	mov	cx,*3
+L10022:
+	clc
+	rcl	*-84(bp),*1
+	rcl	*-82(bp),*1
+	loop	L10022
+	br	L75
+L74:
+	cmp	*-70(bp),*10
+	bne	L76
+	mov	ax,*-84(bp)
+	mov	dx,*-82(bp)
+	mov	cx,*2
+L10023:
+	clc
+	rcl	ax,*1
+	rcl	dx,*1
+	loop	L10023
+	add	ax,*-84(bp)
+	adc	dx,*-82(bp)
+	clc
+	rcl	ax,*1
+	rcl	dx,*1
+	mov	*-84(bp),ax
+	mov	*-82(bp),dx
+	br	L77
+L76:
+	mov	cx,*4
+L10024:
+	clc
+	rcl	*-84(bp),*1
+	rcl	*-82(bp),*1
+	loop	L10024
+L77:
+L75:
+	mov	*-78(bp),si
+	cmp	si,*48
+	blt	L78
+	cmp	si,*57
+	bgt	L78
+	sub	si,*48
+	br	L79
+L78:
+	cmp	si,*97
+	blt	L80
+	cmp	si,*102
+	bgt	L80
+	sub	si,*87
+	br	L81
+L80:
+	sub	si,*55
+L81:
+L79:
+	mov	ax,si
+	cwd
+	mov	*-86(bp),ax
+	mov	*-84(bp),dx
+	mov	ax,*-84(bp)
+	mov	dx,*-82(bp)
+	add	ax,*-86(bp)
+	add	dx,*-84(bp)
+	mov	*-84(bp),ax
+	mov	*-82(bp),dx
+	mov	si,*-78(bp)
+	br	L70
+L73:
+	cmp	si,*46
+	bne	L82
+	cmp	*-70(bp),*10
+	bne	L10025
+	cmp	*-74(bp),*0
+	bne	L83
+L10025:
+	br	L71
+L83:
+	inc	*-80(bp)
+	br	L70
+L82:
+	cmp	si,*101
+	beq	L10026
+	cmp	si,*69
+	bne	L84
+L10026:
+	cmp	*-72(bp),*0
+	bne	L84
+	cmp	*-70(bp),*10
+	bne	L10027
+	cmp	*-74(bp),*0
+	beq	L10027
+	cmp	*-80(bp),*0
+	bne	L85
+L10027:
+	br	L71
+L85:
+	inc	*-72(bp)
+	mov	bx,di
+	inc	di
+	mov	cx,si
+	movb	(bx),cx
+	mov	bx,*14(bp)
+	sub	*2(bx),*1
+	blt	L10028
+	mov	bx,*14(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10029
+L10028:
+	push	*14(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10029:
+	mov	si,ax
+	cmp	si,*43
+	beq	L86
+	cmp	si,*45
+	beq	L86
+	cmp	si,*48
+	blt	L10030
+	cmp	si,*57
+	ble	L86
+L10030:
+	br	L71
+L86:
+	br	L87
+L84:
+	br	L71
+L87:
+L70:
+	mov	bx,di
+	inc	di
+	mov	cx,si
+	movb	(bx),cx
+	mov	bx,*14(bp)
+	sub	*2(bx),*1
+	blt	L10031
+	mov	bx,*14(bp)
+	inc	(bx)
+	mov	ax,(bx)
+	dec	ax
+	mov	bx,ax
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10032
+L10031:
+	push	*14(bp)
+	calli	0,#__filbuf
+	add	sp,*2
+L10032:
+	mov	si,ax
+	br	L72
+L71:
+	cmp	*-76(bp),*0
+	beq	L88
+	mov	ax,*-84(bp)
+	mov	dx,*-82(bp)
+	neg	dx
+	neg	ax
+	sbb	dx,*0
+	mov	*-84(bp),ax
+	mov	*-82(bp),dx
+L88:
+	cmp	si,*-1
+	beq	L89
+	push	*14(bp)
+	push	si
+	calli	0,#_ungetc
+	add	sp,*4
+	mov	bx,*16(bp)
+	mov	(bx),*0
+	br	L90
+L89:
+	mov	bx,*16(bp)
+	mov	(bx),*1
+L90:
+	cmp	*6(bp),*0
+	beq	L10033
+	lea	ax,*-68(bp)
+	cmp	di,ax
+	bne	L91
+L10033:
+	mov	ax,*0
+	br	L57
+L91:
+	mov	bx,di
+	inc	di
+	movb	(bx),*0
+	mov	ax,*-74(bp)
+	mov	cx,*4
+	sal	ax,cl
+	or	ax,*12(bp)
+	br	L93
+L94:
+L95:
+	lea	ax,*-68(bp)
+	push	ax
+	calli	0,#_atof
+	fstpd	*-92(bp)
+	add	sp,*2
+	mov	bx,*6(bp)
+	mov	bx,(bx)
+	fldd	*-92(bp)
+	fstpf	(bx)
+	br	L92
+L96:
+	lea	ax,*-68(bp)
+	push	ax
+	calli	0,#_atof
+	fstpd	*-92(bp)
+	add	sp,*2
+	mov	bx,*6(bp)
+	mov	bx,(bx)
+	fldd	*-92(bp)
+	fstpd	(bx)
+	br	L92
+L97:
+	mov	ax,*-84(bp)
+	mov	bx,*6(bp)
+	mov	bx,(bx)
+	mov	(bx),ax
+	br	L92
+L98:
+	mov	ax,*-84(bp)
+	mov	bx,*6(bp)
+	mov	bx,(bx)
+	mov	(bx),ax
+	br	L92
+L99:
+	mov	bx,*6(bp)
+	mov	bx,(bx)
+	mov	ax,*-84(bp)
+	mov	dx,*-82(bp)
+	mov	(bx),ax
+	mov	*2(bx),dx
+	br	L92
+L93:
+	cmp	ax,#18
+	bhi	L100
+	sal	ax,*1
+	xchg	ax,bx
+	jmp	@L101(bx)
+	.data
+L101:
+	.word	L97
+	.word	L98
+	.word	L99
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L100
+	.word	L94
+	.word	L95
+	.word	L96
+	.text
+L100:
+L92:
+	mov	ax,*1
+	br	L57
+L57:
+	lea	sp,*-4(bp)
+	pop	di
+	pop	si
+	pop	bp
+	reti
+	.para
+	LF2 = 88
+	.data
+	.text
+	.globl	__instr
+__instr:
+	push	bp
+	mov	bp,sp
+	push	si
+	push	di
+	sub	sp,#LF3
+	mov	di,6(bp)
+	mov	si,12(bp)
+	mov	bx,*14(bp)
+	mov	(bx),*0
+	mov	*-8(bp),di
+	cmp	*8(bp),*99
+	bne	L103
+	cmp	*10(bp),#30000
+	bne	L103
+	mov	*10(bp),*1
+L103:
+	mov	*-10(bp),*0
+	cmp	*8(bp),*115
+	bne	L104
+	mov	*-10(bp),*1
+L104:
+L105:
+	sub	*2(si),*1
+	blt	L10034
+	mov	bx,(si)
+	inc	(si)
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10035
+L10034:
+	push	si
+	calli	0,#__filbuf
+	add	sp,*2
+L10035:
+	mov	*-6(bp),ax
+	mov	bx,ax
+	movb	ax,__sctab(bx)
+	cbw
+	test	ax,*-10(bp)
+	beq	L106
+	cmp	*-6(bp),*-1
+	bne	L107
+	br	L106
+L107:
+	br	L105
+L106:
+	mov	*-10(bp),*1
+	cmp	*8(bp),*99
+	bne	L108
+	mov	*-10(bp),*0
+	br	L109
+L108:
+	cmp	*8(bp),*91
+	bne	L110
+	mov	*-10(bp),*2
+L110:
+L109:
+L111:
+	cmp	*-6(bp),*-1
+	beq	L112
+	mov	bx,*-6(bp)
+	movb	ax,__sctab(bx)
+	cbw
+	test	ax,*-10(bp)
+	bne	L112
+	or	di,di
+	beq	L113
+	mov	bx,di
+	inc	di
+	mov	ax,*-6(bp)
+	mov	cx,ax
+	movb	(bx),cx
+L113:
+	sub	*10(bp),*1
+	bgt	L114
+	br	L112
+L114:
+	sub	*2(si),*1
+	blt	L10036
+	mov	bx,(si)
+	inc	(si)
+	movb	ax,(bx)
+	cbw
+	and	ax,#255
+	br	L10037
+L10036:
+	push	si
+	calli	0,#__filbuf
+	add	sp,*2
+L10037:
+	mov	*-6(bp),ax
+	br	L111
+L112:
+	cmp	*-6(bp),*-1
+	beq	L115
+	cmp	*10(bp),*0
+	ble	L116
+	push	si
+	push	*-6(bp)
+	calli	0,#_ungetc
+	add	sp,*4
+L116:
+	mov	bx,*14(bp)
+	mov	(bx),*0
+	br	L117
+L115:
+	mov	bx,*14(bp)
+	mov	(bx),*1
+L117:
+	or	di,di
+	beq	L118
+	cmp	di,*-8(bp)
+	beq	L118
+	cmp	*8(bp),*99
+	beq	L119
+	mov	bx,di
+	inc	di
+	movb	(bx),*0
+L119:
+	mov	ax,*1
+	br	L102
+L118:
+	mov	ax,*0
+	br	L102
+L102:
+	lea	sp,*-4(bp)
+	pop	di
+	pop	si
+	pop	bp
+	reti
+	.para
+	LF3 = 6
+	.data
+	.text
+	.globl	__getccl
+__getccl:
+	push	bp
+	mov	bp,sp
+	push	si
+	push	di
+	sub	sp,#LF4
+	mov	di,6(bp)
+	mov	*-6(bp),*0
+	cmpb	(di),*94
+	bne	L121
+	inc	*-6(bp)
+	inc	di
+L121:
+	mov	si,*0
+L124:
+	cmp	si,#128
+	bge	L123
+	cmp	*-6(bp),*0
+	beq	L125
+	andb	__sctab(si),*-3
+	br	L126
+L125:
+	orb	__sctab(si),*2
+L126:
+L122:
+	inc	si
+	br	L124
+L123:
+L127:
+	mov	bx,di
+	inc	di
+	mov	si,(bx)
+	mov	ax,si
+	and	ax,*127
+	cmp	ax,*93
+	beq	L128
+	cmp	*-6(bp),*0
+	beq	L129
+	orb	__sctab(si),*2
+	inc	si
+	br	L130
+L129:
+	andb	__sctab(si),*-3
+	inc	si
+L130:
+	or	si,si
+	bne	L131
+	sub	di,*1
+	mov	ax,di
+	br	L120
+L131:
+	br	L127
+L128:
+	mov	ax,di
+	br	L120
+L120:
+	lea	sp,*-4(bp)
+	pop	di
+	pop	si
+	pop	bp
+	reti
+	.para
+	LF4 = 2
+	.data

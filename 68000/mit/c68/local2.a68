@@ -1,0 +1,3094 @@
+	.data
+	.text
+	.globl	lineid
+lineid:
+	link	.a6,#-_F1
+	moveml	#_S1,.a6@(-_F1)
+| A1 = 16
+	.text
+	movl	.a6@(12),.sp@-
+	movl	.a6@(8),.sp@-
+	movl	#.L64,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	bra	.L62
+.L62:	moveml	.a6@(-_F1),#0
+	unlk	.a6
+	rts
+_F1 = 0
+_S1 = 0
+| M1 = 12
+	.data
+	.comm	usedregs,4
+	.even
+	.globl	maxtoff
+maxtoff:
+	.long	0
+	.text
+	.globl	cntbits
+cntbits:
+	link	.a6,#-_F2
+	moveml	#_S2,.a6@(-_F2)
+	movl	.a6@(8),.d7
+| A2 = 12
+	clrl	.d5
+	clrl	.d6
+.L71:
+	tstl	.d7
+	beq	.L70
+	cmpl	#16,.d6
+	bge	.L70
+	movl	.d7,.d0
+	andl	#1,.d0
+	beq	.L72
+	addql	#1,.d5
+.L72:
+	asrl	#1,.d7
+.L69:
+	addql	#1,.d6
+	bra	.L71
+.L70:
+	movl	.d5,.d0
+	bra	.L68
+	bra	.L68
+.L68:	moveml	.a6@(-_F2),#224
+	unlk	.a6
+	rts
+_F2 = 12
+_S2 = 224
+| M2 = 0
+	.data
+	.text
+	.globl	eobl2
+eobl2:
+	link	.a6,#-_F3
+	moveml	#_S3,.a6@(-_F3)
+| A3 = 8
+	movl	maxoff,.a6@(-4)
+	movl	#8,.sp@-
+	pea	.a6@(-4)
+	jsr	aldiv
+	addql	#8,.sp
+	movl	#2,.sp@-
+	movl	.a6@(-4),.sp@-
+	jsr	lrem
+	addql	#8,.sp
+	tstl	.d0
+	beq	.L76
+	movl	#2,.sp@-
+	movl	.a6@(-4),.sp@-
+	jsr	ldiv
+	addql	#8,.sp
+	addql	#1,.d0
+	asll	#1,.d0
+	movl	.d0,.a6@(-4)
+.L76:
+	andl	#15612,usedregs
+	movl	usedregs,.sp@-
+	jsr	cntbits
+	addql	#4,.sp
+	asll	#2,.d0
+	addl	.d0,.a6@(-4)
+	.text
+	movl	usedregs,.sp@-
+	movl	ftnno,.sp@-
+	movl	retlab,.sp@-
+	movl	#.L77,.sp@-
+	jsr	printf
+	addl	#16,.sp
+	.text
+	movl	#.L78,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	.text
+	movl	#.L79,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	.text
+	movl	.a6@(-4),.sp@-
+	movl	ftnno,.sp@-
+	movl	#.L80,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	.text
+	movl	usedregs,.sp@-
+	movl	ftnno,.sp@-
+	movl	#.L81,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	.text
+	movl	maxtoff,.sp@-
+	movl	ftnno,.sp@-
+	movl	#.L82,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	clrl	maxtoff
+	tstl	fltused
+	beq	.L83
+	clrl	fltused
+	.text
+	movl	#.L84,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L83:
+	bra	.L74
+.L74:	moveml	.a6@(-_F3),#0
+	unlk	.a6
+	rts
+_F3 = 4
+_S3 = 0
+| M3 = 16
+	.data
+	.even
+	.globl	ioptab
+ioptab:
+	.long	7
+	.data
+	.long	.L86
+	.long	9
+	.data
+	.long	.L87
+	.long	18
+	.data
+	.long	.L88
+	.long	15
+	.data
+	.long	.L89
+	.long	20
+	.data
+	.long	.L90
+	.long	12
+	.data
+	.long	.L91
+	.long	61
+	.data
+	.long	.L92
+	.long	63
+	.data
+	.long	.L93
+	.long	65
+	.data
+	.long	.L94
+	.long	67
+	.data
+	.long	.L95
+	.long	-1
+	.data
+	.long	.L96
+	.text
+	.globl	hopcode
+hopcode:
+	link	.a6,#-_F4
+	moveml	#_S4,.a6@(-_F4)
+| A4 = 16
+	movl	#ioptab,.a5
+.L101:
+	tstl	.a5@
+	blt	.L100
+	movl	.a5@,.d0
+	cmpl	.a6@(12),.d0
+	bne	.L102
+	.text
+	movl	.a5@(4),.sp@-
+	movl	#.L103,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	cmpl	#70,.a6@(8)
+	bne	.L104
+	.text
+	movl	#.L105,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L104:
+	bra	.L98
+.L102:
+.L99:
+	addql	#8,.a5
+	bra	.L101
+.L100:
+	.text
+	movl	.a6@(12),.d0
+	asll	#2,.d0
+	addl	#opst,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L107,.sp@-
+	jsr	cerror
+	addql	#8,.sp
+	bra	.L98
+.L98:	moveml	.a6@(-_F4),#8192
+	unlk	.a6
+	rts
+_F4 = 4
+_S4 = 8192
+| M4 = 8
+	.data
+	.even
+	.globl	rnames
+rnames:
+	.data
+	.long	.L108
+	.data
+	.long	.L109
+	.data
+	.long	.L110
+	.data
+	.long	.L111
+	.data
+	.long	.L112
+	.data
+	.long	.L113
+	.data
+	.long	.L114
+	.data
+	.long	.L115
+	.data
+	.long	.L116
+	.data
+	.long	.L117
+	.data
+	.long	.L118
+	.data
+	.long	.L119
+	.data
+	.long	.L120
+	.data
+	.long	.L121
+	.data
+	.long	.L122
+	.data
+	.long	.L123
+	.even
+	.globl	rstatus
+rstatus:
+	.long	6
+	.long	6
+	.long	6
+	.long	6
+	.long	6
+	.long	6
+	.long	6
+	.long	6
+	.long	24
+	.long	24
+	.long	24
+	.long	24
+	.long	24
+	.long	24
+	.long	8
+	.long	8
+	.comm	brnode,4
+	.comm	brcase,4
+	.even
+	.globl	toff
+toff:
+	.long	0
+	.text
+	.globl	zzzcode
+zzzcode:
+	link	.a6,#-_F5
+	moveml	#_S5,.a6@(-_F5)
+| A5 = 16
+	movl	.a6@(12),.d0
+	bra	.L130
+.L131:
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a0
+	movl	.a0@,.d0
+	bra	.L133
+.L134:
+	.text
+	movl	#.L135,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.sp@-
+	jsr	acon
+	addql	#4,.sp
+	bra	.L128
+.L137:
+	.text
+	movl	#.L138,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.sp@-
+	jsr	adrput
+	addql	#4,.sp
+	.text
+	movl	#.L140,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L128
+.L141:
+.L142:
+	.text
+	movl	#.L143,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.sp@-
+	jsr	adrput
+	addql	#4,.sp
+	.text
+	movl	#.L144,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L128
+.L145:
+	.text
+	movl	#.L146,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L132
+.L133:
+	cmpl	#2,.d0
+	beq	.L141
+	cmpl	#4,.d0
+	beq	.L134
+	cmpl	#94,.d0
+	beq	.L137
+	cmpl	#95,.d0
+	beq	.L142
+	bra	.L145
+.L132:
+.L147:
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a0
+	movl	.a0@(8),.d7
+	bra	.L148
+.L149:
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.a0@(8),.d7
+	bra	.L148
+.L150:
+	movl	.a6@(8),.a0
+	movl	.a0@(8),.d7
+.L148:
+	cmpl	#2,.d7
+	beq	.L10000
+	cmpl	#12,.d7
+	bne	.L151
+.L10000:
+	.text
+	movl	#.L152,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L153
+.L151:
+	cmpl	#3,.d7
+	beq	.L10001
+	cmpl	#13,.d7
+	bne	.L154
+.L10001:
+	.text
+	movl	#.L155,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L156
+.L154:
+	.text
+	movl	#.L157,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L156:
+.L153:
+	bra	.L128
+.L158:
+	movl	#73,.sp@-
+	jsr	get2lab
+	movl	.d0,.d7
+	movl	.d0,.sp@-
+	movl	#0,.sp@-
+	jsr	cbgen
+	addl	#12,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(16),.sp@-
+	jsr	def2lab
+	addql	#4,.sp
+	.text
+	movl	#49,.sp@-
+	movl	.a6@(8),.sp@-
+	jsr	getlr
+	addql	#8,.sp
+	movl	.d0,.a0
+	movl	.a0@(28),.d6
+	movl	.d6,.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L162,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	moveq	#1,.d0
+	asll	.d6,.d0
+	orl	.d0,usedregs
+	movl	.d7,.sp@-
+	jsr	def2lab
+	addql	#4,.sp
+	bra	.L128
+.L163:
+	movl	.a6@(12),.sp@-
+	movl	.a6@(8),.a0
+	movl	.a0@(16),.sp@-
+	movl	.a6@(8),.a0
+	movl	.a0@,.sp@-
+	jsr	cbgen
+	addl	#12,.sp
+	bra	.L128
+.L164:
+	.text
+	movl	#.L165,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L166:
+	addql	#4,toff
+	movl	toff,.d0
+	cmpl	maxtoff,.d0
+	ble	.L167
+	movl	toff,maxtoff
+.L167:
+	bra	.L128
+.L168:
+	clrl	toff
+	bra	.L128
+.L169:
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.a0@(24),.d0
+	notl	.d0
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.d0,.a0@(24)
+	movl	#82,.sp@-
+	movl	.a6@(8),.sp@-
+	jsr	getlr
+	addql	#8,.sp
+	movl	.d0,.sp@-
+	jsr	conput
+	addql	#4,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.a0@(24),.d0
+	notl	.d0
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.d0,.a0@(24)
+	bra	.L128
+.L171:
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.a0@(24),.d0
+	negl	.d0
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.d0,.a0@(24)
+.L172:
+	movl	#82,.sp@-
+	movl	.a6@(8),.sp@-
+	jsr	getlr
+	addql	#8,.sp
+	movl	.d0,.sp@-
+	jsr	conput
+	addql	#4,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.a0@(24),.d0
+	negl	.d0
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a0
+	movl	.d0,.a0@(24)
+	bra	.L128
+.L173:
+	movl	.a6@(8),.a0
+	movl	.a0@(8),.d7
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a6@(8)
+	movl	.a6@(8),.a0
+	movl	.a0@,.d0
+	bra	.L175
+.L176:
+.L177:
+	movl	.a6@(8),.a0
+	cmpl	#3,.a0@(8)
+	beq	.L10002
+	movl	.a6@(8),.a0
+	cmpl	#13,.a0@(8)
+	bne	.L178
+.L10002:
+	cmpl	#2,.d7
+	beq	.L10004
+	cmpl	#12,.d7
+	bne	.L10003
+.L10004:
+	moveq	#1,.d0
+	bra	.L10005
+.L10003:
+	clrl	.d0
+.L10005:
+	movl	.a6@(8),.a0
+	addl	.d0,.a0@(24)
+	bra	.L179
+.L178:
+	cmpl	#2,.d7
+	beq	.L10007
+	cmpl	#12,.d7
+	bne	.L10006
+.L10007:
+	moveq	#3,.d0
+	bra	.L10008
+.L10006:
+	moveq	#2,.d0
+.L10008:
+	movl	.a6@(8),.a0
+	addl	.d0,.a0@(24)
+.L179:
+	bra	.L128
+.L180:
+	bra	.L128
+.L181:
+	.text
+	movl	#.L182,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L128
+.L175:
+	cmpl	#2,.d0
+	beq	.L176
+	cmpl	#94,.d0
+	beq	.L180
+	cmpl	#95,.d0
+	beq	.L177
+	bra	.L181
+.L174:
+.L183:
+	.text
+	movl	#.L184,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+.L185:
+	movl	.a6@(8),.a0
+	cmpl	#98,.a0@
+	bne	.L186
+	.text
+	movl	.a6@(8),.a0
+	movl	.a0@(16),.sp@-
+	movl	#.L187,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L188
+.L186:
+	.text
+	movl	#.L189,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+.L188:
+	bra	.L128
+.L190:
+	movl	.a6@(8),.a0
+	cmpl	#98,.a0@
+	bne	.L191
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a5
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.a4
+	bra	.L192
+.L191:
+	movl	.a6@(8),.a0
+	cmpl	#99,.a0@
+	bne	.L193
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a4
+	bra	.L194
+.L193:
+	.text
+	movl	#.L195,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+.L194:
+.L192:
+	cmpl	#4,.a4@
+	bne	.L196
+	movl	#2,.a4@
+	bra	.L197
+.L196:
+	cmpl	#94,.a4@
+	bne	.L198
+	movl	#95,.a4@
+	bra	.L199
+.L198:
+	cmpl	#95,.a4@
+	beq	.L200
+	.text
+	movl	#.L201,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+.L200:
+.L199:
+.L197:
+	movl	.a6@(8),.a0
+	movl	.a0@(16),.d5
+	addl	.d5,.a4@(24)
+	addl	.d5,.a5@(24)
+.L202:
+	tstl	.d5
+	beq	.L203
+	cmpl	#2,.d5
+	ble	.L10009
+	moveq	#4,.d0
+	bra	.L10010
+.L10009:
+	moveq	#2,.d0
+.L10010:
+	movl	.d0,.d4
+	subl	.d4,.a4@(24)
+	.text
+	.text
+	cmpl	#2,.d4
+	bne	.L10011
+	movl	#.L205,.d0
+	bra	.L10012
+.L10011:
+	movl	#.L206,.d0
+.L10012:
+	movl	.d0,.sp@-
+	movl	#1,.sp@-
+	pea	.a4@
+	jsr	expand
+	addl	#12,.sp
+	subl	.d4,.a5@(24)
+	.text
+	movl	#.L207,.sp@-
+	movl	#1,.sp@-
+	pea	.a5@
+	jsr	expand
+	addl	#12,.sp
+	subl	.d4,.d5
+	bra	.L202
+.L203:
+	cmpl	#2,.a4@
+	bne	.L208
+	movl	#4,.a4@
+	bra	.L209
+.L208:
+	cmpl	#95,.a4@
+	bne	.L210
+	movl	#94,.a4@
+.L210:
+.L209:
+	bra	.L129
+.L211:
+	.text
+	movl	#.L212,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L129
+.L130:
+	cmpl	#78,.d0
+	beq	.L158
+	bgt	.L213
+	cmpl	#67,.d0
+	beq	.L131
+	bgt	.L214
+	cmpl	#45,.d0
+	beq	.L164
+	cmpl	#48,.d0
+	beq	.L168
+	cmpl	#66,.d0
+	beq	.L150
+	bra	.L211
+.L214:	cmpl	#73,.d0
+	beq	.L163
+	cmpl	#76,.d0
+	beq	.L147
+	cmpl	#77,.d0
+	beq	.L171
+	bra	.L211
+.L213:	cmpl	#83,.d0
+	beq	.L190
+	bgt	.L215
+	cmpl	#79,.d0
+	beq	.L172
+	cmpl	#80,.d0
+	beq	.L166
+	cmpl	#82,.d0
+	beq	.L149
+	bra	.L211
+.L215:	cmpl	#84,.d0
+	beq	.L173
+	cmpl	#85,.d0
+	beq	.L183
+	cmpl	#87,.d0
+	beq	.L185
+	cmpl	#126,.d0
+	beq	.L169
+	bra	.L211
+.L129:
+	bra	.L128
+.L128:	moveml	.a6@(-_F5),#12528
+	unlk	.a6
+	rts
+_F5 = 24
+_S5 = 12528
+| M5 = 12
+	.data
+	.text
+	.globl	rmove
+rmove:
+	link	.a6,#-_F6
+	moveml	#_S6,.a6@(-_F6)
+| A6 = 20
+	cmpl	#7,.a6@(16)
+	bne	.L218
+	.text
+	movl	.a6@(8),.d0
+	addql	#1,.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	.a6@(12),.d0
+	addql	#1,.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L219,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	movl	.a6@(12),.d0
+	addql	#1,.d0
+	moveq	#1,.d1
+	asll	.d0,.d1
+	orl	.d1,usedregs
+	movl	.a6@(8),.d0
+	addql	#1,.d0
+	moveq	#1,.d1
+	asll	.d0,.d1
+	orl	.d1,usedregs
+.L218:
+	.text
+	movl	.a6@(8),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	.a6@(12),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L220,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	moveq	#1,.d0
+	movl	.a6@(12),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	moveq	#1,.d0
+	movl	.a6@(8),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	bra	.L217
+.L217:	moveml	.a6@(-_F6),#0
+	unlk	.a6
+	rts
+_F6 = 0
+_S6 = 0
+| M6 = 12
+	.data
+	.even
+	.globl	respref
+respref:
+	.long	20
+	.long	20
+	.long	10
+	.long	3786
+	.long	4096
+	.long	4096
+	.long	8192
+	.long	8192
+	.long	4
+	.long	578
+	.long	0
+	.long	0
+	.text
+	.globl	setregs
+setregs:
+	link	.a6,#-_F7
+	moveml	#_S7,.a6@(-_F7)
+| A7 = 8
+	movl	maxtreg,.d0
+	asrl	#8,.d0
+	andl	#255,.d0
+	movl	.d0,.d6
+	andl	#255,maxtreg
+	cmpl	#2,maxtreg
+	blt	.L10013
+	movl	maxtreg,.d0
+	addql	#1,.d0
+	bra	.L10014
+.L10013:
+	moveq	#2,.d0
+.L10014:
+	movl	.d0,fregs
+	tstl	x2debug
+	beq	.L223
+	movl	x2debug,.d0
+	addql	#1,.d0
+	cmpl	fregs,.d0
+	bge	.L224
+	movl	x2debug,.d0
+	addql	#1,.d0
+	movl	.d0,fregs
+.L224:
+.L223:
+	moveq	#2,.d7
+.L227:
+	cmpl	#7,.d7
+	bgt	.L226
+	cmpl	fregs,.d7
+	bge	.L10015
+	moveq	#6,.d0
+	bra	.L10016
+.L10015:
+	moveq	#2,.d0
+.L10016:
+	movl	.d7,.d1
+	asll	#2,.d1
+	addl	#rstatus,.d1
+	movl	.d1,.a0
+	movl	.d0,.a0@
+.L225:
+	addql	#1,.d7
+	bra	.L227
+.L226:
+	moveq	#2,.d7
+.L230:
+	cmpl	#7,.d7
+	bgt	.L229
+	cmpl	.d6,.d7
+	bge	.L10017
+	moveq	#24,.d0
+	bra	.L10018
+.L10017:
+	moveq	#8,.d0
+.L10018:
+	movl	.d7,.d1
+	addql	#8,.d1
+	asll	#2,.d1
+	addl	#rstatus,.d1
+	movl	.d1,.a0
+	movl	.d0,.a0@
+.L228:
+	addql	#1,.d7
+	bra	.L230
+.L229:
+	bra	.L222
+.L222:	moveml	.a6@(-_F7),#192
+	unlk	.a6
+	rts
+_F7 = 8
+_S7 = 192
+| M7 = 0
+	.data
+	.text
+	.globl	szty
+szty:
+	link	.a6,#-_F8
+	moveml	#_S8,.a6@(-_F8)
+| A8 = 12
+	cmpl	#7,.a6@(8)
+	bne	.L10019
+	moveq	#2,.d0
+	bra	.L10020
+.L10019:
+	moveq	#1,.d0
+.L10020:
+	bra	.L232
+	bra	.L232
+.L232:	moveml	.a6@(-_F8),#0
+	unlk	.a6
+	rts
+_F8 = 0
+_S8 = 0
+| M8 = 0
+	.data
+	.text
+	.globl	rewfld
+rewfld:
+	link	.a6,#-_F9
+	moveml	#_S9,.a6@(-_F9)
+| A9 = 12
+	moveq	#1,.d0
+	bra	.L234
+	bra	.L234
+.L234:	moveml	.a6@(-_F9),#0
+	unlk	.a6
+	rts
+_F9 = 0
+_S9 = 0
+| M9 = 0
+	.data
+	.text
+	.globl	callreg
+callreg:
+	link	.a6,#-_F10
+	moveml	#_S10,.a6@(-_F10)
+| A10 = 12
+	clrl	.d0
+	bra	.L236
+	bra	.L236
+.L236:	moveml	.a6@(-_F10),#0
+	unlk	.a6
+	rts
+_F10 = 0
+_S10 = 0
+| M10 = 0
+	.data
+	.text
+	.globl	shltype
+shltype:
+	link	.a6,#-_F11
+	moveml	#_S11,.a6@(-_F11)
+| A11 = 16
+	cmpl	#2,.a6@(8)
+	beq	.L10021
+	cmpl	#94,.a6@(8)
+	beq	.L10021
+	cmpl	#4,.a6@(8)
+	beq	.L10021
+	cmpl	#95,.a6@(8)
+	bne	.L239
+.L10021:
+	moveq	#1,.d0
+	bra	.L238
+.L239:
+	cmpl	#13,.a6@(8)
+	bne	.L10022
+	movl	.a6@(12),.a0
+	movl	.a0@(24),.sp@-
+	jsr	shumul
+	addql	#4,.sp
+	tstl	.d0
+	beq	.L10022
+	moveq	#1,.d0
+	bra	.L10023
+.L10022:
+	clrl	.d0
+.L10023:
+	bra	.L238
+	bra	.L238
+.L238:	moveml	.a6@(-_F11),#0
+	unlk	.a6
+	rts
+_F11 = 0
+_S11 = 0
+| M11 = 4
+	.data
+	.text
+	.globl	flshape
+flshape:
+	link	.a6,#-_F12
+	moveml	#_S12,.a6@(-_F12)
+	movl	.a6@(8),.a5
+| A12 = 12
+	movl	.a5@,.d7
+	cmpl	#2,.d7
+	beq	.L10024
+	cmpl	#94,.d7
+	beq	.L10024
+	cmpl	#4,.d7
+	beq	.L10024
+	cmpl	#95,.d7
+	bne	.L243
+.L10024:
+	moveq	#1,.d0
+	bra	.L242
+.L243:
+	cmpl	#13,.d7
+	bne	.L10025
+	movl	.a5@(24),.sp@-
+	jsr	shumul
+	addql	#4,.sp
+	cmpl	#1024,.d0
+	bne	.L10025
+	moveq	#1,.d0
+	bra	.L10026
+.L10025:
+	clrl	.d0
+.L10026:
+	bra	.L242
+	bra	.L242
+.L242:	moveml	.a6@(-_F12),#8320
+	unlk	.a6
+	rts
+_F12 = 8
+_S12 = 8320
+| M12 = 4
+	.data
+	.text
+	.globl	shtemp
+shtemp:
+	link	.a6,#-_F13
+	moveml	#_S13,.a6@(-_F13)
+	movl	.a6@(8),.a5
+| A13 = 12
+	cmpl	#13,.a5@
+	bne	.L246
+	movl	.a5@(24),.a5
+.L246:
+	cmpl	#94,.a5@
+	beq	.L10027
+	cmpl	#95,.a5@
+	bne	.L247
+.L10027:
+	movl	.a5@(28),.d0
+	asll	#2,.d0
+	addl	#rstatus,.d0
+	movl	.d0,.a0
+	movl	.a0@,.d0
+	andl	#20,.d0
+	bne	.L10028
+	moveq	#1,.d0
+	bra	.L10029
+.L10028:
+	clrl	.d0
+.L10029:
+	bra	.L245
+.L247:
+	cmpl	#2,.a5@
+	beq	.L10031
+	cmpl	#4,.a5@
+	bne	.L10030
+.L10031:
+	moveq	#1,.d0
+	bra	.L10032
+.L10030:
+	clrl	.d0
+.L10032:
+	bra	.L245
+	bra	.L245
+.L245:	moveml	.a6@(-_F13),#8192
+	unlk	.a6
+	rts
+_F13 = 4
+_S13 = 8192
+| M13 = 0
+	.data
+	.text
+	.globl	spsz
+spsz:
+	link	.a6,#-_F14
+	moveml	#_S14,.a6@(-_F14)
+| A14 = 16
+	movl	.a6@(8),.d0
+	andl	#48,.d0
+	cmpl	#16,.d0
+	beq	.L250
+	clrl	.d0
+	bra	.L249
+.L250:
+	movl	.a6@(8),.d0
+	lsrl	#2,.d0
+	andl	#-16,.d0
+	movl	.a6@(8),.d1
+	andl	#15,.d1
+	orl	.d1,.d0
+	movl	.d0,.a6@(8)
+	movl	.a6@(8),.d0
+	andl	#48,.d0
+	cmpl	#16,.d0
+	bne	.L251
+	cmpl	#4,.a6@(12)
+	bne	.L10033
+	moveq	#1,.d0
+	bra	.L10034
+.L10033:
+	clrl	.d0
+.L10034:
+	bra	.L249
+.L251:
+	movl	.a6@(8),.d0
+	bra	.L253
+.L254:
+.L255:
+	cmpl	#1,.a6@(12)
+	bne	.L10035
+	moveq	#1,.d0
+	bra	.L10036
+.L10035:
+	clrl	.d0
+.L10036:
+	bra	.L249
+.L256:
+.L257:
+	cmpl	#2,.a6@(12)
+	bne	.L10037
+	moveq	#1,.d0
+	bra	.L10038
+.L10037:
+	clrl	.d0
+.L10038:
+	bra	.L249
+.L258:
+.L259:
+.L260:
+	cmpl	#4,.a6@(12)
+	bne	.L10039
+	moveq	#1,.d0
+	bra	.L10040
+.L10039:
+	clrl	.d0
+.L10040:
+	bra	.L249
+.L261:
+	cmpl	#8,.a6@(12)
+	bne	.L10041
+	moveq	#1,.d0
+	bra	.L10042
+.L10041:
+	clrl	.d0
+.L10042:
+	bra	.L249
+.L253:
+	subl	#2,.d0
+	cmpl	#12,.d0
+	bhi	.L262
+	addw	.d0,.d0
+	movw	.pc@(6,.d0:w),.d0
+	jmp	.pc@(2,.d0:w)
+.L263 = .
+	.word	.L255-.L263
+	.word	.L256-.L263
+	.word	.L258-.L263
+	.word	.L262-.L263
+	.word	.L260-.L263
+	.word	.L261-.L263
+	.word	.L262-.L263
+	.word	.L262-.L263
+	.word	.L262-.L263
+	.word	.L262-.L263
+	.word	.L254-.L263
+	.word	.L257-.L263
+	.word	.L259-.L263
+.L262:
+.L252:
+	clrl	.d0
+	bra	.L249
+	bra	.L249
+.L249:	moveml	.a6@(-_F14),#0
+	unlk	.a6
+	rts
+_F14 = 0
+_S14 = 0
+| M14 = 0
+	.data
+	.text
+	.globl	indexreg
+indexreg:
+	link	.a6,#-_F15
+	moveml	#_S15,.a6@(-_F15)
+	movl	.a6@(8),.a5
+| A15 = 12
+	cmpl	#94,.a5@
+	bne	.L266
+	cmpl	#8,.a5@(28)
+	blt	.L266
+	cmpl	#15,.a5@(28)
+	bgt	.L266
+	moveq	#1,.d0
+	bra	.L265
+.L266:
+	clrl	.d0
+	bra	.L265
+	bra	.L265
+.L265:	moveml	.a6@(-_F15),#8192
+	unlk	.a6
+	rts
+_F15 = 4
+_S15 = 8192
+| M15 = 0
+	.data
+	.text
+	.globl	shumul
+shumul:
+	link	.a6,#-_F16
+	moveml	#_S16,.a6@(-_F16)
+	movl	.a6@(8),.a5
+| A16 = 12
+	movl	.a5@,.d7
+	pea	.a5@
+	jsr	indexreg
+	addql	#4,.sp
+	tstl	.d0
+	beq	.L268
+	movl	#1024,.d0
+	bra	.L267
+.L268:
+	cmpl	#78,.d7
+	bne	.L269
+	movl	.a5@(24),.sp@-
+	jsr	indexreg
+	addql	#4,.sp
+	tstl	.d0
+	beq	.L269
+	movl	.a5@(28),.a0
+	cmpl	#4,.a0@
+	bne	.L269
+	movl	.a5@(28),.a0
+	tstb	.a0@(16)
+	bne	.L269
+	movl	.a5@(28),.a0
+	movl	.a0@(24),.sp@-
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.sp@-
+	jsr	spsz
+	addql	#8,.sp
+	tstl	.d0
+	beq	.L269
+	movl	#2048,.d0
+	bra	.L267
+.L269:
+	clrl	.d0
+	bra	.L267
+	bra	.L267
+.L267:	moveml	.a6@(-_F16),#8320
+	unlk	.a6
+	rts
+_F16 = 8
+_S16 = 8320
+| M16 = 10
+	.data
+	.text
+	.globl	adrcon
+adrcon:
+	link	.a6,#-_F17
+	moveml	#_S17,.a6@(-_F17)
+| A17 = 12
+	.text
+	movl	.a6@(8),.sp@-
+	movl	#.L272,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L271
+.L271:	moveml	.a6@(-_F17),#0
+	unlk	.a6
+	rts
+_F17 = 0
+_S17 = 0
+| M17 = 8
+	.data
+	.text
+	.globl	conput
+conput:
+	link	.a6,#-_F18
+	moveml	#_S18,.a6@(-_F18)
+	movl	.a6@(8),.a5
+| A18 = 12
+	movl	.a5@,.d0
+	bra	.L275
+.L276:
+	pea	.a5@
+	jsr	acon
+	addql	#4,.sp
+	bra	.L273
+.L277:
+	.text
+	movl	.a5@(28),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L278,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	moveq	#1,.d0
+	movl	.a5@(28),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	bra	.L273
+.L279:
+	.text
+	movl	#.L280,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L274
+.L275:
+	cmpl	#4,.d0
+	beq	.L276
+	cmpl	#94,.d0
+	beq	.L277
+	bra	.L279
+.L274:
+	bra	.L273
+.L273:	moveml	.a6@(-_F18),#8192
+	unlk	.a6
+	rts
+_F18 = 4
+_S18 = 8192
+| M18 = 8
+	.data
+	.text
+	.globl	insput
+insput:
+	link	.a6,#-_F19
+	moveml	#_S19,.a6@(-_F19)
+| A19 = 12
+	.text
+	movl	#.L283,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L282
+.L282:	moveml	.a6@(-_F19),#0
+	unlk	.a6
+	rts
+_F19 = 0
+_S19 = 0
+| M19 = 4
+	.data
+	.text
+	.globl	upput
+upput:
+	link	.a6,#-_F20
+	moveml	#_S20,.a6@(-_F20)
+| A20 = 12
+	movl	.a6@(8),.a0
+	cmpl	#103,.a0@
+	bne	.L286
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a6@(8)
+.L286:
+	movl	.a6@(8),.a0
+	movl	.a0@(24),.a6@(-4)
+	movl	.a6@(8),.a0
+	movl	.a0@,.d0
+	bra	.L288
+.L289:
+	movl	.a6@(8),.a0
+	addql	#4,.a0@(24)
+	movl	.a6@(8),.sp@-
+	jsr	acon
+	addql	#4,.sp
+	bra	.L287
+.L290:
+	movl	.a6@(8),.a0
+	andl	#-1,.a0@(24)
+	.text
+	movl	#.L291,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a6@(8),.sp@-
+	jsr	acon
+	addql	#4,.sp
+	bra	.L287
+.L292:
+	.text
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.d0
+	addql	#1,.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L293,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.d0
+	addql	#1,.d0
+	moveq	#1,.d1
+	asll	.d0,.d1
+	orl	.d1,usedregs
+	bra	.L287
+.L294:
+	movl	.a6@(8),.a0
+	addql	#4,.a0@(24)
+	movl	.a6@(8),.a0
+	cmpl	#14,.a0@(28)
+	bne	.L295
+	movl	.a6@(8),.a0
+	tstb	.a0@(16)
+	beq	.L296
+	.text
+	movl	#.L298,.sp@-
+	jsr	werror
+	addql	#4,.sp
+.L296:
+.L295:
+	.text
+	movl	.a6@(8),.a0
+	movl	.a0@(28),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L299,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	movl	.a6@(8),.a0
+	moveq	#1,.d0
+	movl	.a0@(28),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	movl	.a6@(8),.a0
+	tstl	.a0@(24)
+	bne	.L10043
+	movl	.a6@(8),.a0
+	tstb	.a0@(16)
+	beq	.L300
+.L10043:
+	.text
+	movl	#.L301,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a6@(8),.sp@-
+	jsr	acon
+	addql	#4,.sp
+	.text
+	movl	#.L302,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L300:
+	bra	.L287
+.L303:
+	.text
+	movl	#.L304,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L287
+.L288:
+	cmpl	#2,.d0
+	beq	.L289
+	cmpl	#4,.d0
+	beq	.L290
+	cmpl	#94,.d0
+	beq	.L292
+	cmpl	#95,.d0
+	beq	.L294
+	bra	.L303
+.L287:
+	movl	.a6@(8),.a0
+	movl	.a6@(-4),.a0@(24)
+	bra	.L285
+.L285:	moveml	.a6@(-_F20),#0
+	unlk	.a6
+	rts
+_F20 = 4
+_S20 = 0
+| M20 = 8
+	.data
+	.text
+	.globl	adrput
+adrput:
+	link	.a6,#-_F21
+	moveml	#_S21,.a6@(-_F21)
+	movl	.a6@(8),.a5
+| A21 = 12
+	cmpl	#103,.a5@
+	bne	.L306
+	movl	.a5@(24),.a5
+.L306:
+	movl	.a5@,.d0
+	bra	.L308
+.L309:
+	pea	.a5@
+	jsr	acon
+	addql	#4,.sp
+	bra	.L305
+.L310:
+	movl	.a5@(8),.sp@-
+	jsr	szty
+	addql	#4,.sp
+	cmpl	#2,.d0
+	bne	.L311
+	movl	.a5@(24),.a6@(-4)
+	movl	.a5@(24),.d0
+	moveq	#32,.d1
+	asrl	.d1,.d0
+	andl	#-1,.d0
+	movl	.d0,.a5@(24)
+	.text
+	movl	#.L312,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	pea	.a5@
+	jsr	acon
+	addql	#4,.sp
+	movl	.a6@(-4),.a5@(24)
+	bra	.L305
+.L311:
+	.text
+	movl	#.L313,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	pea	.a5@
+	jsr	acon
+	addql	#4,.sp
+	bra	.L305
+.L314:
+	.text
+	movl	.a5@(28),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L315,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	moveq	#1,.d0
+	movl	.a5@(28),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	bra	.L305
+.L316:
+	cmpl	#14,.a5@(28)
+	bne	.L317
+	tstb	.a5@(16)
+	beq	.L318
+	.text
+	movl	#.L319,.sp@-
+	jsr	werror
+	addql	#4,.sp
+.L318:
+	.text
+	movl	#.L320,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	.text
+	movl	.a5@(24),.sp@-
+	movl	#.L321,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	.text
+	movl	#.L322,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L305
+.L317:
+	.text
+	movl	.a5@(28),.d0
+	asll	#2,.d0
+	addl	#rnames,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L323,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	moveq	#1,.d0
+	movl	.a5@(28),.d1
+	asll	.d1,.d0
+	orl	.d0,usedregs
+	tstl	.a5@(24)
+	bne	.L10044
+	tstb	.a5@(16)
+	beq	.L324
+.L10044:
+	.text
+	movl	#.L325,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	pea	.a5@
+	jsr	acon
+	addql	#4,.sp
+	.text
+	movl	#.L326,.sp@-
+	jsr	printf
+	addql	#4,.sp
+.L324:
+	bra	.L307
+.L327:
+	movl	#1024,.sp@-
+	pea	.a5@
+	jsr	tshape
+	addql	#8,.sp
+	tstl	.d0
+	beq	.L329
+	movl	.a5@(24),.sp@-
+	jsr	adrput
+	addql	#4,.sp
+	.text
+	movl	#.L330,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	bra	.L331
+.L329:
+	movl	.a5@(24),.a3
+	movl	.a3@(24),.a4
+	movl	#95,.a5@
+	movl	.a4@(4),.a5@(4)
+	movl	.a4@(24),.a5@(24)
+	movl	.a4@(28),.a5@(28)
+	clrl	.d7
+.L334:
+	cmpl	#8,.d7
+	bge	.L333
+	lea	.a4@(16),.a0
+	addl	.d7,.a0
+	lea	.a5@(16),.a1
+	addl	.d7,.a1
+	movb	.a0@,.a1@
+.L332:
+	addql	#1,.d7
+	bra	.L334
+.L333:
+	cmpl	#78,.a3@
+	bne	.L335
+	pea	.a5@
+	jsr	adrput
+	addql	#4,.sp
+	.text
+	movl	#.L336,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	movl	.a3@(28),.a0
+	movl	.a0@(24),.d0
+	subl	.d0,.a5@(24)
+	bra	.L337
+.L335:
+	.text
+	movl	#.L338,.sp@-
+	jsr	printf
+	addql	#4,.sp
+	pea	.a5@
+	jsr	adrput
+	addql	#4,.sp
+.L337:
+	pea	.a3@
+	jsr	tfree
+	addql	#4,.sp
+.L331:
+	bra	.L305
+.L340:
+	.text
+	movl	#.L341,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L305
+.L308:
+	cmpl	#2,.d0
+	beq	.L309
+	cmpl	#4,.d0
+	beq	.L310
+	cmpl	#13,.d0
+	beq	.L327
+	cmpl	#94,.d0
+	beq	.L314
+	cmpl	#95,.d0
+	beq	.L316
+	bra	.L340
+.L307:
+	bra	.L305
+.L305:	moveml	.a6@(-_F21),#14464
+	unlk	.a6
+	rts
+_F21 = 20
+_S21 = 14464
+| M21 = 8
+	.data
+	.text
+	.globl	acon
+acon:
+	link	.a6,#-_F22
+	moveml	#_S22,.a6@(-_F22)
+	movl	.a6@(8),.a5
+| A22 = 12
+	tstb	.a5@(16)
+	bne	.L343
+	.text
+	movl	.a5@(24),.sp@-
+	movl	#.L344,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L345
+.L343:
+	tstl	.a5@(24)
+	bne	.L346
+	.text
+	pea	.a5@(16)
+	movl	#.L347,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L348
+.L346:
+	.text
+	pea	.a5@(16)
+	movl	#.L349,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	.text
+	movl	.a5@(24),.sp@-
+	movl	#.L350,.sp@-
+	jsr	printf
+	addql	#8,.sp
+.L348:
+.L345:
+	bra	.L342
+.L342:	moveml	.a6@(-_F22),#8192
+	unlk	.a6
+	rts
+_F22 = 4
+_S22 = 8192
+| M22 = 8
+	.data
+	.text
+	.globl	genscall
+genscall:
+	link	.a6,#-_F23
+	moveml	#_S23,.a6@(-_F23)
+	movl	.a6@(8),.a5
+| A23 = 16
+	movl	.a6@(12),.sp@-
+	pea	.a5@
+	jsr	gencall
+	addql	#8,.sp
+	bra	.L352
+	bra	.L352
+.L352:	moveml	.a6@(-_F23),#8192
+	unlk	.a6
+	rts
+_F23 = 4
+_S23 = 8192
+| M23 = 8
+	.data
+	.text
+	.globl	gencall
+gencall:
+	link	.a6,#-_F24
+	moveml	#_S24,.a6@(-_F24)
+	movl	.a6@(8),.a5
+| A24 = 16
+	tstl	.a5@(28)
+	beq	.L355
+	movl	.a5@(28),.sp@-
+	jsr	argsize
+	addql	#4,.sp
+	movl	.d0,.d7
+	bra	.L357
+.L355:
+	clrl	.d7
+.L357:
+	tstl	.a5@(28)
+	beq	.L358
+	movl	.a5@(28),.sp@-
+	jsr	genargs
+	addql	#4,.sp
+.L358:
+	movl	.a5@(24),.sp@-
+	movl	.a5@(24),.a0
+	movl	.a0@,.sp@-
+	jsr	shltype
+	addql	#8,.sp
+	tstl	.d0
+	bne	.L360
+	movl	#520,.sp@-
+	movl	.a5@(24),.sp@-
+	jsr	order
+	addql	#8,.sp
+.L360:
+	movl	#72,.a5@
+	movl	#20,.sp@-
+	pea	.a5@
+	jsr	match
+	addql	#8,.sp
+	movl	.d0,.d6
+	movl	.d7,.sp@-
+	jsr	popargs
+	addql	#4,.sp
+	cmpl	#4097,.d6
+	beq	.L10045
+	moveq	#1,.d0
+	bra	.L10046
+.L10045:
+	clrl	.d0
+.L10046:
+	bra	.L354
+	bra	.L354
+.L354:	moveml	.a6@(-_F24),#8384
+	unlk	.a6
+	rts
+_F24 = 12
+_S24 = 8384
+| M24 = 8
+	.data
+	.text
+	.globl	popargs
+popargs:
+	link	.a6,#-_F25
+	moveml	#_S25,.a6@(-_F25)
+	movl	.a6@(8),.d7
+| A25 = 12
+	movl	#2,.sp@-
+	movl	.d7,.sp@-
+	jsr	ldiv
+	addql	#8,.sp
+	subl	.d0,toff
+	tstl	toff
+	bne	.L365
+	cmpl	#2,.d7
+	blt	.L365
+	subql	#2,.d7
+.L365:
+	movl	.d7,.d0
+	bra	.L367
+.L368:
+	bra	.L366
+.L369:
+	.text
+	.text
+	.text
+	movl	.d7,.sp@-
+	cmpl	#8,.d7
+	bgt	.L10047
+	movl	#.L371,.d0
+	bra	.L10048
+.L10047:
+	movl	#.L372,.d0
+.L10048:
+	movl	.d0,.sp@-
+	movl	#.L370,.sp@-
+	jsr	printf
+	addl	#12,.sp
+	bra	.L366
+.L367:
+	cmpl	#0,.d0
+	beq	.L368
+	bra	.L369
+.L366:
+	bra	.L364
+.L364:	moveml	.a6@(-_F25),#128
+	unlk	.a6
+	rts
+_F25 = 4
+_S25 = 128
+| M25 = 12
+	.data
+	.even
+	.globl	ccbranch
+ccbranch:
+	.data
+	.long	.L374
+	.data
+	.long	.L375
+	.data
+	.long	.L376
+	.data
+	.long	.L377
+	.data
+	.long	.L378
+	.data
+	.long	.L379
+	.data
+	.long	.L380
+	.data
+	.long	.L381
+	.data
+	.long	.L382
+	.data
+	.long	.L383
+	.even
+	.globl	lbranche
+lbranche:
+	.long	0
+	.long	81
+	.long	80
+	.long	81
+	.long	0
+	.long	81
+	.long	83
+	.long	85
+	.long	86
+	.long	83
+	.long	85
+	.long	87
+	.long	85
+	.long	83
+	.long	88
+	.long	85
+	.long	83
+	.long	89
+	.long	87
+	.long	89
+	.long	86
+	.long	87
+	.long	89
+	.long	87
+	.long	89
+	.long	87
+	.long	88
+	.long	89
+	.long	87
+	.long	89
+	.text
+	.globl	cbgen
+cbgen:
+	link	.a6,#-_F26
+	moveml	#_S26,.a6@(-_F26)
+| A26 = 20
+	tstl	.a6@(8)
+	bne	.L387
+	.text
+	movl	.a6@(12),.sp@-
+	movl	#.L388,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L389
+.L387:
+	cmpl	#89,.a6@(8)
+	ble	.L390
+	.text
+	movl	.a6@(8),.d0
+	asll	#2,.d0
+	addl	#opst,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	movl	#.L391,.sp@-
+	jsr	cerror
+	addql	#8,.sp
+	bra	.L392
+.L390:
+	movl	brcase,.d0
+	bra	.L394
+.L395:
+.L396:
+	movl	#12,.sp@-
+	movl	.a6@(8),.d0
+	subl	#80,.d0
+	movl	.d0,.sp@-
+	jsr	lmul
+	addql	#8,.sp
+	addl	#lbranche,.d0
+	movl	.d0,.a5
+	jsr	get2lab
+	movl	.d0,.a6@(-4)
+	.text
+	.text
+	cmpl	#67,brcase
+	bne	.L10049
+	movl	#.L397,.d0
+	bra	.L10050
+.L10049:
+	movl	#.L398,.d0
+.L10050:
+	movl	.d0,.sp@-
+	movl	#32,.sp@-
+	movl	brnode,.sp@-
+	jsr	expand
+	addl	#12,.sp
+	tstl	.a5@
+	beq	.L399
+	movl	.a6@(12),.sp@-
+	movl	.a5@,.d0
+	subl	#80,.d0
+	asll	#2,.d0
+	addl	#ccbranch,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	jsr	printf
+	addql	#8,.sp
+.L399:
+	addql	#4,.a5
+	tstl	.a5@
+	beq	.L400
+	movl	.a6@(-4),.sp@-
+	movl	.a5@,.d0
+	subl	#80,.d0
+	asll	#2,.d0
+	addl	#ccbranch,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	jsr	printf
+	addql	#8,.sp
+.L400:
+	.text
+	.text
+	cmpl	#67,brcase
+	bne	.L10051
+	movl	#.L401,.d0
+	bra	.L10052
+.L10051:
+	movl	#.L402,.d0
+.L10052:
+	movl	.d0,.sp@-
+	movl	#32,.sp@-
+	movl	brnode,.sp@-
+	jsr	expand
+	addl	#12,.sp
+	movl	.a6@(12),.sp@-
+	addql	#4,.a5
+	movl	.a5@,.d0
+	subl	#80,.d0
+	asll	#2,.d0
+	addl	#ccbranch,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	movl	.a6@(-4),.sp@-
+	jsr	def2lab
+	addql	#4,.sp
+	movl	#0,.sp@-
+	movl	#0,.sp@-
+	movl	brnode,.sp@-
+	jsr	reclaim
+	addl	#12,.sp
+	bra	.L393
+.L404:
+	cmpl	#70,.a6@(16)
+	bne	.L405
+	movl	.a6@(8),.d0
+	subl	#80,.d0
+	asll	#1,.d0
+	addl	#revrel,.d0
+	movl	.d0,.a0
+	movw	.a0@,.d0
+	extl	.d0
+	movl	.d0,.a6@(8)
+.L405:
+	movl	.a6@(12),.sp@-
+	movl	.a6@(8),.d0
+	subl	#80,.d0
+	asll	#2,.d0
+	addl	#ccbranch,.d0
+	movl	.d0,.a0
+	movl	.a0@,.sp@-
+	jsr	printf
+	addql	#8,.sp
+	bra	.L393
+.L394:
+	cmpl	#65,.d0
+	beq	.L395
+	cmpl	#67,.d0
+	beq	.L396
+	bra	.L404
+.L393:
+	clrl	brcase
+	clrl	brnode
+.L392:
+.L389:
+	bra	.L386
+.L386:	moveml	.a6@(-_F26),#8192
+	unlk	.a6
+	rts
+_F26 = 8
+_S26 = 8192
+| M26 = 12
+	.data
+	.text
+	.globl	nextcook
+nextcook:
+	link	.a6,#-_F27
+	moveml	#_S27,.a6@(-_F27)
+| A27 = 16
+	cmpl	#16384,.a6@(12)
+	bne	.L408
+	clrl	.d0
+	bra	.L407
+.L408:
+	movl	.a6@(12),.d0
+	andl	#20,.d0
+	bne	.L409
+	moveq	#20,.d0
+	bra	.L407
+.L409:
+	movl	.a6@(12),.d0
+	andl	#4096,.d0
+	bne	.L410
+	movl	.a6@(8),.a0
+	movl	.a0@,.d0
+	asll	#2,.d0
+	addl	#dope,.d0
+	movl	.d0,.a0
+	movl	.a0@,.d0
+	andl	#1,.d0
+	beq	.L410
+	movl	#4126,.d0
+	bra	.L407
+.L410:
+	movl	#16384,.d0
+	bra	.L407
+	bra	.L407
+.L407:	moveml	.a6@(-_F27),#0
+	unlk	.a6
+	rts
+_F27 = 0
+_S27 = 0
+| M27 = 0
+	.data
+	.text
+	.globl	lastchan
+lastchan:
+	link	.a6,#-_F28
+	moveml	#_S28,.a6@(-_F28)
+| A28 = 16
+	clrl	.d0
+	bra	.L412
+	bra	.L412
+.L412:	moveml	.a6@(-_F28),#0
+	unlk	.a6
+	rts
+_F28 = 0
+_S28 = 0
+| M28 = 0
+	.data
+	.even
+	.globl	opfunc
+opfunc:
+	.long	11
+	.long	4
+	.data
+	.long	.L414
+	.long	60
+	.long	4
+	.data
+	.long	.L415
+	.long	62
+	.long	4
+	.data
+	.long	.L416
+	.long	12
+	.long	4
+	.data
+	.long	.L417
+	.long	61
+	.long	4
+	.data
+	.long	.L418
+	.long	63
+	.long	4
+	.data
+	.long	.L419
+	.long	11
+	.long	14
+	.data
+	.long	.L420
+	.long	60
+	.long	14
+	.data
+	.long	.L421
+	.long	62
+	.long	14
+	.data
+	.long	.L422
+	.long	12
+	.long	14
+	.data
+	.long	.L423
+	.long	61
+	.long	14
+	.data
+	.long	.L424
+	.long	63
+	.long	14
+	.data
+	.long	.L425
+	.long	6
+	.long	7
+	.data
+	.long	.L426
+	.long	8
+	.long	7
+	.data
+	.long	.L427
+	.long	11
+	.long	7
+	.data
+	.long	.L428
+	.long	60
+	.long	7
+	.data
+	.long	.L429
+	.long	10
+	.long	7
+	.data
+	.long	.L430
+	.long	10
+	.long	6
+	.data
+	.long	.L431
+	.long	7
+	.long	7
+	.data
+	.long	.L432
+	.long	9
+	.long	7
+	.data
+	.long	.L433
+	.long	12
+	.long	7
+	.data
+	.long	.L434
+	.long	61
+	.long	7
+	.data
+	.long	.L435
+	.long	7
+	.long	6
+	.data
+	.long	.L436
+	.long	9
+	.long	6
+	.data
+	.long	.L437
+	.long	12
+	.long	6
+	.data
+	.long	.L438
+	.long	61
+	.long	6
+	.data
+	.long	.L439
+	.long	0
+	.long	0
+	.long	0
+	.text
+	.globl	hardops
+hardops:
+	link	.a6,#-_F29
+	moveml	#_S29,.a6@(-_F29)
+	movl	.a6@(8),.a5
+| A29 = 12
+	movl	.a5@,.d7
+	movl	.a5@(8),.d6
+	cmpl	#104,.d7
+	bne	.L442
+	pea	.a5@
+	jsr	hardconv
+	addql	#4,.sp
+	bra	.L441
+.L442:
+	movl	#opfunc,.a3
+.L446:
+	tstl	.a3@
+	beq	.L445
+	cmpl	.a3@,.d7
+	bne	.L447
+	cmpl	.a3@(4),.d6
+	bne	.L447
+	bra	.L448
+.L447:
+.L444:
+	addl	#12,.a3
+	bra	.L446
+.L445:
+	bra	.L441
+.L448:
+	cmpl	#11,.d7
+	bne	.L449
+	cmpl	#4,.d6
+	bne	.L449
+	movl	.a5@(24),.a0
+	cmpl	#3,.a0@(8)
+	bne	.L449
+	movl	.a5@(28),.a0
+	cmpl	#3,.a0@(8)
+	bne	.L449
+	bra	.L441
+.L449:
+	movl	.d7,.d0
+	asll	#2,.d0
+	addl	#dope,.d0
+	movl	.d0,.a0
+	movl	.a0@,.d0
+	andl	#1,.d0
+	beq	.L450
+	movl	.a5@(24),.a0
+	movl	.a0@,.d0
+	bra	.L452
+.L453:
+	movl	.a5@(24),.a0
+	movl	#97,.a0@
+	movl	.a5@(24),.a0
+	movl	.a0@(24),.a5@(24)
+	bra	.L451
+.L454:
+	movl	.a5@(24),.a0
+	movl	#4,.a0@
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.d0
+	andl	#-16,.d0
+	lsll	#2,.d0
+	orl	#16,.d0
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.d1
+	andl	#15,.d1
+	orl	.d1,.d0
+	movl	.a5@(24),.a0
+	movl	.d0,.a0@(8)
+	bra	.L451
+.L455:
+	movl	.a5@(24),.a0
+	movl	#94,.a0@
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.d0
+	andl	#-16,.d0
+	lsll	#2,.d0
+	orl	#16,.d0
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.d1
+	andl	#15,.d1
+	orl	.d1,.d0
+	movl	.a5@(24),.a0
+	movl	.d0,.a0@(8)
+	movl	.a5@(24),.a0
+	tstl	.a0@(24)
+	beq	.L456
+	jsr	talloc
+	movl	.d0,.a4
+	movl	#6,.a4@
+	movl	#8192,.a4@(4)
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.a4@(8)
+	movl	.a5@(24),.a4@(24)
+	jsr	talloc
+	movl	.d0,.a4@(28)
+	movl	.a4@(28),.a0
+	movl	#4,.a0@
+	movl	.a4@(28),.a0
+	movl	#8192,.a0@(4)
+	movl	.a4@(28),.a0
+	movl	#4,.a0@(8)
+	movl	.a4@(28),.a0
+	clrb	.a0@(16)
+	movl	.a5@(24),.a0
+	movl	.a4@(28),.a1
+	movl	.a0@(24),.a1@(24)
+	movl	.a4@(28),.a0
+	clrl	.a0@(28)
+	movl	.a5@(24),.a0
+	clrl	.a0@(24)
+	movl	.a4,.a5@(24)
+.L456:
+	bra	.L451
+.L457:
+	jsr	talloc
+	movl	.d0,.a4
+	movl	.a5@,.d0
+	subql	#1,.d0
+	movl	.d0,.a4@
+	movl	.a5@(4),.a4@(4)
+	movl	.a5@(8),.a4@(8)
+	jsr	talloc
+	movl	.d0,.a4@(24)
+	movl	.a5@(28),.a4@(28)
+	movl	#58,.a5@
+	movl	.a4,.a5@(28)
+	movl	.a4@(24),.a4
+	movl	.a5@(24),.a0
+	movl	.a0@,.a4@
+	movl	.a5@(24),.a0
+	movl	.a0@(4),.a4@(4)
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.a4@(8)
+	movl	.a5@(24),.a0
+	movl	.a0@(24),.a4@(24)
+	movl	.a5@(24),.a0
+	movl	.a0@(28),.a4@(28)
+	movl	.a5@(28),.sp@-
+	jsr	hardops
+	addql	#4,.sp
+	bra	.L441
+.L458:
+	.text
+	movl	#.L459,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L451
+.L452:
+	cmpl	#2,.d0
+	beq	.L454
+	cmpl	#13,.d0
+	beq	.L453
+	cmpl	#94,.d0
+	beq	.L457
+	cmpl	#95,.d0
+	beq	.L455
+	bra	.L458
+.L451:
+.L450:
+	movl	.a5@,.d0
+	asll	#2,.d0
+	addl	#dope,.d0
+	movl	.d0,.a0
+	movl	.a0@,.d0
+	andl	#14,.d0
+	cmpl	#8,.d0
+	bne	.L460
+	jsr	talloc
+	movl	.d0,.a4
+	movl	#56,.a4@
+	movl	#8192,.a4@(4)
+	movl	#4,.a4@(8)
+	movl	.a5@(24),.a4@(24)
+	movl	.a5@(28),.a4@(28)
+	bra	.L461
+.L460:
+	movl	.a5@(24),.a4
+.L461:
+	movl	#70,.a5@
+	movl	.a4,.a5@(28)
+	jsr	talloc
+	movl	.d0,.a4
+	movl	.a4,.a5@(24)
+	movl	#4,.a4@
+	movl	#8192,.a4@(4)
+	movl	.a5@(8),.d0
+	addl	#32,.d0
+	andl	#-16,.d0
+	lsll	#2,.d0
+	orl	#16,.d0
+	movl	.a5@(8),.d1
+	addl	#32,.d1
+	andl	#15,.d1
+	orl	.d1,.d0
+	movl	.d0,.a4@(8)
+	movl	.a3@(8),.sp@-
+	pea	.a4@(16)
+	jsr	strcpy
+	addql	#8,.sp
+	clrl	.a4@(24)
+	clrl	.a4@(28)
+	bra	.L441
+	bra	.L441
+.L441:	moveml	.a6@(-_F29),#14528
+	unlk	.a6
+	rts
+_F29 = 20
+_S29 = 14528
+| M29 = 8
+	.data
+	.text
+	.globl	hardconv
+hardconv:
+	link	.a6,#-_F30
+	moveml	#_S30,.a6@(-_F30)
+	movl	.a6@(8),.a5
+| A30 = 12
+	movl	.a5@(8),.d7
+	movl	.a5@(24),.a0
+	movl	.a0@(8),.d6
+	cmpl	#7,.d7
+	beq	.L10054
+	cmpl	#6,.d7
+	bne	.L10053
+.L10054:
+	moveq	#1,.d0
+	bra	.L10055
+.L10053:
+	clrl	.d0
+.L10055:
+	movl	.d0,.a6@(-4)
+	cmpl	#7,.d6
+	beq	.L10057
+	cmpl	#6,.d6
+	bne	.L10056
+.L10057:
+	moveq	#1,.d0
+	bra	.L10058
+.L10056:
+	clrl	.d0
+.L10058:
+	movl	.d0,.a6@(-8)
+	movl	.a6@(-4),.d0
+	cmpl	.a6@(-8),.d0
+	bne	.L464
+	bra	.L463
+.L464:
+	movl	#70,.a5@
+	movl	.a5@(24),.a5@(28)
+	jsr	talloc
+	movl	.d0,.a4
+	movl	.a4,.a5@(24)
+	movl	#4,.a4@
+	movl	#8192,.a4@(4)
+	movl	.a5@(8),.d0
+	addl	#32,.d0
+	andl	#-16,.d0
+	lsll	#2,.d0
+	orl	#16,.d0
+	movl	.a5@(8),.d1
+	addl	#32,.d1
+	andl	#15,.d1
+	orl	.d1,.d0
+	movl	.d0,.a4@(8)
+	.text
+	.text
+	tstl	.a6@(-4)
+	beq	.L10059
+	movl	#.L465,.d0
+	bra	.L10060
+.L10059:
+	movl	#.L466,.d0
+.L10060:
+	movl	.d0,.sp@-
+	pea	.a4@(16)
+	jsr	strcpy
+	addql	#8,.sp
+	clrl	.a4@(24)
+	clrl	.a4@(28)
+	bra	.L463
+.L463:	moveml	.a6@(-_F30),#12480
+	unlk	.a6
+	rts
+_F30 = 24
+_S30 = 12480
+| M30 = 8
+	.data
+	.text
+	.globl	shortcon
+shortcon:
+	link	.a6,#-_F31
+	moveml	#_S31,.a6@(-_F31)
+	movl	.a6@(8),.a5
+| A31 = 12
+	cmpl	#104,.a5@
+	bne	.L469
+	cmpl	#4,.a5@(8)
+	bne	.L469
+	movl	.a5@(24),.a0
+	cmpl	#3,.a0@(8)
+	bne	.L469
+	moveq	#1,.d0
+	bra	.L468
+.L469:
+	clrl	.d0
+	bra	.L468
+	bra	.L468
+.L468:	moveml	.a6@(-_F31),#8192
+	unlk	.a6
+	rts
+_F31 = 4
+_S31 = 8192
+| M31 = 0
+	.data
+	.text
+	.globl	optim2
+optim2:
+	link	.a6,#-_F32
+	moveml	#_S32,.a6@(-_F32)
+	movl	.a6@(8),.a5
+| A32 = 12
+	cmpl	#11,.a5@
+	bne	.L472
+	cmpl	#4,.a5@(8)
+	bne	.L472
+	movl	.a5@(24),.sp@-
+	jsr	shortcon
+	addql	#4,.sp
+	tstl	.d0
+	beq	.L472
+	movl	.a5@(28),.sp@-
+	jsr	shortcon
+	addql	#4,.sp
+	tstl	.d0
+	bne	.L10061
+	movl	.a5@(28),.a0
+	cmpl	#4,.a0@
+	bne	.L472
+	movl	.a5@(28),.a0
+	tstb	.a0@(16)
+	bne	.L472
+	movl	.a5@(28),.a0
+	cmpl	#-32768,.a0@(24)
+	blt	.L472
+	movl	.a5@(28),.a0
+	cmpl	#32767,.a0@(24)
+	bgt	.L472
+.L10061:
+	movl	.a5@(24),.a4
+	movl	.a4@(24),.a5@(24)
+	movl	#97,.a4@
+	movl	.a5@(28),.a0
+	cmpl	#4,.a0@
+	bne	.L473
+	movl	.a5@(28),.a0
+	movl	#3,.a0@(8)
+	bra	.L474
+.L473:
+	movl	.a5@(28),.a4
+	movl	.a4@(24),.a5@(28)
+	movl	#97,.a4@
+.L474:
+.L472:
+	movl	.a5@,.d0
+	asll	#2,.d0
+	addl	#dope,.d0
+	movl	.d0,.a0
+	movl	.a0@,.d0
+	andl	#16,.d0
+	beq	.L475
+	movl	.a5@(24),.a4
+	cmpl	#6,.a4@(8)
+	beq	.L10062
+	cmpl	#7,.a4@(8)
+	bne	.L475
+.L10062:
+	movl	.a5@(28),.a4
+	cmpl	#6,.a4@(8)
+	beq	.L10063
+	cmpl	#7,.a4@(8)
+	bne	.L475
+.L10063:
+	jsr	talloc
+	movl	.d0,.a4
+	movl	#8,.a4@
+	movl	#8192,.a4@(4)
+	movl	#7,.a4@(8)
+	movl	.a5@(24),.a4@(24)
+	movl	.a5@(28),.a4@(28)
+	movl	.a4,.a5@(24)
+	jsr	talloc
+	movl	.d0,.a4
+	movl	.a4,.a5@(28)
+	movl	#4,.a4@
+	movl	#7,.a4@(8)
+	clrb	.a4@(16)
+	clrl	.a4@(28)
+	clrl	.a4@(24)
+.L475:
+	bra	.L471
+.L471:	moveml	.a6@(-_F32),#12288
+	unlk	.a6
+	rts
+_F32 = 8
+_S32 = 12288
+| M32 = 6
+	.data
+	.text
+	.globl	myreader
+myreader:
+	link	.a6,#-_F33
+	moveml	#_S33,.a6@(-_F33)
+	movl	.a6@(8),.a5
+| A33 = 12
+	movl	#optim2,.sp@-
+	pea	.a5@
+	jsr	walkf
+	addql	#8,.sp
+	movl	#hardops,.sp@-
+	pea	.a5@
+	jsr	walkf
+	addql	#8,.sp
+	pea	.a5@
+	jsr	canon
+	addql	#4,.sp
+	clrl	toff
+	bra	.L477
+.L477:	moveml	.a6@(-_F33),#8192
+	unlk	.a6
+	rts
+_F33 = 4
+_S33 = 8192
+| M33 = 8
+	.data
+	.text
+	.globl	special
+special:
+	link	.a6,#-_F34
+	moveml	#_S34,.a6@(-_F34)
+	movl	.a6@(8),.a5
+| A34 = 16
+	movl	.a6@(12),.d0
+	bra	.L483
+.L484:
+	cmpl	#4,.a5@
+	bne	.L485
+	tstb	.a5@(16)
+	bne	.L485
+	cmpl	#-128,.a5@(24)
+	blt	.L485
+	cmpl	#127,.a5@(24)
+	bgt	.L485
+	moveq	#1,.d0
+	bra	.L481
+.L485:
+	bra	.L482
+.L486:
+	cmpl	#4,.a5@
+	bne	.L487
+	tstb	.a5@(16)
+	bne	.L487
+	tstl	.a5@(24)
+	blt	.L487
+	cmpl	#32767,.a5@(24)
+	bgt	.L487
+	moveq	#1,.d0
+	bra	.L481
+.L487:
+	bra	.L482
+.L488:
+	cmpl	#4,.a5@
+	bne	.L489
+	tstb	.a5@(16)
+	bne	.L489
+	cmpl	#1,.a5@(24)
+	blt	.L489
+	cmpl	#8,.a5@(24)
+	bgt	.L489
+	moveq	#1,.d0
+	bra	.L481
+.L489:
+	bra	.L482
+.L490:
+	.text
+	movl	#.L491,.sp@-
+	jsr	cerror
+	addql	#4,.sp
+	bra	.L482
+.L483:
+	cmpl	#32868,.d0
+	beq	.L484
+	cmpl	#32869,.d0
+	beq	.L486
+	cmpl	#32870,.d0
+	beq	.L488
+	bra	.L490
+.L482:
+	clrl	.d0
+	bra	.L481
+	bra	.L481
+.L481:	moveml	.a6@(-_F34),#8192
+	unlk	.a6
+	rts
+_F34 = 4
+_S34 = 8192
+| M34 = 4
+	.data
+.L64:
+	.byte	124,9,108,105,110,101,32,37
+	.byte	100,44,32,102,105,108,101,32
+	.byte	37,115,10,0
+.L77:
+	.byte	46,76,37,100,58,9,109,111
+	.byte	118,101,109,108,9,46,97,54
+	.byte	64,40,45,95,70,37,100,41
+	.byte	44,35,37,100,10,0
+.L78:
+	.byte	9,117,110,108,107,9,46,97
+	.byte	54,10,0
+.L79:
+	.byte	9,114,116,115,10,0
+.L80:
+	.byte	95,70,37,100,32,61,32,37
+	.byte	108,100,10,0
+.L81:
+	.byte	95,83,37,100,32,61,32,37
+	.byte	100,10,0
+.L82:
+	.byte	124,32,77,37,100,32,61,32
+	.byte	37,100,10,0
+.L84:
+	.byte	9,46,103,108,111,98,108,9
+	.byte	102,108,116,117,115,101,100,10
+	.byte	0
+.L86:
+	.byte	97,100,100,0
+.L87:
+	.byte	115,117,98,0
+.L88:
+	.byte	111,114,0
+.L89:
+	.byte	97,110,100,0
+.L90:
+	.byte	101,111,114,0
+.L91:
+	.byte	109,117,108,0
+.L92:
+	.byte	100,105,118,0
+.L93:
+	.byte	100,105,118,0
+.L94:
+	.byte	115,108,0
+.L95:
+	.byte	115,114,0
+.L96:
+	.byte	0
+.L103:
+	.byte	37,115,0
+.L105:
+	.byte	102,0
+.L107:
+	.byte	110,111,32,104,111,112,116,97
+	.byte	98,32,102,111,114,32,37,115
+	.byte	0
+.L108:
+	.byte	46,100,48,0
+.L109:
+	.byte	46,100,49,0
+.L110:
+	.byte	46,100,50,0
+.L111:
+	.byte	46,100,51,0
+.L112:
+	.byte	46,100,52,0
+.L113:
+	.byte	46,100,53,0
+.L114:
+	.byte	46,100,54,0
+.L115:
+	.byte	46,100,55,0
+.L116:
+	.byte	46,97,48,0
+.L117:
+	.byte	46,97,49,0
+.L118:
+	.byte	46,97,50,0
+.L119:
+	.byte	46,97,51,0
+.L120:
+	.byte	46,97,52,0
+.L121:
+	.byte	46,97,53,0
+.L122:
+	.byte	46,97,54,0
+.L123:
+	.byte	46,115,112,0
+.L135:
+	.byte	9,106,115,114,9,0
+.L138:
+	.byte	9,106,115,114,9,0
+.L140:
+	.byte	64,0
+.L143:
+	.byte	9,109,111,118,108,9,0
+.L144:
+	.byte	44,46,97,48,10,9,106,115
+	.byte	114,9,46,97,48,64,0
+.L146:
+	.byte	98,97,100,32,115,117,98,114
+	.byte	111,117,116,105,110,101,32,110
+	.byte	97,109,101,0
+.L152:
+	.byte	98,0
+.L155:
+	.byte	119,0
+.L157:
+	.byte	108,0
+.L162:
+	.byte	9,99,108,114,108,9,37,115
+	.byte	10,0
+.L165:
+	.byte	46,115,112,64,45,0
+.L182:
+	.byte	73,108,108,101,103,97,108,32
+	.byte	90,84,32,116,121,112,101,32
+	.byte	99,111,110,118,101,114,115,105
+	.byte	111,110,0
+.L184:
+	.byte	73,108,108,101,103,97,108,32
+	.byte	90,85,0
+.L187:
+	.byte	37,100,0
+.L189:
+	.byte	78,111,116,32,97,32,115,116
+	.byte	114,117,99,116,117,114,101,0
+.L195:
+	.byte	83,84,65,83,71,32,98,97
+	.byte	100,0
+.L201:
+	.byte	83,84,65,83,71,45,114,0
+.L205:
+	.byte	9,109,111,118,119,9,65,82
+	.byte	44,0
+.L206:
+	.byte	9,109,111,118,108,9,65,82
+	.byte	44,0
+.L207:
+	.byte	65,82,10,0
+.L212:
+	.byte	105,108,108,101,103,97,108,32
+	.byte	122,122,122,99,111,100,101,0
+.L219:
+	.byte	9,109,111,118,108,9,37,115
+	.byte	44,37,115,10,0
+.L220:
+	.byte	9,109,111,118,108,9,37,115
+	.byte	44,37,115,10,0
+.L272:
+	.byte	37,108,100,0
+.L278:
+	.byte	37,115,0
+.L280:
+	.byte	105,108,108,101,103,97,108,32
+	.byte	99,111,110,112,117,116,0
+.L283:
+	.byte	105,110,115,112,117,116,0
+.L291:
+	.byte	35,0
+.L293:
+	.byte	37,115,0
+.L298:
+	.byte	98,97,100,32,97,114,103,32
+	.byte	116,101,109,112,0
+.L299:
+	.byte	37,115,64,0
+.L301:
+	.byte	40,0
+.L302:
+	.byte	41,0
+.L304:
+	.byte	105,108,108,101,103,97,108,32
+	.byte	117,112,112,101,114,32,97,100
+	.byte	100,114,101,115,115,0
+.L312:
+	.byte	35,0
+.L313:
+	.byte	35,0
+.L315:
+	.byte	37,115,0
+.L319:
+	.byte	98,97,100,32,97,114,103,32
+	.byte	116,101,109,112,0
+.L320:
+	.byte	46,97,54,64,40,0
+.L321:
+	.byte	37,108,100,0
+.L322:
+	.byte	41,0
+.L323:
+	.byte	37,115,64,0
+.L325:
+	.byte	40,0
+.L326:
+	.byte	41,0
+.L330:
+	.byte	64,0
+.L336:
+	.byte	43,0
+.L338:
+	.byte	45,0
+.L341:
+	.byte	105,108,108,101,103,97,108,32
+	.byte	97,100,100,114,101,115,115,0
+.L344:
+	.byte	37,108,100,0
+.L347:
+	.byte	37,46,56,115,0
+.L349:
+	.byte	37,46,56,115,43,0
+.L350:
+	.byte	37,108,100,0
+.L370:
+	.byte	9,37,115,9,35,37,100,44
+	.byte	46,115,112,10,0
+.L371:
+	.byte	97,100,100,113,108,0
+.L372:
+	.byte	97,100,100,108,0
+.L374:
+	.byte	9,98,101,113,9,46,76,37
+	.byte	100,10,0
+.L375:
+	.byte	9,98,110,101,9,46,76,37
+	.byte	100,10,0
+.L376:
+	.byte	9,98,108,101,9,46,76,37
+	.byte	100,10,0
+.L377:
+	.byte	9,98,108,116,9,46,76,37
+	.byte	100,10,0
+.L378:
+	.byte	9,98,103,101,9,46,76,37
+	.byte	100,10,0
+.L379:
+	.byte	9,98,103,116,9,46,76,37
+	.byte	100,10,0
+.L380:
+	.byte	9,98,108,115,9,46,76,37
+	.byte	100,10,0
+.L381:
+	.byte	9,98,99,115,9,46,76,37
+	.byte	100,10,0
+.L382:
+	.byte	9,98,99,99,9,46,76,37
+	.byte	100,10,0
+.L383:
+	.byte	9,98,104,105,9,46,76,37
+	.byte	100,10,0
+.L388:
+	.byte	9,98,114,97,9,46,76,37
+	.byte	100,10,0
+.L391:
+	.byte	98,97,100,32,99,111,110,100
+	.byte	105,116,105,111,110,97,108,32
+	.byte	98,114,97,110,99,104,58,32
+	.byte	37,115,0
+.L397:
+	.byte	9,99,109,112,9,65,76,44
+	.byte	65,82,10,0
+.L398:
+	.byte	9,116,115,116,9,65,82,10
+	.byte	0
+.L401:
+	.byte	9,99,109,112,9,85,76,44
+	.byte	85,82,10,0
+.L402:
+	.byte	9,116,115,116,9,85,82,10
+	.byte	0
+.L414:
+	.byte	108,109,117,108,0
+.L415:
+	.byte	108,100,105,118,0
+.L416:
+	.byte	108,114,101,109,0
+.L417:
+	.byte	97,108,109,117,108,0
+.L418:
+	.byte	97,108,100,105,118,0
+.L419:
+	.byte	97,108,114,101,109,0
+.L420:
+	.byte	117,108,109,117,108,0
+.L421:
+	.byte	117,108,100,105,118,0
+.L422:
+	.byte	117,108,114,101,109,0
+.L423:
+	.byte	97,117,108,109,117,108,0
+.L424:
+	.byte	97,117,108,100,105,118,0
+.L425:
+	.byte	97,117,108,114,101,109,0
+.L426:
+	.byte	102,97,100,100,0
+.L427:
+	.byte	102,115,117,98,0
+.L428:
+	.byte	102,109,117,108,0
+.L429:
+	.byte	102,100,105,118,0
+.L430:
+	.byte	102,110,101,103,0
+.L431:
+	.byte	102,110,101,103,0
+.L432:
+	.byte	97,102,97,100,100,0
+.L433:
+	.byte	97,102,115,117,98,0
+.L434:
+	.byte	97,102,109,117,108,0
+.L435:
+	.byte	97,102,100,105,118,0
+.L436:
+	.byte	97,102,97,100,100,102,0
+.L437:
+	.byte	97,102,115,117,98,102,0
+.L438:
+	.byte	97,102,109,117,108,102,0
+.L439:
+	.byte	97,102,100,105,118,102,0
+.L459:
+	.byte	66,97,100,32,97,100,100,114
+	.byte	101,115,115,32,102,111,114,32
+	.byte	104,97,114,100,32,111,112,115
+	.byte	0
+.L465:
+	.byte	102,108,111,97,116,0
+.L466:
+	.byte	102,105,120,0
+.L491:
+	.byte	98,97,100,32,115,112,101,99
+	.byte	105,97,108,32,115,104,97,112
+	.byte	101,0

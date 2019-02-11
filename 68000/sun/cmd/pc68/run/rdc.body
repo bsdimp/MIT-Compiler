@@ -1,0 +1,18 @@
+
+procedure $get (var fdb:txtfdb); extern;
+
+procedure $rdc ( var ch:char;var fdb:txtfdb);
+   begin
+   with fdb do
+   if (device = ttydev) and bufferinvalid then
+	 begin
+	 $get (fdb);
+	 bufferinvalid := false;
+	 end;
+   ch := fdb.pbuffer;
+   $get (fdb);
+   end;
+
+   (* dummy main program *)
+
+.

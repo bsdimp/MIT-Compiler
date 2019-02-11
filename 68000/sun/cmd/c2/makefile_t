@@ -1,0 +1,17 @@
+# cross version of the optimizer makefile
+
+.SUFFIXES:	.c .o
+
+CFLAGS =	-c -O -DBOOTSTRAP
+
+OFILES =	o0.o o1.o
+
+c2:		$(OFILES)
+		cc -o c268 $(OFILES)
+
+.c.o:		o.h
+		cc $(CFLAGS) $*.c
+
+install:
+	cp c268 /usr/local/bin
+

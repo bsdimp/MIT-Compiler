@@ -1,0 +1,25 @@
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdident (var fdb:txtfdb; var ident:identifier); extern;
+
+procedure $rdscalar(var sourcevalue: integer;
+		    var fdb:txtfdb;
+		    minvalue, maxvalue: integer;
+		    scalarname: scalarvptr);
+
+   var ident: identifier;
+
+   begin (*readscalar*)
+   $rdident (fdb,ident);
+   sourcevalue := minvalue;
+   while (sourcevalue <= maxvalue) and
+   (scalarname^[sourcevalue] <> ident) do
+   sourcevalue:=sourcevalue+1;
+   if sourcevalue > maxvalue then
+   $perror(fdb,'undefined ennumerated type  ');
+   end (*readscalar*);
+
+   (* dummy main program *)
+
+.

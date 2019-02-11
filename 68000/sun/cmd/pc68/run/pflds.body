@@ -1,0 +1,26 @@
+
+PROCEDURE $Flds (VAR Tfdb: Txtfdb);
+   (* This procedure is used just to make it easy to see where all the
+      fields are for correspondence with the primitives *)
+   BEGIN
+   WITH Tfdb DO
+      BEGIN
+(*      Namelength := 0;
+      Name[1] := 'A';*)
+      Status := Notopen;
+      Device := Anydev;
+      Eofflag := False;
+      Bufferinvalid := False;
+      Filetype := Binary;
+      Ttymode := False;
+(*      Protect:= 0;*)
+      Prompt[1] := 'A';
+      Eolnflag := False;
+      Eopageflag := False;
+      Pbuffersize := 0;
+      Channel := 0;
+      Pbuffer := 'A';
+      END;
+   END;
+
+.

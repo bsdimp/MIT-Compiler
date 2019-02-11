@@ -1,0 +1,17 @@
+   txtfdbptr = ^txtfdb;
+
+procedure $initfile (fdb:txtfdbptr; initstatus:filestatus;
+		filevarname:identifier; ftype:typeoffile; flength: integer);
+	extern;
+
+procedure $initstd (infile, outfile, errfile: txtfdbptr;
+	openin, openout: Boolean);
+   begin
+      $initfile (infile,  openforinput,  'input           ', charfile, 8);
+      $initfile (outfile, openforoutput, 'output          ', charfile, 8);
+      if errfile <> nil then
+         $initfile (errfile, openforoutput, 'stderror        ', charfile, 8);
+   end;
+
+   (* dummy main program *)
+.

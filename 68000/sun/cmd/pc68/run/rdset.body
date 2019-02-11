@@ -1,0 +1,118 @@
+
+function $bufval (var fdb:txtfdb): char; extern;
+
+function $eof (var fdb:txtfdb): boolean; extern;
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdc ( var ch:char;var fdb:txtfdb); extern;
+
+procedure $rdirange(var sourcevalue:integer;var fdb:txtfdb;
+		    minvalue,maxvalue:integer); extern;
+
+procedure $rdcrange( var sourcevalue: char; var fdb:txtfdb;
+		    minvalue, maxvalue: char); extern;
+
+procedure $rdscalar(var sourcevalue: integer; var fdb:txtfdb;
+		  minvalue, maxvalue: integer; scalarname: scalarvptr); extern;
+
+procedure $rdset(var setvariable: targetset; (*chd*)
+		 var fdb:txtfdb;
+		 minvalue, maxvalue: integer;
+		 scalarname: scalarvptr;
+		 elementform: scalarform);
+
+   var
+   scalarvalue: integer;
+   i, firstscalar: integer;
+   subrange: boolean;
+   ch :char;
+   cval:char;
+   rightbracket: boolean;
+
+   procedure addelement (i: integer);  (*chd*)
+   var setbound,index: integer;
+   begin
+   index := 1;
+   while i > setunitmax do
+	begin
+    i := i - setunitsize;
+    index := index + 1;
+	end;
+   setvariable[index] := setvariable[index] + [i];
+   end;
+
+   begin (*readset*)
+   subrange := false;
+   for i := 1 to setsperset do  (*chd*)
+   setvariable[i] := [];
+   while $bufval(fdb) in [' ',','] do $rdc(ch,fdb);
+   if $eof(fdb) then
+   $perror(fdb,'reading past end of file    ');
+   if not ($bufval(fdb) = '[') then
+   $perror(fdb,'left bracket expected       ');
+
+   $rdc(ch,fdb);
+   while $bufval(fdb) in [' ',','] do $rdc(ch,fdb);
+   rightbracket := false;
+   while not rightbracket do
+   begin
+   case elementform of
+	 integerform:
+	    begin
+	    $rdirange(scalarvalue,fdb,minvalue,maxvalue);
+	    scalarvalue := scalarvalue-minvalue;
+	    end;
+	 charform:
+	    begin
+	    if $bufval(fdb) <> '''' then
+	   $perror(fdb,'opening quote missing       ')
+	    else
+	   begin
+	   $rdc(ch,fdb);
+	   $rdcrange(cval,fdb,chr(minvalue),chr(maxvalue));
+	   if cval = '''' then
+		  begin
+		  if $bufval(fdb) <> '''' then
+		  $perror(fdb,'double quote expected       ');
+		  $rdc(ch,fdb);
+		  end ;
+	   if $bufval(fdb) <> '''' then
+		  $perror(fdb,'missing closing quote       ')
+	   else $rdc(ch,fdb);
+	   scalarvalue := ord(cval)-minvalue;
+	   end
+	    end;
+	 declaredform:
+	    $rdscalar(scalarvalue,fdb,
+		   minvalue,maxvalue,scalarname)
+	 end (*case elementform*);
+   if subrange then  (*chdd*)
+	 for i := firstscalar+1 to scalarvalue do addelement (i)
+   else
+    addelement (scalarvalue);
+   while $bufval(fdb) = ' ' do $rdc(ch,fdb);
+   subrange := false;
+   if not ($bufval(fdb) in [',','.',':',']']) then
+	 $perror(fdb,'missing closing bracket     ');
+   if $bufval(fdb) in ['.',':'] then
+	 begin
+	 if $bufval(fdb) = '.' then
+	    begin
+	    $rdc(ch,fdb);
+	    if $bufval(fdb) <> '.' then
+	   $perror(fdb,'missing period              ');
+	    end;
+	 subrange := true;
+	 firstscalar := scalarvalue
+	 end;
+   rightbracket := $bufval(fdb) = ']';
+   $rdc(ch,fdb);
+   if not rightbracket then
+	 while $bufval(fdb) =' ' do $rdc(ch,fdb);
+   end (*while not leftbracket*);
+   end (*readset*);
+
+   (* dummy main program *)
+
+.

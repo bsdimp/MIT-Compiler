@@ -1,0 +1,2 @@
+../ld68 -x /projects/nunix/lib/crt0.b -R 400 \
+ error.b init.b ins.b io68.b ps.b rel.b sdi.b sym.b scan.b -lc

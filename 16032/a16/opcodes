@@ -1,0 +1,164 @@
+mov.	BWD	0	14	READ.	WRITE.
+cmp.	BWD	0	04	READ.	READ.
+add.	BWD	0	00	READ.	RMW.
+addc.	BWD	0	10	READ.	RMW.
+sub.	BWD	0	20	READ.	RMW.
+subc.	BWD	0	30	READ.	RMW.
+neg.	BWD	4E	20	READ.	WRITE.
+abs.	BWD	4E	30	READ.	WRITE.
+mul.	BWD	CE	20	READ.	RMW.
+div.	BWD	CE	3C	READ.	RMW.
+mod.	BWD	CE	38	READ.	RMW.
+quo.	BWD	CE	30	READ.	RMW.
+rem.	BWD	CE	34	READ.	RMW.
+and.	BWD	0	28	READ.	RMW.
+or.	BWD	0	18	READ.	RMW.
+bic.	BWD	0	08	READ.	RMW.
+xor.	BWD	0	38	READ.	RMW.
+com.	BWD	4E	34	READ.	WRITE.
+ash.	BWD	4E	04	READB	RMW.
+lsh.	BWD	4E	14	READB	RMW.
+rot.	BWD	4E	00	READB	RMW.
+movx.w	B	CE	10	READ.	WRITEW
+movx.d	BW	CE	1C	READ.	WRITED
+movz.w	B	CE	14	READ.	WRITEW
+movz.d	BW	CE	18	READ.	WRITED
+addr	-	0	27	ADDR	WRITED
+
+movq.	BWD	0	5C	QUICK	WRITE.
+cmpq.	BWD	0	1C	QUICK	READ.
+addq.	BWD	0	0C	QUICK	RMW.
+
+mei.	BWD	CE	24	READ.	RMW2.
+dei.	BWD	CE	2C	READ.	RMW2.
+
+not.	BWD	4E	24	READ.	WRITE.
+
+seq.	BWD	0	03C	WRITE.
+sne.	BWD	0	0BC	WRITE.
+scs.	BWD	0	13C	WRITE.
+scc.	BWD	0	1BC	WRITE.
+shi.	BWD	0	23C	WRITE.
+sls.	BWD	0	2BC	WRITE.
+sgt.	BWD	0	33C	WRITE.
+sle.	BWD	0	3BC	WRITE.
+sfs.	BWD	0	43C	WRITE.
+sfc.	BWD	0	4BC	WRITE.
+slo.	BWD	0	53C	WRITE.
+shs.	BWD	0	5BC	WRITE.
+slt.	BWD	0	63C	WRITE.
+sge.	BWD	0	6BC	WRITE.
+
+tbit.	BWD	0	34	READ.	REGADDR
+# book (5-43) says these are READI
+sbit.	BWD	4E	18	WRITE.	REGADDR
+sbiti.	BWD	4E	1C	WRITE.	REGADDR
+cbit.	BWD	4E	08	WRITE.	REGADDR
+cbiti.	BWD	4E	0C	WRITE.	REGADDR
+ibit.	BWD	4E	38	WRITE.	REGADDR
+cvtp	-	6E	03	REGFLD	ADDR	WRITED
+ffs.	BWD	6E	04	READ.	RMWB
+
+ext.	BWD	2E	00	REGFLD	REGADDR	WRITE.	DISP
+exts.	BWD	CE	0C	REGADDR	WRITE.	IMM
+ins.	BWD	AE	00	REGFLD	READ.	REGADDR	DISP
+inss.	BWD	CE	08	READ.	REGADDR	IMM
+
+# string instructions
+# all the options ({B} {U|W}) are still missing
+# these only use r0-r2
+movs.	BWD	0E	00
+movst	-	0E	80
+cmps.	BWD	0E	04
+cmpst	-	0E	84
+skps.	BWD	0E	0c
+skpst	-	0E	8c
+
+
+movm.	BWD	CE	0	ADDR	ADDR	DISP
+cmpm.	BWD	CE	1	ADDR	ADDR	DISP
+
+
+addp.	BWD	4E	3C	READ.	RMW.
+subp.	BWD	4E	1C	READ.	RMW.
+
+index.	BWD	2E	04	REGFLD	READ.	READ.
+# book says this is REGD
+check.	BWD	EE	00	REGFLD	ADDR	READ.
+
+jump	-	0	7F	ADDR
+beq	-	0	0A	DISPPC
+bne	-	0	1A	DISPPC
+bcs	-	0	2A	DISPPC
+bcc	-	0	3A	DISPPC
+bhi	-	0	4A	DISPPC
+bls	-	0	5A	DISPPC
+bgt	-	0	6A	DISPPC
+ble	-	0	7A	DISPPC
+bfs	-	0	8A	DISPPC
+bfc	-	0	9A	DISPPC
+blo	-	0	AA	DISPPC
+bhs	-	0	BA	DISPPC
+blt	-	0	CA	DISPPC
+bge	-	0	DA	DISPPC
+br	-	0	EA	DISPPC
+# this should be READ.PC
+case.	BWD	0	7C	READ.
+acb.	BWD	0	4C	QUICK	RMW.	DISPPC
+jsr	-	0	67F	ADDR
+bsr	-	0	02	DISPPC
+ret	-	0	12	DISP
+cxp	-	0	22	DISP
+cxpd	-	0	7F	ADDR
+rxp	-	0	32	DISP
+rett	-	0	42	DISP
+reti	-	0	52
+
+adjsp.	BWD	0	57C	READ.
+bicpsr.	BW	0	17C	READ.
+bispsr.	BW	0	37C	READ.
+save	-	0	62	IMM
+restore	-	0	72	IMM
+enter	-	0	82	IMM	DISP
+exit	-	0	92	IMM
+lpr.	BWD	0	6C	PROCREG	READ.
+spr.	BWD	0	2C	PROCREG	WRITE.
+setcfg	-	0E	0B	SHORT
+bpt	-	0	F2
+flag	-	0	D2
+svc	-	0	E2
+nop	-	0	A2
+wait	-	0	B2
+dia	-	0	C2
+
+lmr	-	1E	0B	MMUREG	READD
+smr	-	1E	0F	MMUREG	WRITED
+rdval	-	1E	03	ADDR
+wrval	-	1E	07	ADDR
+# correction from chip document
+movsu.	BWD	AE	0C4	ADDR	ADDR
+# correction from chip document
+movus.	BWD	AE	1C4	ADDR	ADDR
+
+# addition from chip document
+#add.	FL	BE	00	READ.	RMW.
+#sub.	FL	BE	10	READ.	RMW.
+#mul.	FL	BE	30	READ.	RMW.
+#div.	FL	BE	20	READ.	RMW.
+#mov.	FL	BE	04	READ.	WRITE.
+#abs.	FL	BE	34	READ.	WRITE.
+#neg.	FL	BE	14	READ.	WRITE.
+#cmp.	FL	BE	08	READ.	READ.
+# these aren't clear
+#floorf.	BWD	3E	3C	READF	WRITE.
+#floorl.	BWD	3E	38	READL	WRITE.
+#truncf.	BWD	3E	2C	READF	WRITE.
+#truncl.	BWD	3E	28	READL	WRITE.
+#roundf.	BWD	3E	24	READF	WRITE.
+#roundl.	BWD	3E	20	READL	WRITE.
+#lfsr
+#sfsr
+#movlf
+#movfl
+#mov.f	BWD	3E	04	READ.	WRITEF
+#mov.l	BWD	3E	00	READ.	WRITEL

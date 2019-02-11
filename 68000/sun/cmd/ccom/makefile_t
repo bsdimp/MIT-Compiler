@@ -1,0 +1,20 @@
+# Cross version of 68000 Compiler makefile
+
+.SUFFIXES:	.c .o
+
+CFLAGS =	-c -O -I/usr/sun/include -DBOOTSTRAP -DFLEXNAMES -DStanford
+
+OFILES =	cgram.o xdefs.o scan.o pftn.o trees.o optim.o code.o local.o\
+		reader.o local2.o order.o match.o allo.o comm1.o table.o
+
+DEST	=	.
+
+ccom:		$(OFILES)
+		cc -o $(DEST)/ccom68 $(OFILES)
+
+.c.o:
+		cc $(CFLAGS) $*.c
+
+cgram.c:	cgram.y
+		yacc cgram.y
+		mv y.tab.c cgram.c

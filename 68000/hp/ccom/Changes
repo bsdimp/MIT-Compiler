@@ -1,0 +1,69 @@
+820621 - MFM 	scan.c: added 'F' option to echo source code as assembly
+			comments (stolen from FOCUS C compiler). Also
+			reenabled "asm" escapes.
+820520 - MFM 	table.c: fixed cookie 0 to include RRIGHT and RESCC.
+820517 - MFM    common: fixed uerror to handle variable precision error
+		strings.
+		table.c: reordered table and changed one cookie to do moveq
+		#0, d0 vice clrl d0.
+820506 - MFM    local2.c, code.c: altered code printfs to put out longer
+		identifiers of length NCHNAM=16.
+		local2.c: testing a short indexing counter as a char register
+		variable (byte incrementing).
+820402 - MFM	table.c: changed one of the templates (the first OPLTYPE)
+		to avoid an autoincrement bug with a register ptr variable
+		used as a for-loop counter.
+820322 - MFM 	scan.c: since the difference between FLOAT and DOUBLE seems
+		to be scattered throughout the compiler, the keyword "float"
+		is now temporarily translated into DOUBLE in order to avoid
+		a problem of allocating registers upon return from fmul and
+		other float/double runtime support routines. When true 32
+		bit float is implemented, this will have to be changed.
+		macdefs: SZFLOAT remains 64 until it proves to be a problem.
+820316 - MFM 	common: made some pointers register vars.
+820312 - MFM	code.c: updated pc relative addressing to reference extension
+		word.
+820310 - MFM	macdefs: SZFLOAT changed to 64 since all floats are synon-
+		ymous with doubles at this time.
+820303 - MFM	local2.c,order.c: put all references to fltused inside an
+		#ifdef flthardw section.
+820201 - MFM	code.c altered. #ifdef protest section added. If def then
+		trap 13 added to all function prologs.
+81/11/7		trees.c: changed buildtree() so uses of undefined structure
+			components won't dump core.
+81/10/10	local2.c:
+		  ->	changed szty() to return 2 for DOUBLE, 1 otherwise
+		  ->	changed optim2() to convert
+				<floating exp>1 <logop> <floating exp>2
+			into
+				(<floating exp>1 - <floating exp>2) <logop> 0
+			which turns out to be faster and avoids bug in fcmp
+			routine.
+		table.c:
+		  ->	added a rule SCONV, FORARG, EA, TFLOAT, SANY,
+			TDOUBLE, 0, RNULL to eliminate unnecessary FLOAT to
+			DOUBLE conversion during arithmetic.
+		  ->	modified OPLTYPE, INTAREG|INAREG, ..., TDOUBLE rule
+			to reflect szty change
+		  ->	modified OPLTYPE, INTEMP|FORCC, ..., TDOUBLE rule
+			to be INTEMP only and to reflect szty change
+		  ->	modified SCONV, ..., TDOUBLE, ..., TFLOAT rule to
+			reflect szty change (fixes <flt> <logop> <flt> bug)
+		  ->	extended rule OPLTYPE, FORCC, SANY, TANY, EAA,
+			TSCALAR|TFLOAT|TDOUBLE, ... to permit if (<flt>)
+			and if (<dbl>) constructs to work.
+		local.c: now clobbers conversions of FCONs to FLOATs.  fixes
+			problems with "static float x = 3.14;"
+81/10/08	local.c: now clobbers conversions to void type
+81/07/24	table.c: changed "cmpZR" to "cmpZB" to avoid bus error on NU's
+81/07/23	trees.c: fixed chkpun to make compare of two enums work...
+81/07/22	local2.c: make multiply of two shorts use MULS instruction...
+81/04/30	code.c: fixed structure value returns in efcode().
+81/04/30	trees.c, local2.c: unfixed ZN and hardconv() code (see fix of 4/29) and
+			did it right in tymatch() -- result of comparison
+			is ALWAYS of type int.
+81/04/25	code.c: fixed genbinary() to use signed comparisons...
+81/04/25	local2.c: fixed ZN code and hardconv() so that you win if you
+			wanted an arithmetic result from a floating comparison.
+81/04/18	local.c, code.c: added defn's of _A and _M symbols for metering
+

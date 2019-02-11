@@ -1,0 +1,15 @@
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+
+procedure $rdi ( var sourcevalue:integer;var fdb:txtfdb); extern;
+
+procedure $rdirange(var sourcevalue:integer;var fdb:txtfdb;
+		    minvalue,maxvalue:integer);
+   begin
+   $rdi (sourcevalue,fdb);
+   if (sourcevalue < minvalue) or (sourcevalue > maxvalue) then
+   $perror(fdb,'value out of range          ');
+   end;
+
+   (* dummy main program *)
+
+.

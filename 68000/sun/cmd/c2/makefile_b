@@ -1,0 +1,21 @@
+#----------------------------------------------------------------------------
+#  	These coded statements, instructions, and computer programs
+#	contain unpublished proprietary information and are protected
+#	by Federal copyright law.  They may not be disclosed to third
+#	parties or copied or duplicated in any form without the prior
+#	written consent of Lucasfilm Ltd.
+#
+#	Modifications to Unix V7 by John Seamons, Lucasfilm Ltd.
+#----------------------------------------------------------------------------
+
+.SUFFIXES:	.c .b
+
+CFLAGS =	-c
+
+BFILES =	o0.b o1.b
+
+c2:	 	$(BFILES)
+		cc68 -r -n -s -o ../../../bin/c2 $(BFILES)
+
+.c.b:		o.h
+		cc68 $(CFLAGS) $*.c

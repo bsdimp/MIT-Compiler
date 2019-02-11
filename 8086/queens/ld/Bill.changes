@@ -1,0 +1,58 @@
+The most evident modifications to the linker are that
+  1) now a modified linker must be used, rather than simply the
+     standard unix linker.
+  2) the linker now produces the final DOS .com file;  the 
+     conversion program cvt86 is not used anymore.
+
+The linker has been changed to accept a new flag "-8" which indicates
+an 8086 run.  This flag should be immediately followed by a hexedecimal
+absolute paragraph load address -- the first paragraph available above DOS
+(or the debugger, if that is to be used, although we have had some trouble
+using the debugger with large text segments).  Absolute loading is necessary
+because a .com file has no relocation bits for DOS to use.  The little
+program "absld.com" located in this directory will print out the correct
+address when run on the PC.  Note: do not attempt to account for the
+DOS program prefix or the unix header;  the linker adds the size of these
+objects to the load address before it uses it.  To obtain the right address
+for using the debugger, simply run the debugger without arguments, type
+"r", and use the value in the cs register.  The following values should be
+correct for the current versions of DOS.
+
+			DOS 1.0
+		Normal load address: 2f7
+		Debug  load address: 49f
+
+			DOS 1.1
+		Normal load address: 307
+		Debug  load address: 4b5
+
+In 8086 mode the linker operates by manipulating those words in the object
+file which are described by the relocation bits as being N_TEXT relocatable.
+The linker first computes the 32 bit relocated offset, (which must never be
+actually greater than 2**20, the current 8086/8088 machine limit)
+and then shifts this right 4 bits and adds the absolute
+relocation address. This algorithm works because:
+
+	1) In C, gotos out of a procedure are not allowed, and
+	2) Local jumps are IP relative, and the assembler 
+	   does not generate relocation bits for them.
+	3) Data references are unchanged, and the data space is 
+	   still limited to 64K.  Incidentally, it is essential that
+	   the stack segment overlap the data segment; pointers to 
+	   automatic variables and parameters would be useless otherwise.
+
+The linker still has all its former capability, and will perform
+as before if it is not given the -8 flag.  If the -8 flag is used,
+the linker will complain if other, incompatable flags are also used
+(like -r).  Complaints will also be forthcoming if an attempt is made
+to link a procedure which is not paragraph aligned, or if the text
+segment does not end just before a paragraph boundary.  It is the
+programmers responsibility to ensure this, but it will automatically be
+the case if all procedures are paragraph aligned.  Users need only be
+careful to put .para at the end of any assembly language procedures the
+may write.
+
+P.S.  absld.com consists of absld.c linked with lda.a86.  The old compiler
+system (without paragraph aligned procedures) was used to create absld.com.
+A quick look at how absld works will reveal why it was simpler to use the
+old system.

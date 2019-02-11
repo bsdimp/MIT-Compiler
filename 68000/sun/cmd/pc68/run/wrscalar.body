@@ -1,0 +1,30 @@
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $wrscalar(sourcevalue: integer; var fdb:txtfdb; scalarname: scalarvptr;
+		    fldw: integer);
+
+   var
+   ident: identifier;
+   i,lastchar: integer;
+   ch:char;
+
+
+   begin
+   ident := scalarname^[sourcevalue];
+   lastchar := identlength;
+   while (lastchar > 1) and (ident[lastchar] = ' ') do
+      lastchar := lastchar-1;
+   for i := lastchar+1 to fldw do
+      $wr1c (fdb,' ');
+   for i := 1 to lastchar do
+      begin
+      ch := ident[i];
+      $wr1c (fdb,ch);
+      end;
+   end;
+
+
+   (* dummy main program *)
+
+.

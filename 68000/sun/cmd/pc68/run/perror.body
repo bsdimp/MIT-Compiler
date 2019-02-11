@@ -1,0 +1,58 @@
+
+procedure $close (var fdb:txtfdb); extern;
+
+procedure $opnttout (var fdb:txtfdb); extern;
+
+
+procedure $wri (i:integer; var fdb:txtfdb;  fldw:integer; base: integer); extern;
+
+procedure $wrs ( var str:identifier; var fdb:txtfdb;  length: integer; fldw: integer); extern;
+
+procedure $wln (var fdb:txtfdb); extern;
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $xit (haltcode: integer); extern;
+
+
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring);
+   var ttybuf:txtfdb;
+   tempstr: identifier;
+   i: integer;
+   ch: char;
+   begin (*error*)
+   $opnttout(ttybuf);
+   $wln(ttybuf);
+   with fdb do
+   begin
+   i := identlength;
+   while (prompt[i] = ' ') AND (i > 0) DO
+      i := i - 1;
+   $wrs (prompt,ttybuf,i,i);
+   tempstr := ' page           ';
+   $wrs (tempstr,ttybuf,6,6);
+   $wri (pagecount,ttybuf,0,10);
+   tempstr := ' line           ';
+   $wrs (tempstr,ttybuf,6,6);
+   $wri (linecount,ttybuf,0,10);
+   tempstr := ' char           ';
+   $wrs (tempstr,ttybuf,6,6);
+   $wri (charcount,ttybuf,0,10);
+   $wr1c (ttybuf,':');
+   $wln (ttybuf);
+   end;
+   for i := 1 to 28 do
+   begin
+   ch := errormsg[i];
+   $wr1c(ttybuf,ch);
+   end;
+   $wln (ttybuf);
+   $close (ttybuf);
+   $xit(1);
+   end;
+
+
+   (* dummy main program *)
+
+.

@@ -1,0 +1,7 @@
+		Changes by Bill O'Farrell
+
+All I did, other than re-compiling, was to change userio.c in the
+subdirectory sys to put CR LF to the screen when it sees an LF.
+An idea for future use, to use with my loader, is to change crt1.b86
+to not have "?" as argv[0], but to have the invocation name, which
+is now in the unformatted parameter string.

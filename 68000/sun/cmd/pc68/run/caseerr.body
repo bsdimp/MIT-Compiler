@@ -1,0 +1,37 @@
+
+
+
+   (* $getb, $put, $open, $close, $closeall *)
+
+
+procedure $close (var fdb:txtfdb); extern;
+procedure $wrs ( var str:identifier; var fdb:txtfdb;  length: integer; 
+                     fldw: integer); extern;
+procedure $wri (i:integer;var fdb:txtfdb;fldw:integer; base: integer); extern;
+procedure $wln (var fdb:txtfdb); extern;
+procedure $opnttout (var fdb:txtfdb); extern;
+procedure $xit (haltcode: integer); extern;
+
+procedure $caseerr (page,line: integer);
+   var ttybuf:txtfdb;
+   tempstr: identifier;
+   begin
+   $opnttout(ttybuf);
+   $wln(ttybuf);
+   tempstr := 'case jump error ';
+   $wrs (tempstr,ttybuf,16,16);
+   tempstr := 'at page         ';
+   $wrs (tempstr,ttybuf,8,8);
+   $wri (page,ttybuf,0,10);
+   tempstr := ' line           ';
+   $wrs (tempstr,ttybuf,6,6);
+   $wri (line,ttybuf,0,10);
+   $wln (ttybuf);
+   $close (ttybuf);
+   $xit(1);
+   end;
+
+
+   (* dummy main program *)
+
+.

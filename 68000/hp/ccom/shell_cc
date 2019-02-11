@@ -1,0 +1,79 @@
+lpath=/usr
+cpath=/lib
+bpath=/bin
+pppath=/lib
+ccflags=
+T=/tmp/c.$$ o=a.out E= Q= S= C=
+O="-Dunix -Uvax -Updp11 -Dmc68000"
+Y=${lpath}/lib/crt0.o
+clist=
+blist=
+rmlist=$T.s
+pflag=
+liblist=
+n=
+
+arglist="-I${lpath}/include $*"
+for A in ${arglist}
+do	trap "rm -f ${rmlist}; exit 1" 1 2 15
+	if test $o
+	then
+	case $A in
+	-E)	E=XXX; O="$O $A" ;;
+	-P)	O="$O $A" ;;
+	-p)	pflag=-Xp Y=${lpath}/lib/mcrt0.o ;;
+	-\?*)	ccflags="$ccflags $A" ; echo "system mode" ;;
+	-S)	S=XXX ;;
+	-O)	echo "sorry, optimizer broken; Q=XXX someday" 1>&2 ;;
+	-c)	C=XXX ;;
+	-o)	o= ;;
+	-l*)	liblist="${liblist} ${lpath}/lib/lib`expr $A : -l'\(.*\)'`.a";;
+	-[IDU]*)        O="$O $A" ;;
+	*.o)	blist="${blist} $A" ;;
+	*.s)	${bpath}/as $A
+		if test x$C != x -o x$S != x
+		then	:
+		else	x=`basename $A .s`
+			blist="${blist} $x.o"
+			rmlist="${rmlist} $x.o"
+		fi ;;
+	*.c)	x=`basename $A .c`
+		if test x$E != x 
+		then	${pppath}/cpp $O $A 
+		else	if ${pppath}/cpp $O $A | ${cpath}/ccom ${ccflags} ${pflag} >$T.s
+			then	if test $Q
+				then	mv $T.s $T.op
+					${cpath}/c2 <$T.op >$T.s
+					rm -f $T.op
+				fi
+				if test x$S != x
+				then	mv $T.s $x.s
+				else	${bpath}/as -p $T.s
+					test x$C = x && rmlist="${rmlist} $x.o"
+					mv $T.o $x.o
+					blist="${blist} $x.o"
+				fi
+			else	:
+			fi
+		fi ;;
+	*)     n="$n $A" ;; 
+	esac
+	else o=$A
+	fi
+done
+
+liblist="${liblist} /lib/libc.a"
+
+if test $o
+then	:
+else	echo >&2 "cc: filename expected following -o"
+	rm -f ${rmlist}
+	exit 1
+fi
+
+if test x$C != x -o x$S != x -o x$E != x
+then	:
+else	${bpath}/ld -o $o $n -R 2000 -X $Y ${blist} ${liblist}
+fi
+
+rm -f ${rmlist}

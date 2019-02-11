@@ -1,0 +1,55 @@
+83/8/8		cgram.y: added rules to take structure decl in args
+		table.c: avoid cmpl #N,#N
+			 fixed string in save and restore for FLD extract (was mov)
+83/3/23		order.c: setasop() fixed to do rewrites involving INCR correctly
+82/12/8		local2.c: changes to optim2() and hardop() to make multiply of
+			  two shorts use the appropriate 68K instruction
+82/2/24		table.c: change entry for UNSIGNED SHORT shifts from EA to SNAME|SOREG
+82/2/15		table.c: fix field code to always use longs (someday we'll do
+			it right!)
+		local2.c: fix rmove() to generate correct code for DOUBLEs
+81/12/17	local.c: fix fincode() to be compatible with VAX f.p. format
+81/12/15	table.c: fix to STASG to only allow SCON|SBREG for r.h.s.
+		trees.c: opact() change LS & RS case so that unsigned
+			shifts work
+		local2.c: respef[]: change initialization so that
+			"truncating" conversions do get reclaim errors.
+		code.c:	add .zerol pseudop to reduce .a68 file length when
+			large static structures are partially initialized.
+81/11/7		trees.c: changed buildtree() so uses of undefined structure
+			components won't dump core.
+81/10/10	local2.c:
+		  ->	changed szty() to return 2 for DOUBLE, 1 otherwise
+		  ->	changed optim2() to convert
+				<floating exp>1 <logop> <floating exp>2
+			into
+				(<floating exp>1 - <floating exp>2) <logop> 0
+			which turns out to be faster and avoids bug in fcmp
+			routine.
+		table.c:
+		  ->	added a rule SCONV, FORARG, EA, TFLOAT, SANY,
+			TDOUBLE, 0, RNULL to eliminate unnecessary FLOAT to
+			DOUBLE conversion during arithmetic.
+		  ->	modified OPLTYPE, INTAREG|INAREG, ..., TDOUBLE rule
+			to reflect szty change
+		  ->	modified OPLTYPE, INTEMP|FORCC, ..., TDOUBLE rule
+			to be INTEMP only and to reflect szty change
+		  ->	modified SCONV, ..., TDOUBLE, ..., TFLOAT rule to
+			reflect szty change (fixes <flt> <logop> <flt> bug)
+		  ->	extended rule OPLTYPE, FORCC, SANY, TANY, EAA,
+			TSCALAR|TFLOAT|TDOUBLE, ... to permit if (<flt>)
+			and if (<dbl>) constructs to work.
+		local.c: now clobbers conversions of FCONs to FLOATs.  fixes
+			problems with "static float x = 3.14;"
+81/10/08	local.c: now clobbers conversions to void type
+81/07/24	table.c: changed "cmpZR" to "cmpZB" to avoid bus error on NU's
+81/07/23	trees.c: fixed chkpun to make compare of two enums work...
+81/07/22	local2.c: make multiply of two shorts use MULS instruction...
+81/04/30	code.c: fixed structure value returns in efcode().
+81/04/30	trees.c, local2.c: unfixed ZN and hardconv() code (see fix of 4/29) and
+			did it right in tymatch() -- result of comparison
+			is ALWAYS of type int.
+81/04/25	code.c: fixed genbinary() to use signed comparisons...
+81/04/25	local2.c: fixed ZN code and hardconv() so that you win if you
+			wanted an arithmetic result from a floating comparison.
+81/04/18	local.c, code.c: added defn's of _A and _M symbols for metering

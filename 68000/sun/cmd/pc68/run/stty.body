@@ -1,0 +1,14 @@
+
+  procedure $setttymode (var filevar: txtfdb; lineatatime: boolean);
+
+	(* determines whether tty input will be gotten a line at a time
+	   (thus allowing the user to use the line editor) or a character
+	   at a time.  default value is true *)
+
+   begin
+   filevar.ttymode := lineatatime;
+   end;
+
+   (* dummy main program *)
+
+.

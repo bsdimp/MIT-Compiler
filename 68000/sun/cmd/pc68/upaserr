@@ -1,0 +1,3 @@
+pc -w -g -c uscan.p
+pc -w -g -c upas.p
+pc -o upas uwri.o uini.o uscan.o upas.o

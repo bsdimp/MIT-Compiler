@@ -1,0 +1,28 @@
+82/9/15		rel.c -- changed to write 68000 compatible .b files machine
+			independently (uses new b.out.h)
+82/4/13		mical.h, scan.c -- changed ";" to be end-of-statement rather than
+			comment char.  This allows multiple statements per line,
+			useful when using C pre-processor macros -- added cpp
+			support to assembler.  Also added character constants.
+82/3/24		scan.c,rel.c: sassign() -- assignments to Dot now cause padding
+		error.c: change msg format to be compatible with emacs
+			 error processing
+82/4/4		scan.c: fix main loop to zero BC before call to Instruction()
+82/2/24		ins.c: fix trap() to allow 4-bit trap numbers
+82/2/11		ins.c: fix Instruction() so it only check for odd address errors
+			if opindex < i_long (i.e., it's not a pseudo op)
+		scan.c: add skipb() to beginning of soperand...
+81/12/17	init.c: fix argc loop to avoid argc becomming negative, add .zerol
+		inst.h, ps.c: add .zerol pseudo op
+81/11/20	init.c: decrement argc when handling -o option
+81/10/10	ins.c: fix index() to handle signed displacements
+81/03/30	ins.c: fix exg op code
+81/03/18	ins.c: fix subxb, subxw, subxl op codes
+81/03/13	init.c: permit foo or foo.a68 as source file
+81/03/13	ins.c:  fix roxrl op code
+81/03/04	mical.h, ps.c, scan.c, sym.c: added local symbols
+81/03/03	mical.h, inst.h, init.c, ins.c, scan.c, ps.c:
+		  add ~ operator and .ascii, .asciz pseudo ops
+81/03/02	mical.h, scan.c: add * operator in term()
+81/02/25	scan.c: add 0x syntax for hex constants in term()
+81/02/24	scan.c: fix .=.+n bug in sassign()

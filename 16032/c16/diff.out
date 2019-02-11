@@ -1,0 +1,98 @@
+128d127
+< #ifndef FLEXNAMES
+130,132d128
+< #else
+< 	static char fakename[24];
+< #endif
+151,153d146
+< #ifndef LINT
+< 				pfstab(stab[$2->tn.rval].sname);
+< #endif
+165c158,159
+< arg_dcl_list:	   arg_dcl_list declaration
+---
+> arg_dcl_list:	   arg_dcl_list attributes declarator_list SM
+> 			={ curclass = SNULL;  $2->in.op = FREE; }
+176,189d169
+< r_dcl_stat_list	:  dcl_stat_list attributes SM
+< 			={  $2->in.op = FREE; 
+< #ifndef LINT
+< 			    plcstab(blevel);
+< #endif
+< 			    }
+< 		|  dcl_stat_list attributes init_dcl_list SM
+< 			={  $2->in.op = FREE; 
+< #ifndef LINT
+< 			    plcstab(blevel);
+< #endif
+< 			    }
+< 		;
+< 
+196,202c176
+< declaration:	   attributes declarator_list  SM
+< 			={ curclass = SNULL;  $1->in.op = FREE; }
+< 		|  attributes SM
+< 			={ curclass = SNULL;  $1->in.op = FREE; }
+< 		|  error  SM
+< 			={  curclass = SNULL; }
+< 		;
+---
+> 
+214,217c188,191
+< 		|  type class type
+< 			={  $1->in.type = types( $1->in.type, $3->in.type, UNDEF );
+< 			    $3->in.op = FREE;
+< 			    }
+---
+>  		|  type class type
+>  			={  $1->in.type = types( $1->in.type, $3->in.type, UNDEF );
+>  			    $3->in.op = FREE;
+>  			    }
+284,287d257
+< #ifdef FLEXSTRINGS
+< 				/* No need to hash this, we won't look it up */
+< 				defid( tymerge($1, bdty(NAME,NIL,lookup( savestr(fakename), SMOS ))), curclass );
+< #else
+289d258
+< #endif
+303,304c272
+< declarator:	   fdeclarator
+< 		|  nfdeclarator
+---
+> declarator:	   nfdeclarator
+439,457c407
+< compoundstmt:	   dcmpstmt
+< 		|  cmpstmt
+< 		;
+< 
+< dcmpstmt:	   begin r_dcl_stat_list stmt_list RC
+< 			={  
+< #ifndef LINT
+< 			    prcstab(blevel);
+< #endif
+< 			    --blevel;
+< 			    if( blevel == 1 ) blevel = 0;
+< 			    clearst( blevel );
+< 			    checkst( blevel );
+< 			    autooff = *--psavbc;
+< 			    regvar = *--psavbc;
+< 			    }
+< 		;
+< 
+< cmpstmt:	   begin stmt_list RC
+---
+> compoundstmt:	   begin dcl_stat_list stmt_list RC
+552c502
+< 			    temp->in.left->in.op = FREE;
+---
+> 			    tfree(temp->in.left);
+638c588
+< 			    ecomp( buildtree( FORCE, $3, NIL ) );
+---
+> 			    ecomp( buildtree( FORCE, makety($3,INT,0,INT), NIL ) );
+775d724
+< #ifndef FLEXNAMES
+777,779d725
+< #else
+< 				werror( "undeclared initializer name %s", stab[idname].sname );
+< #endif

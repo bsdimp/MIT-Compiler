@@ -1,0 +1,66 @@
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $wri (i:integer; var fdb:txtfdb;  fldw:integer; base: integer); extern;
+
+procedure $wrscalar(sourcevalue: integer; var fdb:txtfdb; 
+		    scalarname: scalarvptr; fldw: integer); extern;
+
+procedure $wrset(var setvariable: standardset;
+		 var fdb:txtfdb;
+		 scalarname: scalarvptr;
+		 minvalue, maxvalue: integer;
+		 elementform: scalarform;
+		 fldw,base:integer);
+
+   var
+   setsize: integer;
+   i,j:integer;
+   ch: char;
+   firstwritten,subrange: boolean;
+   begin
+   $wr1c (fdb,'[');
+   setsize := maxvalue-minvalue+1;
+   i := 0;
+   firstwritten := false;
+   while i < setsize do
+   begin
+   if i in setvariable then
+	 begin
+	 if not firstwritten then firstwritten := true
+	 else if not subrange then $wr1c(fdb,',');
+	 case elementform of
+	    integerform:
+	   $wri (i+minvalue,fdb,fldw,base);
+	    charform:
+	   begin
+	   ch := chr (i+minvalue);
+	   fldw := fldw - 3;
+	   if ch = '''' then fldw := fldw - 1;
+	   for j := 1 to fldw do $wr1c (fdb,' ');
+	   $wr1c (fdb,'''');
+	   $wr1c (fdb,ch);
+	   if ch = '''' then $wr1c (fdb,'''');
+	   $wr1c (fdb,'''');
+	   end;
+	    declaredform:
+	   $wrscalar (i,fdb,scalarname,fldw)
+	    end;
+	 subrange := (i+2 <= setsize) and (i+1 in setvariable) and (i+2 in setvariable);
+	 if subrange then
+	    begin
+	    $wr1c (fdb,'.'); $wr1c (fdb,'.');
+	    while (i+2 in setvariable) and (i+1 < setsize) do
+	   i := i + 1;
+	    end;
+	 end
+   else subrange := false;
+   i := i+1;
+   end;
+   $wr1c (fdb,']')
+   end;
+
+
+   (* dummy main program *)
+
+.

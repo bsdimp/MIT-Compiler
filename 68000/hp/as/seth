@@ -1,0 +1,22 @@
+From uucp Thu Aug 26 11:29:29 1982
+>From seth Thu Aug 26 10:47:48 1982 remote from hp-pcd
+Date:    26 Aug 1982 10:40-PDT (Thursday)
+From:    Seth.Alford <hp-pcd!seth>
+Subject: Re:  EMACS on 26
+To:      hpdcda!donn
+Message-Id: <82/08/26 1040.933@hp-pcd>
+
+Donn:
+	I am told by tw that Gosling's EMACS does not run on a 9826 under
+UNIX.  Is there anyone there that has looked at this problem?  I am not
+really too keen on porting it myself, and so one of the possibilities
+that I was considering was going to an outside source, such as asking
+Gosling or people at MIT-LCS.  I would think that I would have to tell
+them something about the machine that I am looking at.  Can I do this?
+That is, is the 26 running UNIX proprietary?  Thanks in advance
+for any information you can supply.
+
+--Seth
+hp-pcd!seth
+
+

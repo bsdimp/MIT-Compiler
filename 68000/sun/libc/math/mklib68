@@ -1,0 +1,17 @@
+ar rv libm.a \
+asin.b \
+atan.b \
+hypot.b \
+jn.b \
+j0.b \
+j1.b \
+pow.b \
+fabs.b \
+log.b \
+sin.b \
+sqrt.b \
+tan.b \
+tanh.b \
+sinh.b \
+exp.b \
+floor.b

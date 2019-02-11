@@ -1,0 +1,139 @@
+.TH DDT68 1 MC68000
+.SU
+.SH NAME
+ddt68, fddt68 \- symbolic debugger for 68000
+.SH SYNOPSIS
+.B fddt68
+b.out
+.br
+.B g 1A000
+
+.SH DESCRIPTION
+.I fddt68
+is a symbolic disassembler for b.out files created by the 68000 linker
+(ld68). It's main purpose is to allow testing of ddt logic in a
+more hospitable environment than the 68000.
+.PP
+.I ddt68
+is a symbolic debugger for the 68000. It usually lives at 1A000 in the
+68000 and is started by typing:
+.sp
+.B g 1A000
+.sp
+to the prom monitor.
+
+.SH COMMANDS
+.I ddt68
+recognizes the following commands (\fB$\fP is used for \fB<esc>\fP):
+.TP
+.IB expression /
+.TP
+.IB expression \e
+open the location at \fIexpression\fP and display the contents in the
+current typeout mode. After opening the location, \fBddt\fP waits for
+you to type in either a new value, a \fB/\fP to close the location
+and open the next sequential one, a \fB\\\fP to close the location
+and open the previous one, or a \fBreturn\fP to close the location
+and return to \fBddt\fP's main command loop.
+.TP
+.IB expression $g
+plant any breakpoints set with the \fB$b\fP command, load the registers,
+and start execution at \fIexpression\fP. If \fIexpression\fP is unspecified
+or zero, execution resumes at the point at which \fBddt\fP was entered.
+.TP
+.IB expression $x
+if \fIexpression\fP is supplied and non-zero, execute the instruction at
+\fIexpression\fP otherwise execute the single instruction at the point
+the program was interrupted.
+.TP
+.IB expression $$x
+same as above except execute subroutines calls as a single instruction.
+.TP
+.IB expression $ bno b
+\fIexpression\fP and \fIbno\fP supplied and non-zero, set breakpoint \fIbno\fP
+at \fIexpression\fP.
+.TP
+.IB expression $b
+set the next unused breakpoint at \fIexpression\fP.
+.TP
+.BI 0$ bno b
+remove breakpoint \fIbno\fP.
+.TP
+.B 0$b
+remove all breakpoints.
+.TP
+.B $b
+list active breakpoints.
+.TP
+.BI $ rspec /
+.TP
+.BI $ rspec \e
+examine register \fIrspec\fP where \fIrspec\fP is one of:
+.RS
+.TP
+.B d0-d7
+data registers 0-7
+.TP
+.B a0-a7
+address registers 0-7
+.TP
+.B pc
+program counter
+.TP
+.B sr
+status register
+.RE
+.TP
+.IB expression $=
+type out \fIexpression\fP in current output radix.
+.TP
+.IB base $ir
+set input radix to \fIbase\fP. (Note \fB10$i\fP can never change the radix.)
+.TP
+.B $ir
+reset default input radix (16).
+.TP
+.IB base $or
+set output radix to \fIbase\fP.
+.TP
+.B $or
+reset default output radix (16).
+.TP
+.BI $ type t
+temporarily set typeout mode to \fItype\fP where \fItype\fP is one of:
+.RS
+.TP
+.B c
+type out bytes as ascii characters.
+.TP
+.B h
+type out bytes in current output radix.
+.TP
+.B w
+type out words in current radix.
+.TP
+.B l
+type out longs in current radix.
+.TP
+.B i
+type out as 68000 symbolic instructions.
+.RE
+The new typeout mode stays in effect until a \fBreturn\fP is typed.
+.TP
+.BI $$ type t
+permanently set typeout mode to \fItype\fP.
+.PP
+An \fIexpression\fP is composed of symbols or numeric constants
+and the operators \fB+\fP,
+\fB-\fP, and \fB|\fP representing 2's complement addition,
+subtraction, and inclusive bitwise or.
+Symbols are delimited by operators or \fB<esc>\fP.
+The single character \fB.\fP (dot) as a symbol on its own represents
+the address of the currently open memory location.
+All operations are carried out using 32 bit arithmetic and evaluated
+strictly left to right.
+
+.SH FILES
+.ta \w'b.out  'u
+b.out	output of ld68
+

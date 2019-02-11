@@ -1,0 +1,41 @@
+
+
+procedure $wr1c (var fdb:txtfdb; ch:char); extern;
+
+procedure $wrli ( i:longinteger; var fdb:txtfdb; fldw:integer; base: integer);
+   var negative: boolean;
+
+   procedure $writed2;
+   var digit: 0..9;
+   begin
+   digit := i mod base;
+   i := i div base;
+   fldw := fldw-1;
+   if i > 0 then $writed2;
+   while fldw > 0 do
+	 begin
+	 $wr1c (fdb,' ');
+	 fldw := fldw-1;
+	 end;
+   if negative then
+	 begin
+	 $wr1c (fdb,'-');
+	 negative := false;
+	 end;
+   $wr1c (fdb,chr(digit+ ord('0')));
+   end;
+
+   begin
+   if i < 0 then
+   begin
+   i := -i;
+   negative := true;
+   fldw := fldw-1;
+   end;
+   $writed2;
+   end;
+
+
+   (* dummy main program *)
+
+.

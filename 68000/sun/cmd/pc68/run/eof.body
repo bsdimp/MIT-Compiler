@@ -1,0 +1,17 @@
+procedure $get (var fdb:txtfdb); extern;
+
+function $eof (var fdb:txtfdb): boolean;
+   begin
+   with fdb do
+   if (device = ttydev) and bufferinvalid then
+	 begin
+	 $get (fdb);
+	 bufferinvalid := false;
+	 end;
+   $eof := fdb.eofflag;
+   end;
+
+
+   (* dummy main program *)
+
+.

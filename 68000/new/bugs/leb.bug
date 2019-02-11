@@ -1,0 +1,7 @@
+From leb  Tue Mar  9 00:22:01 1982
+To: terman
+Subject: 68000 c compiler switch statement bug
+
+see /usr/leb/t.c.  it prints out `wrong'.  if you sort the case statements
+as unsigned numbers instead of signed i think that you win.  is that true?
+

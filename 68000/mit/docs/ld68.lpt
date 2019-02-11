@@ -1,0 +1,63 @@
+ ld68(1)                   UNIX Programmmer's Manual                   ld68(1)
+
+
+ _N_A_M_E
+    _l_d_6_8 -- link editor
+
+ _S_Y_N_O_P_S_I_S
+    _l_d_6_8 [_-_d_n_r_s_S_x_X] file . . .
+
+ _D_E_S_C_R_I_P_T_I_O_N
+ _L_d_6_8 combines several object programs into one, resolves external references,
+ and  searches libraries.  The object module produced by _l_d_6_8 may be executed,
+ or used as input for another _l_d_6_8 run if the relocation  commands  have  been
+ preserved  by  the  _-_r option.  The output from  _l_d_6_8 is left, by default, in
+ _b_._o_u_t, which is made executable only if no errors occur during the load.
+
+ _L_d_6_8 concatenates the  argument  routines  in  the  order  specified  by  the
+ programer.  The entry point of _b_._o_u_t is the beginning of the first routine.
+
+ Libraries  may  be specified as arguments.  _L_d_6_8 searches the library when it
+ is encountered in the argument list, loading only those routines which define
+ an unresolved external reference.  Since libraries  are  searched  once,  the
+ order  of  routines  in  a library is important when more than one routine is
+ referenced.  If a routine from a library references a  routine  in  the  same
+ library,  the  referencing routine must preceed the referenced routine in the
+ library.
+
+ The options for _l_d_6_8 are listed below:
+
+ _-_x discards local symbols, preserving only external  symbols  in  the  output
+    symbol table.
+ _-_X discards  all local symbols beginning with ".L".  This option is used with
+    cc68 to discard internally  generated  labels  while  preserving  external
+    symbols.
+ _-_s discards all symbols and relocation commands to save space.
+ _S  discards all symbols except locals and globals.
+ _-_r generates relocation commands in _b_._o_u_t so that it may be used as input for
+    another  _l_d_6_8  run.    _-_r  also  prevents  the  final definition of common
+    symbols.
+ _-_d defines common symbols even if the _-_r option is specified.
+ _-_n creates a 410 file.
+
+
+ _F_I_L_E_S
+    b.out
+
+ _S_E_E _A_L_S_O
+    cc(1), a68(1), b.out(5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 7th Edition                    March 20, 1981                               1
+

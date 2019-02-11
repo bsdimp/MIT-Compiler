@@ -1,0 +1,157 @@
+09/09/82	The following files were modified:
+	init.c	ins.c	inst.h	mical.h		ps.c	scan.c
+	The .include pseudo op was added to the assembler.
+	Scanner was changed to list all input lines.
+
+82/08/26 -ANNY 	The following files were modified:
+			mical.h
+			inst.h
+			scan.c
+			error.c
+			init.c
+			ins.c
+			ps.c
+			rel.c
+			sym.c
+		The following changes were made:
+			a)  The assembler now accepts Motorola Standard 
+			    syntax instead of RTL syntax.
+			b)  The assembler accepts two new psuedo ops, 
+			    .refa and .refr.  These psuedo ops were 
+			    created to accomodate code brought over from
+			    the Pascal Workstaion, and they are identical 
+			    in operation to the corresponding Pascal
+			    Workstation psuedo ops, REFA and REFR.  
+			    When a symbol is listed after a .refr
+			    psuedo op it is given the attributes 
+			    S_RELATIVE and S_CANTDEFINE.  The latter
+			    prevents the symbol from being defined
+			    within the current assembly as per the 
+			    definition of REFA and REFR.  The former
+			    requires the assembler to generate a pc 
+			    relative address for the operand currently
+			    being scanned, regardless of other consider-
+			    ations.  When a symbol is listed after a 
+			    .refa psuedo op it is given the S_CANTDEFINE
+			    attribute.
+			c)  The period (".") no longer represents the
+			    "here" symbol.  The "here" symbol is now 
+			    represented by the asterisk ("*").  This 
+			    was done to accomodate code brought over
+			    from the Pascal Workstation.  (Note that
+			    the Assembler source code still refers to
+			    the "here" symbol as "Dot" although it is
+			    now an asterisk.)
+			d)  The bug which required that a pc relative
+			    address be specified as pc(*-label) or
+			    pc(*-label,indexreg) has been fixed so that
+			    a pc relative address may be specified as
+			    simply pc(label) or pc(label,indexreg).
+			e)  Spaces are no longer allowed between operands.
+			f)  A space following the proper number of operands
+			    for an opcode is considered an end of line.
+			    Everything after that space is considered a 
+			    comment and is ignored by the assembler.
+			g)  If the first character of a line is an 
+			    asterisk ("*"), then the entire line is
+			    considered to be a comment. (NOTE:  The 
+			    vertical bar ("|") anywhere in a line 
+			    still indicates a comment as it did before.)
+			h)  The at symbol ("@") and the question mark 
+			    ("?") are considered alphabetic.
+			i)  The dollar sign ("$") is used to indicate
+			    the hexidecimal number base when it procedes
+			    a number.  It can also be used within a 
+			    symbol, but NOT as the first charater of
+			    a symbol.  (NOTE:  The 0 and 0x characters
+			    preceding a number still indicate octal and 
+			    hex number bases. The $ is an addition not
+			    a replacement.)
+			j)  The -p option now causes the assembler to
+			    recognize internal registers as those reg-
+			    ister names preceded by a question mark ("?")
+			    instead of a dollar sign ("$").
+			k)  The -t option was added.  This option causes
+			    the assembler to ignore lines where the 
+			    first word is one of the following Pascal
+			    Workstation assembler psuedo ops:
+					decimal,
+					end,
+					llen,
+					list,
+					lprint,
+					nolist,
+					noobj,
+					nosyms,
+					page,
+					spc,
+					sprint,
+					start,
+					ttl.
+
+82/07/07 -MFM	ps.c, ins.c,mical.h, error.c, inst.h, sym.c, rel.c: added
+		a new pseudo-pseudo-op ".align". It's purpose is to support
+		system code writing by allowing the user to specify a
+		dynamically amount of white space to be placed into the 
+		text, data, and/or bss segments so that following code is
+		aligned as desired to a given address.
+		for example:
+			.align	x,1024
+		  y:	"anything"
+		sends an instruction to the loader that x is to be the beginning
+		address of a "hole" in the current segment. The next code
+		address (y in this case) is to be relocated so that it has the
+		first address that fulfills (address mod 1024 == 0). Any 
+		(unsigned short) modulus is allowable. The primary purpose of
+		the new op is to permit placing things on page boundaries
+		regardless of what order the loader places them on the a.out
+		file. Note that since the size of the "hole" is determined
+		by the loader, the assembler cannot compute sdi's through or
+		across the "hole" correctly. Hence I have added a warning
+		that will appear whenever a .align is seen within a text
+		segment. It is possible to specify a .align within the .bss
+		segment as well, although I don't know what use that could be.
+		Multiple .aligns are allowed.
+82/07/07 -MFM	error.c: Added a counter for the number of errors. The assembler
+		now gives up if the number of errors exceeds a defined maximum.
+82/07/01 -MFM	scan.c: thought things through and decided that multiplication
+		of a relocatable is senseless so removed it. Ditto for a lot
+		of the new operators.
+82/06/22 -MFM	init.c: Fixed -A flag to permit -a listing to stderr vice a
+		designated file.
+82/06/09 -MFM   scan.c,mical.h: added new binary operators / (integer
+		divide), % (MOD), < and > (arithmetic shifts left and right),
+		? (bitwise or), ^ (bitwise exclusive or), & (bitwise and).
+		Also modified * binary op slightly to permit multiplication
+		if no more than 1 operand is relocatable.
+82/06/01 -MFM	as modified to handle new a.out format everywhere.
+82/04/22 -MFM	recompiled as with new BUFSIZ=1024 in stdio.h. Makes for
+		larger buffers for I/O.
+82/03/29 -MFM	scan.c,init.c: added -a option to permit a listing of
+		the input file and the pc counter. 
+82/02/18 -MFM 	ins.c,sdi.c,sym.c: modified jbrnch, cbrnch, sdi_inc,
+		makesdi to fix "Multiply defined symbol" problem. Message
+		was coming out for labels following sdi references.
+82/03/16 -MFM	ins.c: made several auto vars into register vars.
+82/03/12 -MFM	rel.c: modified rel_val to put out correct offsets for
+		pc-relative instructions.
+82/03/10 -MFM	sym.c: modified Sym_Write to use more register vars and
+		made slength a register short vice int.
+		ins.c: modified trap to permit traps in range of #8-#15.
+82/02/25 -MFM	ins.c: modified odd address check to permit .byte and .even
+		to be used anywhere within the text segment
+82/02/03 -MFM 	scan.c: changed sdefer to avoid infinite looping
+		if @ was missing from indirect offsets.
+82/01/13 -MFM   init.c: changed to recognize  -p option. If -p then recognize
+		all registers as having names beginning with $. This change
+		complements changes to ccom.
+81/03/30	ins.c: fix exg op code
+81/03/18	ins.c: fix subxb, subxw, subxl op codes
+81/03/13	init.c: permit foo or foo.a68 as source file
+81/03/13	ins.c:  fix roxrl op code
+81/03/04	mical.h, ps.c, scan.c, sym.c: added local symbols
+81/03/03	mical.h, inst.h, init.c, ins.c, scan.c, ps.c:
+		  add ~ operator and .ascii, .asciz pseudo ops
+81/03/02	mical.h, scan.c: add * operator in term()
+81/02/25	scan.c: add 0x syntax for hex constants in term()
+81/02/24	scan.c: fix .=.+n bug in sassign()

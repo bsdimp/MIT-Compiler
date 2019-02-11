@@ -1,0 +1,18 @@
+# Native Unix version of 68000 compiler makefile
+
+.SUFFIXES:	.c .o
+
+CFLAGS =	-c -DFLEXNAMES
+
+OFILES =	cgram.o xdefs.o scan.o pftn.o trees.o optim.o code.o local.o\
+		reader.o local2.o order.o match.o allo.o comm1.o table.o
+
+ccom:		$(OFILES)
+		cc -o ../../../bin/ccom $(OFILES)
+
+.c.o:
+		cc $(CFLAGS) $*.c
+
+cgram.c:	cgram.y
+		yacc cgram.y
+		mv y.tab.c cgram.c

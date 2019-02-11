@@ -1,0 +1,100 @@
+
+procedure $perror ( var fdb: txtfdb; errormsg: errorstring); extern;
+procedure $getb (var fdb:txtfdb); extern;
+
+procedure $get (var fdb:txtfdb);
+
+begin (*getc*)
+if fdb.filetype = binary then 
+   $getb (fdb)
+else with fdb do
+   begin
+   if (status <> openforinput) then
+	 $perror(fdb,'file not open               ')
+   else if eofflag then
+	 $perror(fdb,'reading past end of file    ')
+   else if (device = ttydev) and (not bufferinvalid) then
+	 bufferinvalid := true
+   else  begin (* file ok, get character*)
+	 if eopageflag then 
+	    begin
+	    pagecount := pagecount+1;
+	    eopageflag := false;
+	    eolnflag := false;
+	    charcount := 0;
+	    linecount := 1
+	    end
+	 else if eolnflag then 
+	    begin
+	    linecount:= linecount+1;
+	    eolnflag := false;
+	    charcount := 0
+	    end;
+	 if (tabcount > 0) then 
+	    begin
+	    pbuffer := ' ';
+	    tabcount := tabcount-1
+	    end
+	 else
+	    if (filetype = asciifile) then 
+		begin (*ascii handling*)
+		$getb (fdb);  (*get next character from file*)
+		if eofflag then 
+		   begin 
+		   pbuffer :=' '; 
+		   eolnflag := true 
+		   end
+		else  (*not eof*)
+		   (**ift vax or 68000*)
+		   if (ord(pbuffer) = 10) then 
+		   (**else*)
+		   {if (ord(pbuffer) = 13) then }
+		   (**endc*)
+			eolnflag := true
+		   else if (ord(pbuffer) = 12) then 
+			eopageflag:=true
+		end
+	    else begin (* pascal character file*)
+		$getb (fdb);
+		while (ord(pbuffer) in [0..31,127]) do 
+		    begin
+		    if eofflag then 
+			begin 
+			pbuffer := ' '; 
+			eolnflag := true 
+			end
+		    else if (ord(pbuffer) = 19) then 
+			begin (*tab*)
+			pbuffer := ' ';
+			tabcount :=tabsetting-((charcount+1)mod tabsetting)
+			end
+		    else if (ord(pbuffer) = 10) then 
+			begin (*lf*)
+			pbuffer := ' ';
+			eolnflag := true
+			end
+		    else if (ord(pbuffer) = 12) then
+			begin (* ff *)
+			pbuffer := ' ';
+			eopageflag := true;
+			eolnflag := true;
+			end
+		    else if (ord(pbuffer) = 24) then (* sail underbar *)
+			pbuffer := chr(95)
+		    else $getb (fdb)
+		    end;
+		if eofflag then 
+		    begin 
+		    pbuffer := ' '; 
+		    eolnflag := true 
+		    end;
+		end;
+	charcount := charcount+1;
+	bufferinvalid := true;
+	end
+   end
+end;
+
+   (* dummy main program *)
+
+.

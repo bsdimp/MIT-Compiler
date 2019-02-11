@@ -1,0 +1,28 @@
+Sun Jun 27 02:10:56 1982
+  created file emtcall.c[diablo], author: pratt on Tue Jun 16 18:19:08 1981
+Sun Jun 27 02:10:58 1982
+  created file emtgetchar.c[diablo], author: pratt on Tue Jun 16 18:19:08 1981
+Sun Jun 27 02:10:59 1982
+  created file emtputchar.c[diablo], author: pratt on Tue Jun 16 18:19:08 1981
+Sun Jun 27 02:11:00 1982
+  created file fbmode.c[diablo], author: mogul on Thu Apr 15 13:07:28 1982
+Sun Jun 27 02:11:02 1982
+  created file getconfig.c[diablo], author: mogul on Tue Feb 16 23:23:28 1982
+Sun Jun 27 02:11:03 1982
+  created file getcontext.c[diablo], author: pratt on Tue Jun 16 18:19:09 1981
+Sun Jun 27 02:11:05 1982
+  created file getmemsize.c[diablo], author: pratt on Tue Jun 16 18:19:09 1981
+Sun Jun 27 02:11:07 1982
+  created file getsegmap.c[diablo], author: pratt on Tue Jun 16 18:19:09 1981
+Sun Jun 27 02:11:09 1982
+  created file makefile[diablo], author: pratt on Thu Apr 15 13:07:34 1982
+Sun Jun 27 02:11:10 1982
+  created file setcontext.c[diablo], author: pratt on Tue Jun 16 18:19:09 1981
+Sun Jun 27 02:11:11 1982
+  created file setecho.c[diablo], author: pratt on Wed Jul  8 13:30:11 1981
+Sun Jun 27 02:11:12 1982
+  created file setsegmap.c[diablo], author: pratt on Tue Jun 16 18:19:10 1981
+Sun Jun 27 02:11:14 1982
+  created file ticks.c[diablo], author: pratt on Tue Jun 16 18:19:10 1981
+Sun Jun 27 02:11:15 1982
+  created file version.c[diablo], author: pratt on Tue Jun 16 18:19:10 1981

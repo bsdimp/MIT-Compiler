@@ -1,0 +1,18 @@
+
+  procedure $filepos (var filevar: txtfdb; var pagenum, linenum, charnum: integer);
+	(* returns page, line and character position (in the line) of the
+	   last character read.  file must be open for input *)
+
+   begin
+   with filevar do
+	 begin
+	 pagenum := pagecount;
+	 linenum := linecount;
+	 charnum := charcount;
+	 end;
+   end;
+
+
+   (* dummy main program *)
+
+.

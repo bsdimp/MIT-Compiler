@@ -1,0 +1,18 @@
+procedure $get (var fdb:txtfdb); extern;
+
+function $eof (var fdb:txtfdb): boolean; extern;
+
+function $eopage (var fdb:txtfdb): boolean; extern;
+
+
+procedure $rdpage (var fdb:txtfdb);
+   begin
+   while not $eopage (fdb) and not $eof (fdb) do
+   $get (fdb);
+   $get (fdb);
+   end;
+
+
+   (* dummy main program *)
+
+.

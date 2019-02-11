@@ -1,0 +1,19 @@
+
+procedure $get (var fdb:txtfdb); extern;
+
+function $eln (var fdb:txtfdb): boolean; extern;
+
+function $eof (var fdb:txtfdb): boolean; extern;
+
+procedure $rln (var fdb:txtfdb);
+   begin
+   while not $eln (fdb) and not $eof (fdb) do
+	$get (fdb);
+   $get (fdb);
+   if fdb.filetype = asciifile then 
+	$get (fdb);
+   end;
+
+   (* dummy main program *)
+
+.

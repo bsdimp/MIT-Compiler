@@ -1,0 +1,7 @@
+4/2/82	code.c: efcode() fixed to remove "." from BSS allocation code when
+		returning a structure.
+3/12/82	order.c: changed order calls for temp result to only use INTAREG|INTEMP
+	table.c: make lea template allow INTAREG cookie
+3/9/82	allo.c: usable() fixed to allow BREGS to satisfy AREG requests
+	match.c: tshape() fixed to allow BREGS to satisfy AREG requests
+	table.c: make separate template for SCC from constants

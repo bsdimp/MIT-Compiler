@@ -1,0 +1,20 @@
+You should install the following files into some directory on your
+search path (on our system we use /usr/local):
+
+	cc68		; "cc" but for 68000
+
+cc68 looks for:
+
+	/usr/local/a68	; the assembler
+	/lib/c68	; the compiler
+	/lib/o68	; optimizer pass of the compiler
+	/usr/local/ld68	; the loader
+
+Other utilities:
+
+	pr68		; dumps .b files in a "readable" format
+	nm68		; like nm, but for .b files
+	size68		; like size, but for .b files
+
+Both cc68.c and ld68.c have some built-in path names you may wish to
+change to reflect your local directory structure.
