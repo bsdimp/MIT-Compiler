@@ -65,12 +65,13 @@ int Errors = 0;		/* Number of errors in this pass */
    control string which explains the error, and Number is the value of the
    offending parameter.  This routine will not return.
 */
-Sys_Error(Explanation,Number)
+int Sys_Error(Explanation,Number)
 char *Explanation;
 {
 	fprintf(stderr, "Assembler Error-- ");
 	fprintf(stderr, Explanation,Number);
 	abort();
+	return 0;
 }
 
 /* This is called whenever the assembler recognizes an error in the current
@@ -78,13 +79,14 @@ statement. It registers the error, so that an error code will be listed with
 the statement, and a description of the error will be printed at the end of
 the listing */
 
-Prog_Error(code)
+int Prog_Error(code)
 register int code;
 {	register int i;
 
-	if (Pass != 2) return;		/* no errors on pass 1 */
+	if (Pass != 2) return 0;		/* no errors on pass 1 */
 	Errors++;				/* increment error count */
 	fprintf(stderr,"\"%s\", line %d: %s\n",File_name,Line_no,E_messages[code]);
+	return 0;
 }
 
 /* Prog_Warning registers a warning on a statement. A warning is like an error,
@@ -92,8 +94,9 @@ register int code;
 	to generate the .rel file. 
 */
 
-Prog_Warning(code){
-	if (Pass != 2) return;
+int Prog_Warning(code){
+	if (Pass != 2) return 0;
 	fprintf(stderr,"\"%s\", line %d: (warning) %s\n",
 		File_name,Line_no,E_messages[code]);
+	return 0;
 }

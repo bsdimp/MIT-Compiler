@@ -30,7 +30,7 @@
 #define	E_STRING	19
 #define	E_INSRT		20
 #define	E_ATTRIBUTE	21
-#define	E_.ERROR	22
+#define	E_ERROR		22
 #define	E_LEVELS	23
 #define	E_CONDITION	24
 #define	E_NUMOPS	25
@@ -128,6 +128,7 @@ struct oper {
   long value_o;			/* Value subfield */
 };
 
+extern int abort();
 extern char *soperand(),*exp();
 extern char iline[],Code[];
 extern short cinfo[];
